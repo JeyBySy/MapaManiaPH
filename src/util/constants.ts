@@ -604,7 +604,7 @@ const LGU_PATHS: LGU_PATH_TYPE = {
       },
     ],
   },
-  BATANGAS_CITY: {
+  BATANGAS: {
     viewBox: "0 0 1624 1343",
     paths: [
       {
