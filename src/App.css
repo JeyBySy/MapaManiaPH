@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 button {
-  @apply px-2 py-3;
+  @apply px-2 py-3 lg:text-lg  text-[10px];
 }
 a {
   @apply underline;
