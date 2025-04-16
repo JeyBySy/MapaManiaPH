@@ -9,10 +9,9 @@ function App() {
   return (
     <>
       <Router>
-        <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="min-h-screen flex flex-col items-center justify-center m-auto">
           <Routes>
             <Route index path="/" element={<StartPage />} />
-
             <Route element={<FullScreenLayout />}>
               <Route path="/exploremap" element={<ExploreMapPage />} />
             </Route>
