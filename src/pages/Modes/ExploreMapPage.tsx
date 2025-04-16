@@ -3,10 +3,10 @@ import { LGU_PATHS, PROVINCES } from '../../util/constants';
 
 
 const ExploreMapPage: React.FC = () => {
-  const [focusOutline, setFocusOutline] = useState<string>(PROVINCES[0]);
+  const [provinceOutline, setProvinceOutline] = useState<string>(PROVINCES[0]);
 
   const handleClickProvince = (province: string) => {
-    setFocusOutline(province)
+    setProvinceOutline(province)
   }
 
   return (
@@ -20,38 +20,27 @@ const ExploreMapPage: React.FC = () => {
               <li
                 key={province}
                 onClick={() => { handleClickProvince(province) }}
-                className={`hover:bg-gray-500 cursor-pointer p-3 capitalize ${focusOutline === province ? "bg-gray-500" : ""}`}
+                className={`hover:bg-gray-500 cursor-pointer p-3 capitalize ${provinceOutline === province ? "bg-gray-500" : ""}`}
               >
                 {province.replace(/_/g, " ").toLowerCase()}
               </li>
 
             ))}
           </ul>
-          {/* <ul className="text-xs flex flex-col gap-1">
-            {PROVINCES.map((province) => (
-              <li
-                key={province}
-                onClick={() => { handleClickProvince(province) }}
-                className={`hover:bg-gray-500 cursor-pointer p-3 capitalize ${focusOutline === province ? "bg-gray-500" : ""}`}
-              >
-                {province}
-              </li>
-            ))}
-          </ul> */}
         </div>
       </aside>
 
       {/* Right side: SVG Map Container */}
       <main className="flex-1 flex items-center justify-center">
         <div className="w-full h-full p-4 border">
-          {focusOutline && LGU_PATHS[focusOutline] ? (
+          {provinceOutline && LGU_PATHS[provinceOutline] ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="100%"
               height="100%"
-              viewBox={LGU_PATHS[focusOutline]?.viewBox || '0 0 100 100'}
+              viewBox={LGU_PATHS[provinceOutline]?.viewBox || '0 0 100 100'}
             >
-              {LGU_PATHS[focusOutline]?.paths.map((path, index) => (
+              {LGU_PATHS[provinceOutline]?.paths.map((path, index) => (
                 <path
                   key={path.id || index}
                   id={path.id || undefined}
@@ -59,11 +48,15 @@ const ExploreMapPage: React.FC = () => {
                   fill="auto"
                   className="hover:fill-amber-500 transition-colors duration-200 cursor-pointer"
                   stroke="white"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    console.log(`Clicked on ${path.id || index}`)
+                  }}
                 />
               ))}
             </svg>
           ) : (
-            `${focusOutline} was not found in LGU_PATHS`
+            `${provinceOutline} was not found in LGU_PATHS`
           )}
         </div>
       </main>
