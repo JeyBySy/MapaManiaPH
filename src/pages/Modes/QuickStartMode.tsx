@@ -73,7 +73,7 @@ const QuickStartMode: React.FC = () => {
       </button>
 
       {/* Main Content */}
-      <div className="container md:mx-auto lg:h-auto mt-12 border flex flex-col items-center justify-center h-full w-full">
+      <div className="container md:mx-auto lg:h-auto mt-12 flex flex-col items-center justify-center h-full w-full">
         <p className="lg:text-3xl hidden lg:block  font-bold mb-6 tracking-widest text-green-400 text-center md:text-4xl">
           Guess the Province
         </p>
