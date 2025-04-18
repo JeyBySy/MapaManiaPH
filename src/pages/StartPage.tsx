@@ -10,7 +10,7 @@ const StartPage: React.FC = () => {
       <div className="lg:container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative">
         <div className="w-full">
           <motion.h1 className="lg:text-6xl text-3xl font-bold text-center text-white py-5 px-2">
-            _!_MapaMania_!_
+            _MapaManiaPH_
           </motion.h1>
           <p className="lg:text-sm text-[10px] mx-4 text-center text-gray-300 mb-6">
             Challenge your knowledge of the Philippine map!
@@ -18,14 +18,14 @@ const StartPage: React.FC = () => {
         </div>
         <div className="lg:w-1/3 w-full px-2 flex flex-col gap-4  mx-auto">
           <Link to={"/quickstart"}>
-            <Button btnName="🇵🇭 Quick Start" btnColor="sky" event={() => {}} />
+            <Button btnName="🇵🇭 Quick Start" btnColor="sky" event={() => { }} />
           </Link>
 
           <Link to={"/exploremap"}>
             <Button
               btnName="🌍 Explore Map"
               btnColor="emerald"
-              event={() => {}}
+              event={() => { }}
             />
           </Link>
 
@@ -33,7 +33,7 @@ const StartPage: React.FC = () => {
             <Button
               btnName="⏱️ Challenge Mode"
               btnColor="red"
-              event={() => {}}
+              event={() => { }}
             />
           </Link>
 
@@ -46,7 +46,7 @@ const StartPage: React.FC = () => {
               <Button
                 btnName="🔥 Multiplayer"
                 btnColor="gray"
-                event={() => {}}
+                event={() => { }}
               />
               {/* bg-amber-600 hover:bg-amber-700 */}
             </Link>
