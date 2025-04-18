@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
-import { LGU_PATHS, PROVINCES } from '../../util/constants';
-
+import React from "react"
+import { LGU_PATHS } from "../../util/constants"
+import { useProvince } from "../../hooks/useProvince"
 
 const ExploreMapPage: React.FC = () => {
-  const [provinceOutline, setProvinceOutline] = useState<string>(PROVINCES[0]);
+  const { provinceOutline, provinceKeys, selectProvince } = useProvince(false)
 
   const handleClickProvince = (province: string) => {
-    setProvinceOutline(province)
+    selectProvince(province)
   }
 
   return (
     <div className="flex h-screen w-full">
       {/* Left side: Province List */}
       <aside className="w-1/6 border-dashed border-r-4 overflow-y-auto ">
-        <h2 className="text-xl font-semibold mb-4 bg-gray-800 p-5">Provinces</h2>
-        <div className='flex flex-col'>
+        <h2 className="text-xl font-semibold mb-4 bg-gray-800 p-5">
+          Provinces
+        </h2>
+        <div className="flex flex-col">
           <ul className="text-xs flex flex-col gap-1 py-2 bg-gray-700">
-            {PROVINCES.map((province) => (
+            {provinceKeys.map((province) => (
               <li
                 key={province}
-                onClick={() => { handleClickProvince(province) }}
-                className={`hover:bg-gray-500 cursor-pointer p-3 capitalize ${provinceOutline === province ? "bg-gray-500" : ""}`}
+                onClick={() => {
+                  handleClickProvince(province)
+                }}
+                className={`hover:bg-gray-500 cursor-pointer p-3 capitalize ${
+                  provinceOutline === province ? "bg-gray-500" : ""
+                }`}
               >
                 {province.replace(/_/g, " ").toLowerCase()}
               </li>
-
             ))}
           </ul>
         </div>
@@ -38,7 +43,7 @@ const ExploreMapPage: React.FC = () => {
               xmlns="http://www.w3.org/2000/svg"
               width="100%"
               height="100%"
-              viewBox={LGU_PATHS[provinceOutline]?.viewBox || '0 0 100 100'}
+              viewBox={LGU_PATHS[provinceOutline]?.viewBox || "0 0 100 100"}
             >
               {LGU_PATHS[provinceOutline]?.paths.map((path, index) => (
                 <path
@@ -60,9 +65,8 @@ const ExploreMapPage: React.FC = () => {
           )}
         </div>
       </main>
-
     </div>
-  );
-};
+  )
+}
 
-export default ExploreMapPage;
+export default ExploreMapPage

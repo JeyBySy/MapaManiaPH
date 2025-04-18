@@ -1,21 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 @import "tailwindcss";
-:root {
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
+:root {
+  color: rgba(255, 255, 255, 0.87);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 * {
   box-sizing: border-box;
-
   font-family: "Press Start 2P", sans-serif;
 }
 body {
   margin: 0;
   padding: 0;
+  @apply bg-[var(--color-retro-bg)] text-[var(--color-retro-text)] font-sans;
 }

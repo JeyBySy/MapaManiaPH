@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
 button {
-  @apply px-2 py-3 lg:text-lg  text-[10px];
+  @apply lg:text-lg  text-[10px] text-white cursor-pointer rounded-full transition shadow-2xl;
 }
 a {
   @apply underline;
+}
+@theme {
+  --color-retro-bg: #242424;
+  --color-retro-orange: #ff5f5f;
+  --color-retro-yellow: #fcd34d;
+  --color-retro-mint: #0ff0fc;
+  --color-retro-purple: #a78bfa;
+  --color-retro-text: #f4f4f4;
+  --color-retro-card: #2d2d30;
 }
