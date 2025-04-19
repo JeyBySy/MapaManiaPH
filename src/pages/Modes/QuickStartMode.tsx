@@ -15,6 +15,7 @@ const QuickStartMode: React.FC = () => {
   const handleSubmit = () => {
     setSubmitted(true)
     if (!isCorrect) {
+      setSubmitted(false)
       setTypedText("")
     }
   }
@@ -48,17 +49,15 @@ const QuickStartMode: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-retro-bg text-white p-4">
       {/* Sidebar */}
-      <div className={`transition-transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed left-0 top-0 h-full min-w-[250px] bg-gray-800 p-4 border-r-2 border-gray-600 z-50`}>
-        <button onClick={toggleSidebar} className="text-white absolute right-2 top-0 text-2xl">
-          x
-        </button>
-        <h2 className="text-xl font-bold text-green-400">Province</h2>
-        <p className="text-gray-400">
+      <div className={`transition-transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed top-0  space-y-3.5 min-w-[250px] bg-gray-800 p-4 border border-t-0 z-50`}>
+        <button onClick={toggleSidebar} className="text-white absolute right-2 top-0 text-2xl"> x </button>
+        <h2 className="text-md text-green-400">Guess the Province</h2>
+        <p className="text-white text-shadow-2xs ">
           {submitted
             ? provinceOutline
             : provinceOutline.replace(/[A-Z]/gi, "*").slice(0, 6)}
         </p>
-        <h3 className="mt-4 text-lg font-semibold text-green-400">LGUs</h3>
+        <h3 className="text-md text-green-400">Guess the Location</h3>
         <ul className="mt-2 text-gray-400">
           {lguList.map((lgu, index) => (
             <li key={index} className="mb-2">
@@ -74,9 +73,6 @@ const QuickStartMode: React.FC = () => {
 
       {/* Main Content */}
       <div className="container md:mx-auto lg:h-auto mt-12 flex flex-col items-center justify-center h-full w-full">
-        <p className="lg:text-3xl hidden lg:block  font-bold mb-6 tracking-widest text-green-400 text-center md:text-4xl">
-          Guess the Province
-        </p>
 
         {/* Province Outline */}
         <div className="w-full md:w-4xl h-48 md:h-96 relative bg-gray-800 border-2 border-gray-600 flex items-center justify-center rounded mb-6 py-4">
@@ -142,7 +138,7 @@ const QuickStartMode: React.FC = () => {
           />
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

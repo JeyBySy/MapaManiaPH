@@ -94,12 +94,11 @@ const Keyboard: React.FC<KeyboardProps> = ({
                   <button
                     disabled={!isInputValid}
                     key={key}
-                    className={`${
-                      isInputValid
-                        ? "bg-blue-500 hover:bg-blue-600"
-                        : "bg-gray-400 cursor-not-allowed"
-                    } rounded text-xs text-white shadow transition-colors w-16 px-1 flex items-center justify-center`}
-                    onClick={onSubmit}
+                    className={`${isInputValid
+                      ? "bg-blue-500 hover:bg-blue-600"
+                      : "bg-gray-400 cursor-not-allowed"
+                      } rounded text-xs text-white shadow transition-colors w-16 px-1 flex items-center justify-center`}
+                    onClick={() => { onSubmit() }}
                   >
                     <CornerDownLeft stroke={isInputValid ? "white" : "gray"} />
                   </button>
