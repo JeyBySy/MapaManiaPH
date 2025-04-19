@@ -24,6 +24,8 @@ export function useProvince(random: boolean = false) {
   }
 
   const provinceData = LGU_PATHS[provinceOutline]
+
+  // Shuffle the path and pick based on the pathLimit 
   const locationPath = useMemo(() => {
     const paths = provinceData?.paths || []    
     const shuffled = [...paths]
