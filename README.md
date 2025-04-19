@@ -5,13 +5,11 @@
 ### 🎮 Game Modes
 
 - **🇵🇭 Quick Start**  
-  Three pre-selected province. Guess the province first then proceed to guess it's city/municipal.
-  A fast-paced, 12-question quiz with two type of challenge to choose from:
-
-  - **Typing Challenge** - Type the name of the highlighted province. ex. ( B _ _ A _ _ A S ) <i>with hint</i>
+  Guess the province first then proceed to guess it's city/municipal. Type the name of the province and the highlighted province. ex. ( B _ _ A _ _ A S ). Total of 11 question (1 province, 10 cities/municipal)
 
 - **🌍 Explore Map**  
-- **⏱️ Challenge Mode**  
+- **⏱️ Challenge Mode**
+  Has 3 lives. Guess every location without losing all lives
 - **🔥 Multiplayer** *Experimental with realtime feature*  
 
 ---
