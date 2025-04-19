@@ -10,10 +10,10 @@ import { Analytics } from "@vercel/analytics/react"
 function App() {
   return (
     <>
-      <Analytics />
       <Router>
         <div className="min-h-screen flex flex-col items-center justify-center m-auto">
           <Routes>
+
             <Route index path="/" element={<StartPage />} />
             <Route element={<FullScreenLayout />}>
               <Route path="/exploremap" element={<ExploreMapPage />} />
@@ -23,6 +23,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+        <Analytics />
       </Router>
     </>
   )
