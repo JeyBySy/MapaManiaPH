@@ -8,8 +8,8 @@ import { Analytics } from "@vercel/analytics/react"
 const StartPage: React.FC = () => {
   return (
     <>
-      <Analytics />
       <div className="lg:container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative">
+        <Analytics />
         <div className="w-full">
           <motion.h1 className="lg:text-6xl text-3xl font-bold text-center text-white py-5 px-2">
             _MapaManiaPH_
