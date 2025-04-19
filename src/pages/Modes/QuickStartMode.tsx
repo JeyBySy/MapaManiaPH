@@ -8,7 +8,7 @@ import TypingText from "../../components/TypingText"
 import { motion } from "framer-motion"
 
 const QuickStartMode: React.FC = () => {
-  const { provinceOutline, nextProvince, locationPath } = useProvince(true)
+  const { provinceOutline, nextProvince, locationPath, refreshPaths } = useProvince(true)
   const [submitted, setSubmitted] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [isLoading, setIsLoading] = React.useState(false)
@@ -30,7 +30,11 @@ const QuickStartMode: React.FC = () => {
     setIsLoading(true)
     setSubmitted(false)
     await new Promise((res) => setTimeout(res, 500))
+    const prevProvince = provinceOutline
     nextProvince()
+    if (provinceOutline === prevProvince) {
+      refreshPaths()
+    }
     setIsLoading(false)
     setTimeout(() => {
       inputRef.current?.focus()
@@ -43,10 +47,9 @@ const QuickStartMode: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-retro-bg text-white p-4">
       {/* Sidebar */}
-      <div className={`transition-transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed top-0 left-0 space-y-3.5 min-w-[250px] bg-gray-800 p-4 border border-t-0 border-gray-600 shadow-lg z-50 rounded-b-2xl`}>
+      <div className={`transition-transform ${isSidebarOpen ? "translate-y-0" : "-translate-y-full"} fixed top-0 left-0 space-y-3.5 min-w-[250px] bg-gray-800 p-4 border border-t-0 border-gray-600 shadow-lg z-50 rounded-b-2xl`}>
         <button onClick={toggleSidebar} className="text-white absolute right-2 top-0 text-2xl"> x </button>
         <h2 className="text-md text-white bg-green-400/50 px-4 py-2 rounded text-shadow-2xs">Guess the Province</h2>
-
         <TypingText
           text={provinceOutline}
           isSubmitted={submitted}
@@ -119,6 +122,7 @@ const QuickStartMode: React.FC = () => {
           ) : (
             <ProvinceSkeleton />
           )}
+
         </div>
 
         {!submitted && (
