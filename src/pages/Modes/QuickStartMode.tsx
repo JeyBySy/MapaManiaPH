@@ -91,7 +91,10 @@ const QuickStartMode: React.FC = () => {
         {/* Province Outline */}
         <div className={`${!submitted ? "h-96" : 'h-full'} w-full md:w-4xl relative bg-gray-800 border-2 border-gray-600 flex items-center justify-center rounded  py-4`}>
           <button
-            onClick={handleNextProvince}
+            onClick={(e) => {
+              (e.target as HTMLButtonElement).blur()
+              handleNextProvince()
+            }}
             className="absolute w-auto text-gray-400 hover:text-gray-300 p-2 rounded cursor-pointer top-0 right-0 "
           >
             <RotateCcw width={20} height={20} />

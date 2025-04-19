@@ -1,5 +1,5 @@
 import { CornerDownLeft, Delete } from "lucide-react"
-import React from "react"
+import React, { useEffect } from "react"
 
 const KEYBOARD_ROWS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -15,13 +15,7 @@ interface KeyboardProps {
   provinceValue?: string
 }
 
-const Keyboard: React.FC<KeyboardProps> = ({
-  value,
-  onType,
-  limit,
-  onSubmit,
-  provinceValue,
-}) => {
+const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, provinceValue }) => {
   const handleKeyClick = (key: string) => {
     if (key.length !== 1 || !/^[a-z]$/i.test(key)) return
     if (provinceValue) {
@@ -71,6 +65,29 @@ const Keyboard: React.FC<KeyboardProps> = ({
   }
 
   const isInputValid = value && value.length === provinceValue?.length
+
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase()
+
+      if (key === "enter") {
+        if (isInputValid) onSubmit()
+      } else if (key === "backspace") {
+        handleBackspace()
+      } else if (/^[a-z]$/.test(key)) {
+        handleKeyClick(key)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSubmit, provinceValue])
+
+
   return (
     <div className="w-full max-w-2xl mx-auto px-2 relative">
       <div className="flex flex-col gap-2 ">
@@ -82,7 +99,11 @@ const Keyboard: React.FC<KeyboardProps> = ({
                   <button
                     key={key}
                     className="bg-red-500 hover:bg-red-600 rounded text-xs text-white shadow transition-colors w-16 px-1 flex items-center justify-center"
-                    onClick={handleBackspace}
+                    onClick={(e) => {
+                      (e.target as HTMLButtonElement).blur()
+                      handleBackspace()
+                    }}
+
                   >
                     <Delete />
                   </button>
@@ -98,7 +119,10 @@ const Keyboard: React.FC<KeyboardProps> = ({
                       ? "bg-blue-500 hover:bg-blue-600"
                       : "bg-gray-400 cursor-not-allowed"
                       } rounded text-xs text-white shadow transition-colors w-16 px-1 flex items-center justify-center`}
-                    onClick={() => { onSubmit() }}
+                    onClick={(e) => {
+                      (e.target as HTMLButtonElement).blur()
+                      onSubmit()
+                    }}
                   >
                     <CornerDownLeft stroke={isInputValid ? "white" : "gray"} />
                   </button>
@@ -109,7 +133,10 @@ const Keyboard: React.FC<KeyboardProps> = ({
                 <button
                   key={key}
                   className="bg-gray-600 hover:bg-gray-500 rounded text-xs  text-white shadow transition-colors w-12 px-1 py-4 flex items-center justify-center"
-                  onClick={() => handleKeyClick(key.toLowerCase())}
+                  onClick={(e) => {
+                    (e.target as HTMLButtonElement).blur()
+                    handleKeyClick(key.toLowerCase())
+                  }}
                 >
                   {key}
                 </button>
