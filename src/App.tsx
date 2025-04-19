@@ -5,7 +5,7 @@ import NotFound from "./pages/NotFound"
 import ExploreMapPage from "./pages/Modes/ExploreMapPage"
 import FullScreenLayout from "./layouts/FullScreenLayout"
 import QuickStartMode from "./pages/Modes/QuickStartMode"
-import { Analytics } from "@vercel/analytics/react"
+// import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
-        <Analytics />
+        {/* <Analytics /> */}
       </Router>
     </>
   )
