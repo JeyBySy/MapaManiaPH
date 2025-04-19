@@ -1,6 +1,6 @@
 # 🇵🇭 MapaMania — Challenge your knowledge of the Philippine map!
 
-**MapaMania** is a web-based quiz game that challenges you to learn and identify regions, provinces, and municipalities of the Philippines through an engaging, interactive SVG map.
+**MapaMania** is a web-based quiz game that challenges you to learn and identify cities, provinces, and municipalities of the Philippines through an engaging, interactive SVG map.
 
 ### 🎮 Game Modes
 
