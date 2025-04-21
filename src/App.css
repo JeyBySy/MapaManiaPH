@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 .button {
   @apply lg:text-lg  text-[10px] text-white cursor-pointer rounded-full transition shadow-2xl;
 }
 a {
   @apply underline;
 }
+
 @theme {
   --color-retro-bg: #242424;
   --color-retro-orange: #ff5f5f;
@@ -14,4 +17,5 @@ a {
   --color-retro-purple: #a78bfa;
   --color-retro-text: #f4f4f4;
   --color-retro-card: #2d2d30;
+  --color-retro-main: #4576b2;
 }

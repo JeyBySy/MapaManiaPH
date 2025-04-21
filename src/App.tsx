@@ -6,14 +6,20 @@ import ExploreMapPage from "./pages/Modes/ExploreMapPage"
 import FullScreenLayout from "./layouts/FullScreenLayout"
 import QuickStartMode from "./pages/Modes/QuickStartMode"
 import { Analytics } from "@vercel/analytics/react"
+import { useEffect } from "react"
 
 function App() {
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+  }, []);
   return (
     <>
       <Router>
-        <div className="min-h-screen flex flex-col items-center justify-center m-auto">
+        <div className="min-h-screen flex flex-col items-center justify-center m-auto dark:bg-retro-bg">
           <Routes>
-
             <Route index path="/" element={<StartPage />} />
             <Route element={<FullScreenLayout />}>
               <Route path="/exploremap" element={<ExploreMapPage />} />

@@ -1,13 +1,16 @@
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
-import React from "react"
+import React, { useState } from "react"
 import Footer from "../components/Footer"
 import Button from "../components/Button"
+import PopUp from "../components/PopUp/PopUp"
+import DarkModeToggle from "../components/DarkModeToggle"
 
 const StartPage: React.FC = () => {
+  const [toggleSetting, setToggleSetting] = useState(false)
   return (
     <>
-      <div className="lg:container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative">
+      <div className="lg:container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative bg-[var(--bg-main)]">
         <div className="w-full">
           <motion.h1 className="lg:text-6xl text-3xl font-bold text-center text-white py-5 px-2">
             _MapaManiaPH_
@@ -51,6 +54,24 @@ const StartPage: React.FC = () => {
               {/* bg-amber-600 hover:bg-amber-700 */}
             </Link>
           </div>
+
+          <Button
+            btnName="Settings"
+            btnColor="gray"
+            event={() => { setToggleSetting(true) }}
+          />
+          <PopUp
+            visible={toggleSetting}
+            onClose={() => { setToggleSetting(false) }}
+            title="Settings"
+          >
+            <div className="flex flex-col gap-2 p-2 w-full">
+              <div className="flex flex-row text-gray-600 items-center space-x-10 justify-between">
+                <p>Dark Mode: </p>
+                <DarkModeToggle />
+              </div>
+            </div>
+          </PopUp>
         </div>
       </div>
       <Footer />

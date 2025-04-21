@@ -50,10 +50,10 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
               stiffness: 400,
               damping: 20,
             }}
-            className="bg-gray-900 text-white w-fit rounded-md border-2 border-indigo-400 relative"
+            className="bg-white dark:bg-gray-900 text-white min-w-1/4 rounded-md border-2 relative"
           >
             {/* Header */}
-            <div className="bg-indigo-600 p-4 rounded-t-sm text-center">
+            <div className="bg-black/60  dark:bg-gray-700 p-4 rounded-t-sm text-center">
               <h2 className="text-lg font-bold font-mono tracking-wider uppercase text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
                 {title}
               </h2>
@@ -68,10 +68,10 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
             </div>
 
             {/* Content */}
-            <div className="p-6 space-y-4 bg-gradient-to-t from-gray-800 via-gray-900">
-              <div className="flex justify-end gap-2">{children}</div>
+            <div className="p-6 space-y-4">
+              <div className="flex text-sm gap-2  ">{children}</div>
             </div>
-            <div className="bg-indigo-600 p-4 rounded-b-sm text-center"></div>
+            <div className="bg-black/60 dark:bg-gray-600 p-4 rounded-b-sm text-center"></div>
           </motion.div>
         </motion.div>
       )}

@@ -13,8 +13,10 @@
   box-sizing: border-box;
   font-family: "Press Start 2P", sans-serif;
 }
+
 body {
   margin: 0;
   padding: 0;
-  @apply bg-[var(--color-retro-bg)] text-[var(--color-retro-text)] font-sans;
+  @apply text-[var(--color-retro-text)] font-sans;
+  @apply bg-[#4576b2];
 }

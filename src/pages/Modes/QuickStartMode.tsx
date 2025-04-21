@@ -21,9 +21,10 @@ const QuickStartMode: React.FC = () => {
 
   const handleSubmit = () => {
     setSubmitted(true)
-    setIsSidebarOpen(true)
+    setIsSidebarOpen(!!isSidebarOpen)
     if (!isCorrect) {
       setSubmitted(false)
+      setIsSidebarOpen(true)
       setTypedText("")
     }
   }
@@ -76,11 +77,10 @@ const QuickStartMode: React.FC = () => {
 
 
   return (
-    <div className="flex min-h-screen bg-retro-bg text-white p-4">
+    <div className="flex min-h-screen text-white p-4">
 
       {/* Sidebar */}
-      <div className={`transition-transform ${isSidebarOpen ? "translate-y-0" : "-translate-y-full"} fixed top-0 left-0 space-y-3.5 min-w-[250px] bg-gray-800 p-4 border border-t-0 border-gray-600 shadow-lg z-50 rounded-b-2xl`}>
-        <button onClick={toggleSidebar} className="text-white absolute right-2 top-0 text-2xl"> x </button>
+      <div className={`transition-transform ${isSidebarOpen ? "translate-y-0" : "-translate-y-full"} fixed top-0 left-0 space-y-3.5 min-w-[250px] dark:bg-gray-800 bg-white p-4 border border-t-0 border-gray-600 shadow-2xl z-50 rounded-b-sm`}>
         <h2 className="text-md text-white bg-green-400/50 px-4 py-2 rounded text-shadow-2xs">Guess the Province</h2>
         <TypingText
           text={provinceOutline}
@@ -120,23 +120,22 @@ const QuickStartMode: React.FC = () => {
             </ul>
           </motion.div>
         )}
-
+        <div onClick={toggleSidebar} className="w-[85%] mx-auto absolute -bottom-6 flex items-center justify-center">
+          {/* <ChevronDown width={25} height={25} /> */}
+          <div className="w-1/2 mx-auto py-1 text-xs text-center hover:bg-black/30 bg-retro-mint/40 shadow-2xl cursor-pointer backdrop-blur-2xl rounded-b-2xl">{isSidebarOpen ? "\u25B4" : "\u25BC"}</div>
+        </div>
       </div>
-
-      <button onClick={toggleSidebar} className="text-white absolute text-2xl">
-        Open
-      </button>
 
       {/* Main Content */}
       <div className="container md:mx-auto lg:h-auto flex flex-col items-center justify-center h-full w-full space-y-5">
         {/* Province Outline */}
-        <div className={`${!submitted ? "h-96" : 'h-[900px]'} w-full md:w-4xl relative bg-gray-800 border-2 border-gray-600 flex items-center justify-center rounded  py-4`}>
+        <div className={`${!submitted ? "h-96" : 'h-[900px]'} w-full md:w-4xl relative object-fit border-2 dark:border-gray-600 border-slate-300   rounded  py-4 `}>
           <button
             onClick={(e) => {
               (e.currentTarget as HTMLButtonElement).blur()
               handleNextProvince()
             }}
-            className="absolute w-auto text-gray-400 hover:text-gray-300 p-2 rounded cursor-pointer top-0 right-0 "
+            className="absolute w-auto dark:text-gray-400 dark:hover:text-gray-300 text-white/80 hover:text-white p-2 rounded cursor-pointer top-0 right-0 "
           >
             <RotateCcw width={20} height={20} />
           </button>
@@ -153,11 +152,11 @@ const QuickStartMode: React.FC = () => {
                   key={path.id || index}
                   id={path.id || undefined}
                   d={path.d}
-                  fill="auto"
+                  fill="white"
                   className={`transition-colors duration-200 cursor-pointer 
                      ${path.id && correctGuesses.includes(path.id) ? 'fill-retro-mint' : 'hover:fill-retro-mint'}
                   `}
-                  stroke="white"
+                  stroke="black"
                   onClick={(e) => {
                     e.preventDefault()
                     if (path.id) {
@@ -182,12 +181,12 @@ const QuickStartMode: React.FC = () => {
                   className={`w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center text-md lg:text-xl font-bold uppercase ${char === "_"
                     ? "border-transparent bg-transparent"
                     : typedText[i]
-                      ? "border-green-400 bg-gray-800"
-                      : "border-gray-600 bg-gray-900"
+                      ? "dark:border-white/40 dark:bg-slate-700 bg-white text-slate-600 dark:text-white border-white/40 shadow"
+                      : "dark:border-gray-600 dark:bg-slate-600 bg-slate-300 border-white/60 shadow"
                     }`}
                 >
                   {char === "_" ? (
-                    <span className="w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center border-gray-600 bg-gray-700" />
+                    <span className="w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center dark:border-gray-600 border-black/40 dark:bg-gray-700 bg-gray-400" />
                   ) : (
                     typedText[i] || ""
                   )}

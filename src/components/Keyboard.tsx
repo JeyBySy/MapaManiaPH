@@ -98,12 +98,11 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
                 return (
                   <button
                     key={key}
-                    className="bg-red-500 hover:bg-red-600 rounded text-xs text-white shadow transition-colors w-16 px-1 flex items-center justify-center"
+                    className="bg-red-500 hover:bg-red-600 rounded text-xs text-white shadow transition-colors w-16 px-1 flex items-center justify-center cursor-pointer"
                     onClick={(e) => {
                       (e.target as HTMLButtonElement).blur()
                       handleBackspace()
                     }}
-
                   >
                     <Delete />
                   </button>
@@ -118,7 +117,7 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
                     className={`${isInputValid
                       ? "bg-blue-500 hover:bg-blue-600"
                       : "bg-gray-400 cursor-not-allowed"
-                      } rounded text-xs text-white shadow transition-colors w-16 px-1 flex items-center justify-center`}
+                      } rounded text-xs text-white shadow transition-colors w-16 px-1 flex items-center justify-center cursor-pointer`}
                     onClick={(e) => {
                       (e.target as HTMLButtonElement).blur()
                       onSubmit()
@@ -132,7 +131,7 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
               return (
                 <button
                   key={key}
-                  className="bg-gray-600 hover:bg-gray-500 rounded text-xs  text-white shadow transition-colors w-12 px-1 py-4 flex items-center justify-center"
+                  className="bg-white hover:bg-white/50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:hover:text-white rounded text-xs dark:text-white/60 text-slate-600 text-shadow hover:text-slate-800 shadow transition-colors w-12 px-1 py-4 flex items-center justify-center cursor-pointer"
                   onClick={(e) => {
                     (e.target as HTMLButtonElement).blur()
                     handleKeyClick(key.toLowerCase())
