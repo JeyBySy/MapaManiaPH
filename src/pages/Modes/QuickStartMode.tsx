@@ -9,7 +9,7 @@ import { useUniquePathId } from "../../hooks/useUniquePath"
 import MapSVG from "../../components/MapSVG"
 
 const QuickStartMode: React.FC = () => {
-  const { provinceOutline, nextProvince, locationPath, refreshPaths } = useProvince(true)
+  const { provinceOutline, nextProvince, locationName, refreshPaths } = useProvince(true)
   const { pathsWithIds: UniquePath, answerKeys } = useUniquePathId()
   const [submitted, setSubmitted] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
@@ -60,22 +60,18 @@ const QuickStartMode: React.FC = () => {
       return;
     }
 
-    const expectedAnswer = locationPath[currentStep]?.id;
+    const expectedAnswer = locationName[currentStep];
+
     if (cityName.trim().toLowerCase() === expectedAnswer?.trim().toLowerCase()) {
-      setCorrectGuesses((prev) => [...prev, cityName]);
+      setCorrectGuesses((prev) => [...prev, clickedId]);
       setCurrentStep((prev) => prev + 1); // move to next city     
     }
 
-    if (correctGuesses.length + 1 === locationPath.length) {
-      console.log(locationPath);
-
+    if (correctGuesses.length + 1 === locationName.length) {
       console.log("🎉 All correct answers found!");
       handleNextProvince()
     }
-
-
   };
-
 
   return (
     <div className="flex min-h-screen text-white">
@@ -97,13 +93,14 @@ const QuickStartMode: React.FC = () => {
           >
             <h3 className="text-md text-white bg-green-400/50 px-4 py-2 rounded text-shadow-2xs">Guess the Location</h3>
             <ul className="mt-4 text-gray-400 flex flex-col gap-1">
-              {locationPath.map((path, index) => {
+
+              {locationName.map((path, index) => {
                 const isCurrentStep = index === currentStep;
-                const isCorrect = path.id && correctGuesses.includes(path.id);
+                const isCorrect = path && correctGuesses.includes(path);
                 return (
                   <li key={index} className="mb-2">
                     <TypingText
-                      text={`${path.id}`}
+                      text={`${path}`}
                       isSubmitted={true}
                       isMasked={false}
                       className={`text-sm text-shadow-2xs  ${isCurrentStep ? 'dark:text-white text-gray-500' : isCorrect ? 'text-retro-mint' : 'dark:text-white/50 text-gray-500/50'
@@ -149,7 +146,6 @@ const QuickStartMode: React.FC = () => {
           ) : (
             <ProvinceSkeleton />
           )}
-
         </div>
 
         {!submitted && (
