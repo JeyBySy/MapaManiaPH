@@ -4,7 +4,7 @@ import React, { useEffect } from "react"
 const KEYBOARD_ROWS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
   ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-  ["backspace", "Z", "X", "C", "V", "B", "N", "M", "enter"],
+  ["enter", "Z", "X", "C", "V", "B", "N", "M", "backspace"],
 ]
 
 interface KeyboardProps {
@@ -131,7 +131,7 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
               return (
                 <button
                   key={key}
-                  className="bg-white hover:bg-white/80 dark:bg-gray-600 dark:hover:bg-gray-500 dark:hover:text-white rounded text-xs dark:text-white/80 text-slate-600 text-shadow hover:text-slate-800 shadow transition-colors w-12 px-1 py-4 flex items-center justify-center cursor-pointer"
+                  className="bg-white hover:bg-white/80 dark:bg-gray-600 dark:hover:bg-gray-500 dark:hover:text-white rounded text-xs dark:text-white/80 text-slate-600 text-shadow hover:text-slate-800 shadow transition-colors w-12 px-1 py-5 flex items-center justify-center cursor-pointer"
                   onClick={(e) => {
                     (e.target as HTMLButtonElement).blur()
                     handleKeyClick(key.toLowerCase())
