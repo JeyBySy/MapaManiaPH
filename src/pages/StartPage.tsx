@@ -1,4 +1,3 @@
-import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import React, { useState } from "react"
 import Footer from "../components/Footer"
@@ -24,9 +23,9 @@ const StartPage: React.FC = () => {
           <Settings onClick={() => { setToggleSetting(true) }} className="text-white/80 hover:text-white cursor-pointer" />
         </div>
         <div className="w-full">
-          <motion.h1 className="lg:text-6xl text-3xl font-bold text-center text-white py-5 px-2">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center text-white py-5 px-2">
             _MapaManiaPH_
-          </motion.h1>
+          </h1>
           <p className="lg:text-sm text-[10px] mx-4 text-center text-gray-300 mb-6">
             Challenge your knowledge of the Philippine map!
           </p>
