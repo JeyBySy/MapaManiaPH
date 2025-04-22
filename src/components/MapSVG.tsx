@@ -33,16 +33,15 @@ const MapSVG: React.FC<SVGProps> = ({
         >
             {province.paths.map((path, index) => {
                 const isCorrect = path.id && correctGuesses.includes(path.id ?? '');
-                const baseFill = isGuessMode ? 'fill-gray-100' : 'fill-gray-50';
                 const hoverFill = isGuessMode ? 'hover:fill-retro-mint' : 'hover:fill-green-400';
-                const fillClass = isCorrect ? 'fill-retro-mint' : hoverFill;
+                const fillClass = isCorrect ? 'fill-retro-mint' : `${hoverFill} fill-gray-50 dark:fill-gray-200`;
 
                 return (
                     <path
                         key={path.id || index}
                         id={path.id || undefined}
                         d={path.d}
-                        className={`map_svg ${baseFill} dark:fill-gray-200/90 ${fillClass}`}
+                        className={`map_svg  ${fillClass}`}
                         stroke="black"
                         onClick={(e) => {
                             e.preventDefault();
