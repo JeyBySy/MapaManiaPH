@@ -100,18 +100,13 @@ const QuickStartMode: React.FC = () => {
               {locationPath.map((path, index) => {
                 const isCurrentStep = index === currentStep;
                 const isCorrect = path.id && correctGuesses.includes(path.id);
-
                 return (
                   <li key={index} className="mb-2">
                     <TypingText
                       text={`${path.id}`}
                       isSubmitted={true}
                       isMasked={false}
-                      className={`text-sm ${isCurrentStep
-                        ? 'text-white'
-                        : isCorrect
-                          ? 'text-retro-mint'
-                          : 'text-gray-500'
+                      className={`text-sm text-shadow-2xs  ${isCurrentStep ? 'dark:text-white text-gray-700' : isCorrect ? 'text-retro-mint' : 'dark:text-gray-500 text-gray-400'
                         }`}
                     />
                   </li>
@@ -128,6 +123,7 @@ const QuickStartMode: React.FC = () => {
 
       {/* Main Content */}
       <div className="container md:mx-auto lg:h-auto flex flex-col items-center justify-center h-full w-full space-y-5">
+
         {/* Province Outline */}
         <div className={`${!submitted ? "h-96" : 'h-[900px]'} w-full md:w-4xl relative object-fit border-2 dark:border-gray-600 border-slate-300   rounded  py-4 `}>
           <button
@@ -135,7 +131,7 @@ const QuickStartMode: React.FC = () => {
               (e.currentTarget as HTMLButtonElement).blur()
               handleNextProvince()
             }}
-            className="absolute w-auto dark:text-gray-400 dark:hover:text-gray-300 text-white/80 hover:text-white p-2 rounded cursor-pointer top-0 right-0 "
+            className="absolute w-auto dark:text-gray-400 dark:hover:text-gray-100 text-white/80 hover:text-white p-2 rounded cursor-pointer top-0 right-0 "
           >
             <RotateCcw width={20} height={20} />
           </button>
@@ -152,9 +148,8 @@ const QuickStartMode: React.FC = () => {
                   key={path.id || index}
                   id={path.id || undefined}
                   d={path.d}
-                  fill="white"
-                  className={`transition-colors duration-200 cursor-pointer 
-                     ${path.id && correctGuesses.includes(path.id) ? 'fill-retro-mint' : 'hover:fill-retro-mint'}
+                  className={`map_svg fill-gray-100 dark:fill-gray-200/90
+                    ${path.id && correctGuesses.includes(path.id) ? 'fill-retro-mint' : 'hover:fill-retro-mint'}                     
                   `}
                   stroke="black"
                   onClick={(e) => {
@@ -181,12 +176,12 @@ const QuickStartMode: React.FC = () => {
                   className={`w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center text-md lg:text-xl font-bold uppercase ${char === "_"
                     ? "border-transparent bg-transparent"
                     : typedText[i]
-                      ? "dark:border-white/40 dark:bg-slate-700 bg-white text-slate-600 dark:text-white border-white/40 shadow"
-                      : "dark:border-gray-600 dark:bg-slate-600 bg-slate-300 border-white/60 shadow"
+                      ? "dark:border-white/20 dark:bg-slate-600 bg-white text-slate-600 dark:text-white border-white/40 shadow text-shadow-2xs"
+                      : "dark:border-gray-600 dark:bg-slate-700 bg-slate-300 border-white/60 shadow"
                     }`}
                 >
                   {char === "_" ? (
-                    <span className="w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center dark:border-gray-600 border-black/40 dark:bg-gray-700 bg-gray-400" />
+                    <span className="w-12 h-12 md:w-16 md:h-16 border-b-2 flex items-center justify-center dark:border-gray-600 border-gray-100" />
                   ) : (
                     typedText[i] || ""
                   )}

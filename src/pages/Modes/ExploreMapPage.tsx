@@ -24,9 +24,8 @@ const ExploreMapPage: React.FC = () => {
                 onClick={() => {
                   handleClickProvince(province)
                 }}
-                className={`hover:bg-gray-500 cursor-pointer p-3 capitalize ${
-                  provinceOutline === province ? "bg-gray-500" : ""
-                }`}
+                className={`hover:bg-gray-500 cursor-pointer p-3 capitalize ${provinceOutline === province ? "bg-gray-500" : ""
+                  }`}
               >
                 {province.replace(/_/g, " ").toLowerCase()}
               </li>
@@ -51,8 +50,8 @@ const ExploreMapPage: React.FC = () => {
                   id={path.id || undefined}
                   d={path.d}
                   fill="auto"
-                  className="hover:fill-amber-500 transition-colors duration-200 cursor-pointer"
-                  stroke="white"
+                  className={`map_svg fill-gray-50 dark:fill-gray-200/90 hover:fill-green-400`}
+                  stroke="black"
                   onClick={(e) => {
                     e.preventDefault()
                     console.log(`Clicked on ${path.id || index}`)

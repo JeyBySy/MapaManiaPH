@@ -50,15 +50,8 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
               stiffness: 400,
               damping: 20,
             }}
-            className="bg-white dark:bg-gray-900 text-white min-w-1/4 rounded-md border-2 relative"
+            className="bg-gray-100 dark:bg-gray-900 text-white min-w-1/4 rounded-md border-2 border-gray-300 shadow relative"
           >
-            {/* Header */}
-            <div className="bg-black/60  dark:bg-gray-700 p-4 rounded-t-sm text-center">
-              <h2 className="text-lg font-bold font-mono tracking-wider uppercase text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
-                {title}
-              </h2>
-            </div>
-
             {/* Close Button */}
             <div
               onClick={onClose}
@@ -67,11 +60,20 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
               x
             </div>
 
+            {/* Header */}
+            <div className="bg-gray-400  dark:bg-gray-700 p-4 rounded-t-sm text-center">
+              <h2 className="text-lg font-bold font-mono tracking-wider uppercase text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
+                {title}
+              </h2>
+            </div>
+
             {/* Content */}
             <div className="p-6 space-y-4">
-              <div className="flex text-sm gap-2  ">{children}</div>
+              <div className="flex text-sm gap-2">{children}</div>
             </div>
-            <div className="bg-black/60 dark:bg-gray-600 p-4 rounded-b-sm text-center"></div>
+
+            {/* Footer */}
+            <div className="bg-gray-400  dark:bg-gray-600 p-4 rounded-b-sm text-center"></div>
           </motion.div>
         </motion.div>
       )}

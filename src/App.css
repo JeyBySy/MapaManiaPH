@@ -3,7 +3,7 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 .button {
-  @apply lg:text-lg  text-[10px] text-white cursor-pointer rounded-full transition shadow-2xl;
+  @apply lg:text-lg  text-[10px] text-white rounded-full transition shadow;
 }
 a {
   @apply underline;
@@ -18,4 +18,7 @@ a {
   --color-retro-text: #f4f4f4;
   --color-retro-card: #2d2d30;
   --color-retro-main: #4576b2;
+}
+.map_svg {
+  @apply transition-colors duration-200 cursor-pointer;
 }
