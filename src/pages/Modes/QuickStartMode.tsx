@@ -78,10 +78,9 @@ const QuickStartMode: React.FC = () => {
 
 
   return (
-    <div className="flex min-h-screen text-white p-4">
-
+    <div className="flex min-h-screen text-white">
       {/* Sidebar */}
-      <div className={`transition-transform ${isSidebarOpen ? "translate-y-0" : "-translate-y-full"} fixed top-0 left-0 space-y-3.5 min-w-[250px] dark:bg-gray-800 bg-white p-4 border border-t-0 border-gray-600 shadow-2xl z-50 rounded-b-sm`}>
+      <div className={`hidden lg:block transition-transform ${isSidebarOpen ? "translate-y-0" : "-translate-y-full"} fixed top-0 left-0 space-y-3.5 min-w-[250px] dark:bg-gray-800 bg-white p-4 border border-t-0 border-gray-600 shadow-2xl z-50 rounded-b-sm`}>
         <h2 className="text-md text-white bg-green-400/50 px-4 py-2 rounded text-shadow-2xs">Guess the Province</h2>
         <TypingText
           text={provinceOutline}
@@ -107,7 +106,7 @@ const QuickStartMode: React.FC = () => {
                       text={`${path.id}`}
                       isSubmitted={true}
                       isMasked={false}
-                      className={`text-sm text-shadow-2xs  ${isCurrentStep ? 'dark:text-white text-gray-700' : isCorrect ? 'text-retro-mint' : 'dark:text-gray-500 text-gray-400'
+                      className={`text-sm text-shadow-2xs  ${isCurrentStep ? 'dark:text-white text-gray-500' : isCorrect ? 'text-retro-mint' : 'dark:text-white/50 text-gray-500/50'
                         }`}
                     />
                   </li>
@@ -123,10 +122,9 @@ const QuickStartMode: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container md:mx-auto lg:h-auto flex flex-col items-center justify-center h-full w-full space-y-5">
-
+      <div className="mx-auto lg:h-auto flex flex-col items-center justify-center h-full w-full space-y-5 p-2">
         {/* Province Outline */}
-        <div className={`${!submitted ? "h-96" : 'h-[900px]'} w-full md:w-4xl relative object-fit border-2 dark:border-gray-600 border-slate-300   rounded  py-4 `}>
+        <div className={`${!submitted ? "h-96" : 'lg:h-[900px] h-96'} w-full md:w-4xl relative object-fit border-2 dark:border-gray-600 border-slate-300 rounded  py-4`}>
           <button
             onClick={(e) => {
               (e.currentTarget as HTMLButtonElement).blur()
