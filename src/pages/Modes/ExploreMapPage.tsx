@@ -1,6 +1,7 @@
 import React from "react"
 import { LGU_PATHS } from "../../util/constants"
 import { useProvince } from "../../hooks/useProvince"
+import MapSVG from "../../components/MapSVG"
 
 const ExploreMapPage: React.FC = () => {
   const { provinceOutline, provinceKeys, selectProvince } = useProvince(false)
@@ -38,27 +39,35 @@ const ExploreMapPage: React.FC = () => {
       <main className="flex-1 flex items-center justify-center">
         <div className="w-full h-full p-4 border">
           {provinceOutline && LGU_PATHS[provinceOutline] ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              viewBox={LGU_PATHS[provinceOutline]?.viewBox || "0 0 100 100"}
-            >
-              {LGU_PATHS[provinceOutline]?.paths.map((path, index) => (
-                <path
-                  key={path.id || index}
-                  id={path.id || undefined}
-                  d={path.d}
-                  fill="auto"
-                  className={`map_svg fill-gray-50 dark:fill-gray-200/90 hover:fill-green-400`}
-                  stroke="black"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    console.log(`Clicked on ${path.id || index}`)
-                  }}
-                />
-              ))}
-            </svg>
+            // <svg
+            //   xmlns="http://www.w3.org/2000/svg"
+            //   width="100%"
+            //   height="100%"
+            //   viewBox={LGU_PATHS[provinceOutline]?.viewBox || "0 0 100 100"}
+            // >
+            //   {LGU_PATHS[provinceOutline]?.paths.map((path, index) => (
+            //     <path
+            //       key={path.id || index}
+            //       id={path.id || undefined}
+            //       d={path.d}
+            //       fill="auto"
+            //       className={`map_svg fill-gray-50 dark:fill-gray-200/90 hover:fill-green-400`}
+            //       stroke="black"
+            //       onClick={(e) => {
+            //         e.preventDefault()
+            //         console.log(`Clicked on ${path.id || index}`)
+            //       }}
+            //     />
+            //   ))}
+            // </svg>
+            <MapSVG
+              provinceName={provinceOutline}
+              pathsData={LGU_PATHS}
+              mode="explore"
+              onPathClick={(id) => console.log(`Clicked ${id}`)}
+            />
+
+
           ) : (
             `${provinceOutline} was not found in LGU_PATHS`
           )}

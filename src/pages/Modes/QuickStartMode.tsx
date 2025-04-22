@@ -6,6 +6,7 @@ import ProvinceSkeleton from "../../components/Skeleton/ProvinceSkeleton"
 import TypingText from "../../components/TypingText"
 import { motion } from "framer-motion"
 import { useUniquePathId } from "../../hooks/useUniquePath"
+import MapSVG from "../../components/MapSVG"
 
 const QuickStartMode: React.FC = () => {
   const { provinceOutline, nextProvince, locationPath, refreshPaths } = useProvince(true)
@@ -138,29 +139,15 @@ const QuickStartMode: React.FC = () => {
           {isLoading ? (
             <ProvinceSkeleton />
           ) : provinceOutline && UniquePath && UniquePath[provinceOutline] ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={`${!submitted ? "pointer-events-none" : 'pointer-events-auto'} w-full h-full `}
-              viewBox={UniquePath[provinceOutline]?.viewBox || "0 0 100 100"}
-            >
-              {UniquePath[provinceOutline]?.paths.map((path, index) => (
-                <path
-                  key={path.id || index}
-                  id={path.id || undefined}
-                  d={path.d}
-                  className={`map_svg fill-gray-100 dark:fill-gray-200/90
-                    ${path.id && correctGuesses.includes(path.id) ? 'fill-retro-mint' : 'hover:fill-retro-mint'}                     
-                  `}
-                  stroke="black"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (path.id) {
-                      handlePathClick(path.id);
-                    }
-                  }}
-                />
-              ))}
-            </svg>
+            <MapSVG
+              provinceName={provinceOutline}
+              pathsData={UniquePath}
+              mode="guess"
+              isSubmitted={submitted}
+              correctGuesses={correctGuesses}
+              onPathClick={handlePathClick}
+            />
+
           ) : (
             <ProvinceSkeleton />
           )}
