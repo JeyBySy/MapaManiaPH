@@ -25,18 +25,37 @@ export function useProvince(random: boolean = false) {
 
   const provinceData = LGU_PATHS[provinceOutline]
 
-  // Shuffle the path and pick based on the pathLimit 
-  const locationPath = useMemo(() => {
-    const paths = provinceData?.paths || []    
-    const shuffled = [...paths]
+  // // Get the 10 shuffled location with name and path
+  // const locationPath = useMemo(() => {
+  //   const paths = provinceData?.paths || []    
+  //   const shuffled = [...paths]
+  //   for (let i = shuffled.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1))
+  //     ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  //   }
+  
+  //   return shuffled.slice(0, pathLimit)
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [pathVersion,pathLimit, provinceData?.paths])
+
+// Get the 10 shuffled location with name ONLY
+  const locationName = useMemo(() => {
+    const paths = provinceData?.paths || [];
+    const shuffled = [...paths];
+  
     for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
   
-    return shuffled.slice(0, pathLimit)
+    return shuffled
+      .slice(0, pathLimit)
+      .map((path) => path.id)
+      .filter((id): id is string => !!id);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathVersion,pathLimit, provinceData?.paths])
+  }, [pathVersion, pathLimit, provinceData?.paths]);
+  
 
   return {
     provinceOutline,
@@ -45,6 +64,6 @@ export function useProvince(random: boolean = false) {
     selectProvince,
     nextProvince,
     refreshPaths,
-    locationPath
+    locationName
   }
 }
