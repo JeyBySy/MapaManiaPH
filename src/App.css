@@ -9,6 +9,19 @@ a {
   @apply underline;
 }
 
+.map_svg {
+  @apply transition-colors duration-200 cursor-pointer;
+}
+.text-accent {
+  @apply dark:text-retro-purple text-retro-mint;
+}
+.fill-accent {
+  @apply dark:fill-retro-purple fill-retro-mint;
+}
+.fill-accent-hover {
+  @apply dark:hover:fill-retro-purple hover:fill-retro-mint;
+}
+
 @theme {
   --color-retro-bg: #242424;
   --color-retro-orange: #ff5f5f;
@@ -19,6 +32,20 @@ a {
   --color-retro-card: #2d2d30;
   --color-retro-main: #4576b2;
 }
-.map_svg {
-  @apply transition-colors duration-200 cursor-pointer;
+/* Custom Animation */
+@layer utilities {
+  @keyframes breathing {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.05) translateX(8px);
+    }
+  }
+  .animate-breathing {
+    animation: breathing 1.5s ease-in-out infinite;
+  }
 }

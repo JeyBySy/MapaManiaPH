@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { useProvince } from "../../hooks/useProvince"
 import Keyboard from "../../components/Keyboard"
 import { RotateCcw } from "lucide-react"
@@ -19,6 +19,7 @@ const QuickStartMode: React.FC = () => {
   const isCorrect = typedText.toLowerCase() === provinceOutline.toLowerCase()
   const [currentStep, setCurrentStep] = useState(0); // track progress
   const [correctGuesses, setCorrectGuesses] = useState<[string, string][]>([]);
+  const [showMap, setShowMap] = useState(false);
 
   const handleSubmit = () => {
     setSubmitted(true)
@@ -73,49 +74,70 @@ const QuickStartMode: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (submitted) {
+      setShowMap(false); // reset
+      const timeout = setTimeout(() => setShowMap(true), 1000); // simulate reload delay
+      return () => clearTimeout(timeout);
+    }
+  }, [submitted]);
+
   return (
-    <div className="flex min-h-screen text-white">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
-      <div className={`hidden lg:block transition-transform ${isSidebarOpen ? "translate-y-0" : "-translate-y-full"} fixed top-0 left-0 space-y-3.5 min-w-[250px] dark:bg-gray-800 bg-white p-4 border border-t-0 border-gray-600 shadow-2xl z-50 rounded-b-sm`}>
-        <h2 className="text-md text-white bg-green-400/50 px-4 py-2 rounded text-shadow-2xs">Guess the Province</h2>
-        <TypingText
-          text={provinceOutline}
-          isSubmitted={submitted}
-          isMasked={true}
-          className={`${!submitted ? "text-gray-500" : "text-retro-mint"} text-shadow-2xs`}
-        />
-        {submitted && typedText.length !== 0 && (
-          <motion.div
-            initial={{ opacity: 0, }}
-            animate={{ opacity: 1, }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h3 className="text-md text-white bg-green-400/50 px-4 py-2 rounded text-shadow-2xs">Guess the Location</h3>
-            <ul className="mt-4 text-gray-400 flex flex-col gap-1">
+      <div className={`hidden lg:block transition-transform ${isSidebarOpen ? "translate-y-0" : "-translate-y-full"} fixed top-0 left-0  min-w-[250px] dark:bg-gray-800 bg-slate-200 p-3 border border-t-0 border-gray-600 shadow z-50 rounded-b-sm`}>
+        <h2 className="text-md text-white bg-green-400/50 px-4 py-2 rounded rounded-b-none text-shadow-2xs">Guess the Province</h2>
+        <div className="bg-slate-50 dark:bg-gray-700/50 border  border-gray-600/30 shadow">
 
-              {locationName.map((path, index) => {
-                const isCurrentStep = index === currentStep;
-                const isLocationCorrect = correctGuesses.some(([id]) => id === path);
+          <TypingText
+            text={provinceOutline}
+            isSubmitted={submitted}
+            isMasked={true}
+            className={`${!submitted ? " dark:text-white/40 text-gray-500/0" : "text-accent"} p-3 text-shadow-2xs`}
+          />
 
-                return (
-                  <li key={index} className="mb-2">
-                    <TypingText
-                      text={`${path}`}
-                      isSubmitted={true}
-                      isMasked={false}
-                      className={`text-sm text-shadow-2xs  ${isCurrentStep ? 'dark:text-white text-gray-500' : isLocationCorrect ? 'text-retro-mint' : 'dark:text-white/50 text-gray-500/50'
-                        }`}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          </motion.div>
-        )}
+          {submitted && typedText.length !== 0 && (
+            <motion.div
+              initial={{ opacity: 0, }}
+              animate={{ opacity: 1, }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <hr className="text-gray-400/60" />
+              <ul className=" flex flex-col gap-2 p-3 ">
+                {locationName.map((path, index) => {
+                  const isCurrentStep = index === currentStep;
+                  const isLocationCorrect = correctGuesses.some(([id]) => id === path);
+                  return (
+                    <li key={index} className={`mb-2 ${isCurrentStep ? 'animate-breathing' : ''}`}>
+                      <TypingText
+                        text={`${path}`}
+                        isSubmitted={true}
+                        isMasked={false}
+                        className={`text-sm ${isCurrentStep
+                          ? 'dark:text-white text-gray-500 text-shadow-2xs '
+                          : isLocationCorrect
+                            ? ' text-accent text-shadow-2xs'
+                            : 'dark:text-white/40 text-gray-500/30'
+                          }`}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </motion.div>
+          )}
+        </div>
+        {/* Toggle sidenav */}
         <div onClick={toggleSidebar} className="w-[85%] mx-auto absolute -bottom-6 flex items-center justify-center">
-          {/* <ChevronDown width={25} height={25} /> */}
-          <div className="w-1/2 mx-auto py-1 text-xs text-center hover:bg-black/30 bg-retro-mint/40 shadow-2xl cursor-pointer backdrop-blur-2xl rounded-b-2xl">{isSidebarOpen ? "\u25B4" : "\u25BC"}</div>
+          <div className={`${isSidebarOpen ? "dark:bg-gray-800 bg-slate-200" : "bg-white/80 dark:bg-gray-800/90 dark:hover:bg-gray-800 hover:bg-white "} border border-t-0 w-1/2 mx-auto py-[3.5px] z-30 text-xs text-center cursor-pointer rounded-b-2xl dark:text-slate-500 text-gray-600`}>
+            {isSidebarOpen ?
+              (
+                <span>Close</span>
+              ) : (
+                <span>Open</span>
+              )}
+          </div>
         </div>
       </div>
 
@@ -135,6 +157,8 @@ const QuickStartMode: React.FC = () => {
           </button>
           {isLoading ? (
             <ProvinceSkeleton />
+          ) : submitted && !showMap ? (
+            <ProvinceSkeleton />
           ) : provinceOutline && UniquePath && UniquePath[provinceOutline] ? (
             <MapSVG
               provinceName={provinceOutline}
@@ -144,7 +168,6 @@ const QuickStartMode: React.FC = () => {
               correctGuesses={correctGuesses}
               onPathClick={handlePathClick}
             />
-
           ) : (
             <ProvinceSkeleton />
           )}
@@ -156,7 +179,7 @@ const QuickStartMode: React.FC = () => {
               {provinceOutline.split("").map((char, i) => (
                 <div
                   key={i}
-                  className={`w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center text-md lg:text-xl font-bold uppercase ${char === "_"
+                  className={`w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center text-md lg:text-xl font-bold uppercase  ${char === "_"
                     ? "border-transparent bg-transparent"
                     : typedText[i]
                       ? "dark:border-white/20 dark:bg-slate-600 bg-white text-slate-600 dark:text-white border-white/40 shadow text-shadow-2xs"

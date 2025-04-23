@@ -34,8 +34,8 @@ const MapSVG: React.FC<SVGProps> = ({
             {province.paths.map((path, index) => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const isPathnCorrect = path.id && correctGuesses.some(([_, id]) => id === path.id);
-                const hoverFill = isGuessMode ? 'hover:fill-retro-mint' : 'hover:fill-green-400';
-                const fillClass = isPathnCorrect ? 'fill-retro-mint' : `${hoverFill} fill-gray-50 dark:fill-gray-200`;
+                const hoverFill = isGuessMode ? 'fill-accent-hover' : 'hover:fill-green-400';
+                const fillClass = isPathnCorrect ? 'fill-accent' : `${hoverFill} fill-gray-50 dark:fill-gray-200`;
 
                 return (
                     <path
