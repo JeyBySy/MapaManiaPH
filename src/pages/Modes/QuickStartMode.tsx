@@ -18,7 +18,7 @@ const QuickStartMode: React.FC = () => {
   const [typedText, setTypedText] = useState("")
   const isCorrect = typedText.toLowerCase() === provinceOutline.toLowerCase()
   const [currentStep, setCurrentStep] = useState(0); // track progress
-  const [correctGuesses, setCorrectGuesses] = useState<string[]>([]);
+  const [correctGuesses, setCorrectGuesses] = useState<[string, string][]>([]);
 
   const handleSubmit = () => {
     setSubmitted(true)
@@ -31,13 +31,13 @@ const QuickStartMode: React.FC = () => {
   }
 
   const handleNextProvince = async () => {
+    const prevProvince = provinceOutline
     setTypedText("")
     setCurrentStep(0)
     setCorrectGuesses([])
     setIsLoading(true)
     setSubmitted(false)
     await new Promise((res) => setTimeout(res, 500))
-    const prevProvince = provinceOutline
     nextProvince()
     if (provinceOutline === prevProvince) {
       refreshPaths()
@@ -63,7 +63,7 @@ const QuickStartMode: React.FC = () => {
     const expectedAnswer = locationName[currentStep];
 
     if (cityName.trim().toLowerCase() === expectedAnswer?.trim().toLowerCase()) {
-      setCorrectGuesses((prev) => [...prev, clickedId]);
+      setCorrectGuesses((prev) => [...prev, [cityName, clickedId]]);
       setCurrentStep((prev) => prev + 1); // move to next city     
     }
 
@@ -96,14 +96,15 @@ const QuickStartMode: React.FC = () => {
 
               {locationName.map((path, index) => {
                 const isCurrentStep = index === currentStep;
-                const isCorrect = path && correctGuesses.includes(path);
+                const isLocationCorrect = correctGuesses.some(([id]) => id === path);
+
                 return (
                   <li key={index} className="mb-2">
                     <TypingText
                       text={`${path}`}
                       isSubmitted={true}
                       isMasked={false}
-                      className={`text-sm text-shadow-2xs  ${isCurrentStep ? 'dark:text-white text-gray-500' : isCorrect ? 'text-retro-mint' : 'dark:text-white/50 text-gray-500/50'
+                      className={`text-sm text-shadow-2xs  ${isCurrentStep ? 'dark:text-white text-gray-500' : isLocationCorrect ? 'text-retro-mint' : 'dark:text-white/50 text-gray-500/50'
                         }`}
                     />
                   </li>
@@ -120,6 +121,7 @@ const QuickStartMode: React.FC = () => {
 
       {/* Main Content */}
       <div className="mx-auto lg:h-auto flex flex-col items-center justify-center h-full w-full space-y-5 p-2">
+
         {/* Province Outline */}
         <div className={`${!submitted ? "h-96" : 'lg:h-[900px] h-96'} w-full md:w-4xl relative object-fit border-2 dark:border-gray-600 border-slate-300 rounded  py-4`}>
           <button

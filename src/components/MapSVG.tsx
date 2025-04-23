@@ -7,7 +7,7 @@ interface SVGProps {
     pathsData: LGU_PATH_TYPE;
     mode: 'guess' | 'explore';
     isSubmitted?: boolean;
-    correctGuesses?: string[];
+    correctGuesses?: [string, string][];
     onPathClick?: (id: string) => void;
 }
 
@@ -32,9 +32,10 @@ const MapSVG: React.FC<SVGProps> = ({
             viewBox={province.viewBox || '0 0 100 100'}
         >
             {province.paths.map((path, index) => {
-                const isCorrect = path.id && correctGuesses.includes(path.id ?? '');
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const isPathnCorrect = path.id && correctGuesses.some(([_, id]) => id === path.id);
                 const hoverFill = isGuessMode ? 'hover:fill-retro-mint' : 'hover:fill-green-400';
-                const fillClass = isCorrect ? 'fill-retro-mint' : `${hoverFill} fill-gray-50 dark:fill-gray-200`;
+                const fillClass = isPathnCorrect ? 'fill-retro-mint' : `${hoverFill} fill-gray-50 dark:fill-gray-200`;
 
                 return (
                     <path
