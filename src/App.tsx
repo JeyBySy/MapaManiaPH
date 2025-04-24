@@ -7,6 +7,7 @@ import FullScreenLayout from "./layouts/FullScreenLayout"
 import QuickStartMode from "./pages/Modes/QuickStartMode"
 import { Analytics } from "@vercel/analytics/react"
 import { useEffect } from "react"
+import { ChallengeModePage } from "./pages/Modes/ChallengeModePage"
 
 function App() {
   useEffect(() => {
@@ -22,8 +23,9 @@ function App() {
           <Routes>
             <Route index path="/" element={<StartPage />} />
             <Route element={<FullScreenLayout />}>
-              <Route path="/exploremap" element={<ExploreMapPage />} />
               <Route path="/quickstart" element={<QuickStartMode />} />
+              <Route path="/exploremap" element={<ExploreMapPage />} />
+              <Route path="/challenge" element={<ChallengeModePage />} />
             </Route>
             {/* Catch-all route for 404 */}
             <Route path="*" element={<NotFound />} />

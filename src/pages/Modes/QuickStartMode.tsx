@@ -93,7 +93,7 @@ const QuickStartMode: React.FC = () => {
             text={provinceOutline}
             isSubmitted={submitted}
             isMasked={true}
-            className={`${!submitted ? " dark:text-white/40 text-gray-500/0" : "text-accent"} p-3 text-shadow-2xs`}
+            className={`${!submitted ? " dark:text-white/40 text-gray-500/0" : "text-accent"} p-3 text-shadow-xs text-lg`}
           />
 
           {submitted && typedText.length !== 0 && (
@@ -115,9 +115,9 @@ const QuickStartMode: React.FC = () => {
                         isSubmitted={true}
                         isMasked={false}
                         className={`text-sm ${isCurrentStep
-                          ? 'dark:text-white text-gray-500 text-shadow-2xs '
+                          ? 'dark:text-white text-gray-500 text-shadow-xs '
                           : isLocationCorrect
-                            ? ' text-accent text-shadow-2xs'
+                            ? ' text-accent text-shadow-xs'
                             : 'dark:text-white/40 text-gray-500/30'
                           }`}
                       />
