@@ -54,6 +54,7 @@ const MapSVG: React.FC<SVGProps> = ({
                         }}
                     >
                         {isPathnCorrect && (<title>{label}</title>)}
+                        {!isGuessMode && <title>{path.id}</title>}
                     </path>
                 );
             })}
