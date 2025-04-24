@@ -29,7 +29,3 @@ Test your knowledge under pressure! You have 3 lives to guess each location corr
 ---
 
 ## 📸 Screenshots
-
-![alt text](image-1.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
