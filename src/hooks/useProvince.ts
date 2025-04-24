@@ -1,23 +1,32 @@
-import {  useMemo, useState } from "react"
+import {  useMemo, useRef, useState } from "react"
 import { LGU_PATHS } from "../util/constants"
 
 export function useProvince(random: boolean = false) {
   const pathLimit = 10
   const provinceKeys = Object.keys(LGU_PATHS)
   const [pathVersion, setPathVersion] = useState(0)
-
   const [provinceOutline, setProvinceOutline] = useState(
     random ? provinceKeys[Math.floor(Math.random() * provinceKeys.length)] : provinceKeys[0]
   )
-
+  const lastProvinceRef = useRef(provinceOutline);
+  
+  
   const selectProvince = (province: string) => {
     setProvinceOutline(province)
   }
   
   const nextProvince = () => {
-    const newKey = provinceKeys[Math.floor(Math.random() * provinceKeys.length)]
-    setProvinceOutline(newKey)
-  }
+    if (provinceKeys.length <= 1) return;
+  
+    let newKey = lastProvinceRef.current;
+    while (newKey === lastProvinceRef.current) {     
+      newKey = provinceKeys[Math.floor(Math.random() * provinceKeys.length)];
+    }
+  
+    lastProvinceRef.current = newKey;
+    setProvinceOutline(newKey);
+  };
+  
 
   const refreshPaths = () => {
     setPathVersion((prev) => prev + 1)
