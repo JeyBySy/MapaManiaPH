@@ -15,6 +15,9 @@ a {
 .text-accent {
   @apply dark:text-retro-purple text-retro-mint;
 }
+.drop-shadow-accent-hover {
+  @apply hover:drop-shadow-2xl hover:drop-shadow-retro-bg/80;
+}
 .fill-accent {
   @apply dark:fill-retro-purple fill-retro-mint;
 }

@@ -30,19 +30,20 @@ const MapSVG: React.FC<SVGProps> = ({
             className={`w-full h-full ${isGuessMode && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'
                 }`}
             viewBox={province.viewBox || '0 0 100 100'}
+
         >
             {province.paths.map((path, index) => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const isPathnCorrect = path.id && correctGuesses.some(([_, id]) => id === path.id);
                 const hoverFill = isGuessMode ? 'fill-accent-hover' : 'hover:fill-green-400';
-                const fillClass = isPathnCorrect ? 'fill-accent' : `${hoverFill} fill-gray-50 dark:fill-gray-200`;
+                const fillClass = isPathnCorrect ? 'fill-accent' : `${hoverFill} fill-gray-50 dark:fill-gray-200 `;
 
                 return (
                     <path
                         key={path.id || index}
                         id={path.id || undefined}
                         d={path.d}
-                        className={`map_svg  ${fillClass}`}
+                        className={`map_svg ${fillClass} drop-shadow-accent-hover`}
                         stroke="black"
                         onClick={(e) => {
                             e.preventDefault();
