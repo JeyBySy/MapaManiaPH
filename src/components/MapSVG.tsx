@@ -37,7 +37,8 @@ const MapSVG: React.FC<SVGProps> = ({
                 const isPathnCorrect = path.id && correctGuesses.some(([_, id]) => id === path.id);
                 const hoverFill = isGuessMode ? 'fill-accent-hover' : 'hover:fill-green-400';
                 const fillClass = isPathnCorrect ? 'fill-accent' : `${hoverFill} fill-gray-50 dark:fill-gray-200 `;
-
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const label = correctGuesses.find(([_, id]) => id === path.id)?.[0] || path.id;
                 return (
                     <path
                         key={path.id || index}
@@ -51,7 +52,9 @@ const MapSVG: React.FC<SVGProps> = ({
                                 onPathClick(path.id);
                             }
                         }}
-                    />
+                    >
+                        {isPathnCorrect && (<title>{label}</title>)}
+                    </path>
                 );
             })}
         </svg>
