@@ -141,9 +141,9 @@ const QuickStartMode: React.FC = () => {
         {/* Toggle sidenav */}
         <div
           onClick={toggleSidebar}
-          className="absolute -top-8 left-0 transform cursor-pointer"
+          className="absolute -top-12 left-0 w-[180px] transform cursor-pointer"
         >
-          <div className={`px-8 py-2 w-full rounded-t-xl border border-b-0 text-xs text-gray-600 dark:text-slate-400 
+          <div className={`px-8 py-2 pt-6 w-full text-center rounded-t-xl border border-b-0 text-xs text-gray-600 dark:text-slate-400 
           ${isSidebarOpen
               ? 'bg-slate-200 dark:bg-gray-800'
               : 'bg-white/80 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800'}`}
@@ -156,9 +156,8 @@ const QuickStartMode: React.FC = () => {
 
       {/* Main Content */}
       <div className="mx-auto lg:h-auto flex flex-col items-center justify-center h-full w-full space-y-5 p-2">
-
         {/* Province Outline */}
-        <div className={`${!submitted ? "h-96" : 'lg:h-[900px] h-96'} w-full md:w-4xl relative object-fit border-2 dark:border-gray-600 border-slate-300 rounded  py-4`}>
+        <div className={`${!submitted ? "h-96" : "h-96 lg:h-[900px]"}  w-full md:w-4xl relative object-fit border-2 dark:border-gray-600 border-slate-300 rounded  py-4`}>
           <button
             onClick={(e) => {
               (e.currentTarget as HTMLButtonElement).blur()

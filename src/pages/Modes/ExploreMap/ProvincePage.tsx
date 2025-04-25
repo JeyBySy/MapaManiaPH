@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { LGU_PATHS } from "../../../util/constants"
 import MapSVG from "../../../components/MapSVG"
-import formatProvinceName from "../../../util/formatProvinceName"
+import NotFound from "../../NotFound"
 // import { useProvince } from "../../../hooks/useProvince"
 
 const ProvincePage: React.FC = () => {
@@ -11,18 +11,14 @@ const ProvincePage: React.FC = () => {
         <>
             <div className="w-full h-[85vh] md:h-[85vh] lg:border-none overflow-hidden border">
                 {provinceName && LGU_PATHS[provinceName] ? (
-                    <>
-                        <span>{formatProvinceName(provinceName?.toString())}</span>
-                        <MapSVG
-                            provinceName={provinceName}
-                            pathsData={LGU_PATHS}
-                            mode="explore"
-                            onPathClick={(id) => console.log(`Clicked ${id}`)}
-                        />
-
-                    </>
+                    <MapSVG
+                        provinceName={provinceName}
+                        pathsData={LGU_PATHS}
+                        mode="explore"
+                        onPathClick={(id) => console.log(`Clicked ${id}`)}
+                    />
                 ) : (
-                    <p className="text-center p-4">{provinceName} was not found in LGU PATHS</p>
+                    <NotFound />
                 )}
             </div>
 

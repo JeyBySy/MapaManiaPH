@@ -2,6 +2,7 @@ import React from "react"
 import { LGU_PATHS } from "../../../util/constants"
 import MapSVG from "../../../components/MapSVG"
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import Footer from "../../../components/Footer";
 
 const ExploreMapPage: React.FC = () => {
   const location = useLocation()
@@ -41,6 +42,7 @@ const ExploreMapPage: React.FC = () => {
             </div>
           </>
         )}
+        <Footer />
       </main>
     </div>
   )
