@@ -13,7 +13,6 @@ const QuickStartMode: React.FC = () => {
   const { pathsWithIds: UniquePath, answerKeys } = useUniquePathId()
   const [submitted, setSubmitted] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-  const [isLoading, setIsLoading] = React.useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const [typedText, setTypedText] = useState("")
   const isCorrect = typedText.toLowerCase() === provinceOutline.toLowerCase()
@@ -36,14 +35,15 @@ const QuickStartMode: React.FC = () => {
     setTypedText("")
     setCurrentStep(0)
     setCorrectGuesses([])
-    setIsLoading(true)
     setSubmitted(false)
-    await new Promise((res) => setTimeout(res, 500))
-    nextProvince()
+
+    await nextProvince();
+
     if (provinceOutline === prevProvince) {
       refreshPaths()
     }
-    setIsLoading(false)
+
+
     setTimeout(() => {
       inputRef.current?.focus()
     }, 0)
@@ -77,7 +77,7 @@ const QuickStartMode: React.FC = () => {
   useEffect(() => {
     if (submitted) {
       setShowMap(false); // reset
-      const timeout = setTimeout(() => setShowMap(true), 1000); // simulate reload delay
+      const timeout = setTimeout(() => setShowMap(true), 0); // simulate reload delay
       return () => clearTimeout(timeout);
     }
   }, [submitted]);
@@ -155,11 +155,9 @@ const QuickStartMode: React.FC = () => {
           >
             <RotateCcw width={20} height={20} />
           </button>
-          {isLoading ? (
+          {submitted && !showMap ? (
             <ProvinceSkeleton />
-          ) : submitted && !showMap ? (
-            <ProvinceSkeleton />
-          ) : provinceOutline && UniquePath && UniquePath[provinceOutline] ? (
+          ) : provinceOutline && UniquePath && UniquePath[provinceOutline] && (
             <MapSVG
               provinceName={provinceOutline}
               pathsData={UniquePath}
@@ -168,8 +166,6 @@ const QuickStartMode: React.FC = () => {
               correctGuesses={correctGuesses}
               onPathClick={handlePathClick}
             />
-          ) : (
-            <ProvinceSkeleton />
           )}
         </div>
 
@@ -179,7 +175,7 @@ const QuickStartMode: React.FC = () => {
               {provinceOutline.split("").map((char, i) => (
                 <div
                   key={i}
-                  className={`w-12 h-12 md:w-16 md:h-16 border-2 flex items-center justify-center text-md lg:text-xl font-bold uppercase  ${char === "_"
+                  className={`w-9 h-9 md:w-16 md:h-16 border-2 flex items-center justify-center text-sm lg:text-xl font-bold uppercase  ${char === "_"
                     ? "border-transparent bg-transparent"
                     : typedText[i]
                       ? "dark:border-white/20 dark:bg-slate-600 bg-white text-slate-600 dark:text-white border-white/40 shadow text-shadow-2xs"
@@ -187,7 +183,7 @@ const QuickStartMode: React.FC = () => {
                     }`}
                 >
                   {char === "_" ? (
-                    <span className="w-12 h-12 md:w-16 md:h-16 border-b-2 flex items-center justify-center dark:border-gray-600 border-gray-100" />
+                    <span className="w-9 h-9 md:w-16 md:h-16 border-b-2 lg:flex items-center justify-center text-sm dark:border-gray-600 border-gray-100" />
                   ) : (
                     typedText[i] || ""
                   )}

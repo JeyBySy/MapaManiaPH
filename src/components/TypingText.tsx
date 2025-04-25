@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import formatProvinceName from "../util/formatProvinceName"
 
 interface TypingTextProps {
     text: string
@@ -45,7 +46,7 @@ const TypingText: React.FC<TypingTextProps> = ({
         }
     }, [isSubmitted, text, isMasked, maskChar, delay])
 
-    return <p className={className}>{displayText}</p>
+    return <p className={className}>{formatProvinceName(displayText)}</p>
 }
 
 export default TypingText
