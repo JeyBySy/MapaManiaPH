@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { LGU_PATHS } from "../../../util/constants"
 import MapSVG from "../../../components/MapSVG"
 import formatProvinceName from "../../../util/formatProvinceName"
@@ -6,18 +6,9 @@ import formatProvinceName from "../../../util/formatProvinceName"
 
 const ProvincePage: React.FC = () => {
     const { provinceName } = useParams()
-    const navigate = useNavigate()
-
-    const handleBackButton = () => {
-        navigate(`/exploremap`)
-    }
 
     return (
         <>
-            <button onClick={() => { handleBackButton() }}>
-                Back
-            </button>
-
             <div className="w-full h-[85vh] md:h-[85vh] lg:border-none overflow-hidden border">
                 {provinceName && LGU_PATHS[provinceName] ? (
                     <>

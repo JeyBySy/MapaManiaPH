@@ -15,12 +15,12 @@ const ExploreMapPage: React.FC = () => {
 
   return (
     <div className="flex min-h-screen w-full">
-      <main className="flex  flex-col  justify-between w-full h-full p-4">
+      <main className="flex container mx-auto flex-col justify-between w-full h-full p-4">
         <Outlet />
         {!isProvincePage && (
           <>
-            <div className="w-full mx-auto flex items-center justify-center">
-              <input className="p-2 rounded border" type="text" placeholder="Search" />
+            <div className="w-full mx-auto px-5 lg:mt-10 flex items-center lg:justify-end justify-center">
+              <input className="p-2 rounded border w-full lg:w-fit" type="text" placeholder="Search" />
             </div>
             <div className="w-full h-full overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 p-4">
               {Object.keys(LGU_PATHS).map((province) => (

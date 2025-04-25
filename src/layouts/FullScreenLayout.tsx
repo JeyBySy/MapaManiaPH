@@ -11,9 +11,7 @@ const FullScreenLayout: React.FC = () => {
 
     return (
         <div className="min-h-[80vh] flex flex-col w-full">
-            <HomeButton
-                titlePage={pageTitles[pathname]}
-            />
+            <HomeButton titlePage={pageTitles[pathname]} />
             <Outlet />
         </div>
     );
