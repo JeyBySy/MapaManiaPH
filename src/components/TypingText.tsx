@@ -46,7 +46,7 @@ const TypingText: React.FC<TypingTextProps> = ({
         }
     }, [isSubmitted, text, isMasked, maskChar, delay])
 
-    return <p className={className}>{formatProvinceName(displayText)}</p>
+    return <p className={`${className} capitalize`}>{formatProvinceName(displayText.toLowerCase())}</p>
 }
 
 export default TypingText

@@ -22,7 +22,7 @@ const QuickStartMode: React.FC = () => {
 
   const handleSubmit = () => {
     setSubmitted(true)
-    setIsSidebarOpen(!!isSidebarOpen)
+    setIsSidebarOpen(true)
     if (!isCorrect) {
       setSubmitted(false)
       setIsSidebarOpen(true)
@@ -36,6 +36,7 @@ const QuickStartMode: React.FC = () => {
     setCurrentStep(0)
     setCorrectGuesses([])
     setSubmitted(false)
+    setIsSidebarOpen(true)
 
     await nextProvince();
 
@@ -85,40 +86,48 @@ const QuickStartMode: React.FC = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <div className={`hidden lg:block transition-transform ${isSidebarOpen ? "translate-y-0" : "-translate-y-full"} fixed top-0 left-0  min-w-[250px] dark:bg-gray-800 bg-slate-200 p-3 border border-t-0 border-gray-600 shadow z-50 rounded-b-sm`}>
-        <h2 className="text-md text-white bg-green-400/50 px-4 py-2 rounded rounded-b-none text-shadow-2xs">Guess the Province</h2>
-        <div className="bg-slate-50 dark:bg-gray-700/50 border  border-gray-600/30 shadow">
+      <div
+        className={`hidden lg:block fixed bottom-0 left-0 w-fit transition-transform duration-300 ease-in-out z-50 
+          ${isSidebarOpen ? 'translate-y-0' : 'translate-y-full'} bg-slate-200 dark:bg-gray-800 p-3 border-t border-gray-600 shadow rounded-t-md`}
+      >
+        <h2 className="text-md text-white bg-green-400/50 px-4 py-2 rounded-t-md text-shadow-2xs">
+          Guess the Province
+        </h2>
 
+        <div className="bg-slate-50 dark:bg-gray-700/50 border border-gray-600/30 shadow">
           <TypingText
-            text={provinceOutline}
+            text={provinceOutline.toString()}
             isSubmitted={submitted}
             isMasked={true}
-            className={`${!submitted ? " dark:text-white/40 text-gray-500/0" : "text-accent"} p-3 text-shadow-xs text-lg`}
+            className={`p-3 text-lg text-shadow-xs ${!submitted
+              ? 'text-gray-500/0 dark:text-white/40'
+              : 'text-accent'
+              }`}
           />
 
           {submitted && typedText.length !== 0 && (
             <motion.div
-              initial={{ opacity: 0, }}
-              animate={{ opacity: 1, }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
               <hr className="text-gray-400/60" />
-              <ul className=" flex flex-col gap-2 p-3 ">
+              <ul className="flex flex-col gap-2 p-3">
                 {locationName.map((path, index) => {
                   const isCurrentStep = index === currentStep;
                   const isLocationCorrect = correctGuesses.some(([id]) => id === path);
                   return (
                     <li key={index} className={`mb-2 ${isCurrentStep ? 'animate-breathing' : ''}`}>
                       <TypingText
-                        text={`${path}`}
+                        text={path}
                         isSubmitted={true}
                         isMasked={false}
-                        className={`text-sm ${isCurrentStep
-                          ? 'dark:text-white text-gray-500 text-shadow-xs '
+                        className={`text-sm text-shadow-xs ${isCurrentStep
+                          ? 'text-gray-500 dark:text-white'
                           : isLocationCorrect
-                            ? ' text-accent text-shadow-xs'
-                            : 'dark:text-white/40 text-gray-500/30'
+                            ? 'text-accent'
+                            : 'text-gray-500/30 dark:text-white/40'
                           }`}
                       />
                     </li>
@@ -128,18 +137,22 @@ const QuickStartMode: React.FC = () => {
             </motion.div>
           )}
         </div>
+
         {/* Toggle sidenav */}
-        <div onClick={toggleSidebar} className="w-[85%] mx-auto absolute -bottom-6 flex items-center justify-center">
-          <div className={`${isSidebarOpen ? "dark:bg-gray-800 bg-slate-200" : "bg-white/80 dark:bg-gray-800/90 dark:hover:bg-gray-800 hover:bg-white "} border border-t-0 w-1/2 mx-auto py-[3.5px] z-30 text-xs text-center cursor-pointer rounded-b-2xl dark:text-slate-500 text-gray-600`}>
-            {isSidebarOpen ?
-              (
-                <span>Close</span>
-              ) : (
-                <span>Open</span>
-              )}
+        <div
+          onClick={toggleSidebar}
+          className="absolute -top-8 left-0 transform cursor-pointer"
+        >
+          <div className={`px-8 py-2 w-full rounded-t-xl border border-b-0 text-xs text-gray-600 dark:text-slate-400 
+          ${isSidebarOpen
+              ? 'bg-slate-200 dark:bg-gray-800'
+              : 'bg-white/80 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800'}`}
+          >
+            {isSidebarOpen ? 'Close' : 'Open'}
           </div>
         </div>
       </div>
+
 
       {/* Main Content */}
       <div className="mx-auto lg:h-auto flex flex-col items-center justify-center h-full w-full space-y-5 p-2">

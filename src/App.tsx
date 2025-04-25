@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className="min-h-screen flex flex-col items-center justify-center m-auto dark:bg-retro-bg">
+        <div className="min-h-screen flex flex-col items-center justify-center m-auto dark:bg-retro-bg bg-[#4576b2] relative">
           <Routes>
             <Route index path="/" element={<StartPage />} />
             <Route element={<FullScreenLayout />}>

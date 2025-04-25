@@ -2,6 +2,12 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+body {
+  margin: 0;
+  padding: 0;
+  @apply bg-retro-main dark:bg-retro-bg;
+}
+
 .button {
   @apply lg:text-lg  text-[10px] text-white rounded-full transition shadow;
 }

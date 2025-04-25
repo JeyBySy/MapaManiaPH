@@ -1,17 +1,25 @@
-import { House } from 'lucide-react'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-
-
-const HomeButton: React.FC = () => {
-    const navigate = useNavigate()
-    const handleBackButton = () => {
-        navigate(`/`)
-    }
-    return (
-        <button onClick={() => { handleBackButton() }} className='hidden lg:block absolute top-2 right-2 p-3 cursor-pointer hover:bg-gray-200 bg-gray-200/50 rounded hover:text-gray-500 shadow-2xl '><House /></button>
-    )
+interface HomeButtonProps {
+    titlePage?: string;
 }
 
-export default HomeButton
+const HomeButton: React.FC<HomeButtonProps> = ({ titlePage }) => {
+    const navigate = useNavigate();
+
+    return (
+        <div className="w-full lg:absolute h-fit flex items-center gap-3 px-4 py-2">
+            <button
+                onClick={() => navigate(-1)}
+                className="w-fit items-center gap-1 text-white/80 hover:text-white dark:text-gray-300/80 dark:hover:text-gray-300 cursor-pointer"
+            >
+                <ArrowLeft width={25} height={25} />
+            </button>
+            <p className="text-2xl">{titlePage}</p>
+        </div>
+    );
+};
+
+export default HomeButton;

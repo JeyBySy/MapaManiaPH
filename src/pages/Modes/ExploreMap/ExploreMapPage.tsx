@@ -16,7 +16,6 @@ const ExploreMapPage: React.FC = () => {
   return (
     <div className="flex min-h-screen w-full">
       <main className="flex  flex-col  justify-between w-full h-full p-4">
-        <h1>Explore Map</h1>
         <Outlet />
         {!isProvincePage && (
           <>
