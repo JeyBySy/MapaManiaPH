@@ -15,6 +15,7 @@
     "framer-motion": "^12.7.4",
     "lucide-react": "^0.501.0",
     "react": "^19.0.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.0",
     "tailwindcss": "^4.1.4"
