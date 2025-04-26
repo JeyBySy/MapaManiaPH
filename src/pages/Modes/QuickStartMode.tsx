@@ -81,7 +81,7 @@ const QuickStartMode: React.FC = () => {
 
   return (
     <div className="flex min-h-screen w-full">
-      <main className="w-full flex flex-col mx-auto lg:pt-14 ">
+      <main className="w-full lg:container flex flex-col mx-auto lg:pt-14 ">
         <div className="flex flex-col-reverse lg:flex-row w-full h-full">
 
           {/* Sidebar (Location List) */}
