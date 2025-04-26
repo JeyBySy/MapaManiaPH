@@ -64,7 +64,12 @@ export function useProvince(random: boolean = false) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathVersion, pathLimit, provinceData?.paths]);
-  
+
+  // Get All location Name base on province params
+  const getAllLocationName = (province: string) => {
+    const data = LGU_PATHS[province];
+    return data?.paths?.map((path) => path.id).filter((id): id is string => !!id) || [];
+  };
 
   return {
     provinceOutline,
@@ -73,6 +78,7 @@ export function useProvince(random: boolean = false) {
     selectProvince,
     nextProvince,
     refreshPaths,
-    locationName
+    locationName,
+    getAllLocationName
   }
 }
