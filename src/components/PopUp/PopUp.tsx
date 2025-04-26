@@ -35,7 +35,7 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/50"
+          className="fixed inset-0 z-50 flex lg:items-center py-5 lg:justify-center backdrop-blur-sm bg-black/50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -50,7 +50,7 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
               stiffness: 400,
               damping: 20,
             }}
-            className="bg-gray-100 dark:bg-gray-900 text-white min-w-1/4 rounded-md border-2 border-gray-300 shadow relative"
+            className="bg-gray-100 dark:bg-gray-900 text-white  mx-auto lg:w-2xl lg:min-w-[400px] rounded-md border-2 border-gray-300 shadow relative"
           >
             {/* Close Button */}
             <div
@@ -60,20 +60,21 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
               x
             </div>
 
-            {/* Header */}
-            <div className="bg-gray-400  dark:bg-gray-700 p-4 rounded-t-sm text-center">
-              <h2 className="text-lg font-bold font-mono tracking-wider uppercase text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
-                {title}
-              </h2>
+            <div className="">
+              {/* Header */}
+              <div className="bg-gray-400  dark:bg-gray-700 p-4 rounded-t-sm">
+                <h2 className="text-xs lg:text-lg font-bold font-mono tracking-wider uppercase text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
+                  {title}
+                </h2>
+              </div>
+
+              {/* Content */}
+              <div className="flex text-xs gap-2 max-h-[80vh] text-wrap overflow-y-auto ">{children}</div>
+
+              {/* Footer */}
+              <div className="bg-gray-400  dark:bg-gray-600 p-4 rounded-b-sm text-center"></div>
             </div>
 
-            {/* Content */}
-            <div className="p-6 space-y-4">
-              <div className="flex text-sm gap-2">{children}</div>
-            </div>
-
-            {/* Footer */}
-            <div className="bg-gray-400  dark:bg-gray-600 p-4 rounded-b-sm text-center"></div>
           </motion.div>
         </motion.div>
       )}
