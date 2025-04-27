@@ -35,7 +35,7 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed inset-0 z-50 flex lg:items-center py-5 lg:justify-center backdrop-blur-sm bg-black/50"
+          className="fixed inset-0 z-50 flex lg:items-center py-5 lg:justify-center backdrop-blur-sm bg-black/50 items-center justify-center "
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -50,7 +50,7 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
               stiffness: 400,
               damping: 20,
             }}
-            className="bg-gray-100 dark:bg-gray-900 text-white  mx-auto lg:w-2xl lg:min-w-[400px] rounded-md border-2 border-gray-300 shadow relative"
+            className="bg-gray-100 dark:bg-gray-900 text-white  mx-auto lg:w-xl lg:min-w-[400px] w-[87%] h-fit rounded-md border-2 border-gray-300 shadow relative"
           >
             {/* Close Button */}
             <div
@@ -60,7 +60,7 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, title }) => {
               x
             </div>
 
-            <div className="">
+            <div className="container">
               {/* Header */}
               <div className="bg-gray-400  dark:bg-gray-700 p-4 rounded-t-sm">
                 <h2 className="text-xs lg:text-lg font-bold font-mono tracking-wider uppercase text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
