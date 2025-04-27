@@ -11,12 +11,12 @@ const StartPage: React.FC = () => {
   const [toggleHelp, setToggleHelp] = useState(false)
   return (
     <>
-      <div className="container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative">
+      <div className="lg:container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative">
 
         {/* Settings */}
         <PopUp visible={toggleSetting} onClose={() => { setToggleSetting(false) }} title="Settings">
           <div className="flex flex-col gap-2 p-8 w-full">
-            <div className="flex flex-row dark:text-gray-600 text-gray-700 items-center space-x-10 justify-between text-shadow">
+            <div className="flex flex-row dark:text-gray-600 text-gray-700 items-center space-x-10 justify-between text-shadow-xs">
               <p>Dark Mode: </p>
               <DarkModeToggle />
             </div>
@@ -47,7 +47,7 @@ const StartPage: React.FC = () => {
         </div>
 
         <div className="w-full">
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center text-white py-5 px-2">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center text-white py-5 px-2 ">
             _MapaManiaPH_
           </h1>
           <p className="lg:text-sm text-[10px] mx-4 text-center text-gray-300 mb-6">

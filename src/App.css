@@ -8,6 +8,14 @@ body {
   @apply bg-retro-main dark:bg-retro-bg;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .button {
   @apply lg:text-lg  text-[10px] text-white rounded-full transition shadow;
 }
@@ -19,7 +27,11 @@ a {
   @apply transition-colors duration-200 cursor-pointer;
 }
 .text-accent {
-  @apply dark:text-retro-purple text-retro-mint;
+  /* @apply dark:text-retro-purple text-retro-mint; */
+  @apply dark:text-white text-gray-500;
+}
+.btn-bg-accent {
+  @apply dark:bg-retro-purple bg-retro-mint;
 }
 .drop-shadow-accent-hover {
   @apply hover:drop-shadow-2xl hover:drop-shadow-retro-bg/80;
@@ -47,14 +59,13 @@ a {
     0%,
     100% {
       opacity: 1;
-      transform: scale(1);
     }
     50% {
       opacity: 0.9;
-      transform: scale(1.05) translateX(8px);
+      transform: translateY(10px);
     }
   }
   .animate-breathing {
-    animation: breathing 1.5s ease-in-out infinite;
+    animation: breathing 1s ease-in-out infinite;
   }
 }
