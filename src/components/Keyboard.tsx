@@ -89,16 +89,16 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
 
 
   return (
-    <div className="w-full mx-auto px-2 relative bg-retro-main dark:bg-retro-bg ">
-      <div className="flex flex-col gap-2">
+    <div className="w-full mx-auto relative bg-retro-main dark:bg-retro-bg">
+      <div className="flex flex-col gap-1">
         {KEYBOARD_ROWS.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex justify-center gap-1 lg:gap-1">
+          <div key={rowIndex} className="flex justify-center gap-1">
             {row.map((key) => {
               if (key === "backspace") {
                 return (
                   <button
                     key={key}
-                    className="bg-red-500 hover:bg-red-600 dark:bg-red-500/60 dark:hover:bg-red-500 rounded text-xs text-white shadow transition-colors w-fit px-2.5 flex items-center justify-center cursor-pointer"
+                    className="bg-red-500 hover:bg-red-600 dark:bg-red-500/60 dark:hover:bg-red-500 rounded text-xs text-white shadow transition-colors w-fit px-3.5 flex items-center justify-center cursor-pointer"
                     onClick={(e) => {
                       (e.target as HTMLButtonElement).blur()
                       handleBackspace()
@@ -117,7 +117,7 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
                     className={`${isInputValid
                       ? "bg-blue-500 hover:bg-blue-600 dark:bg-blue-500/60 dark:hover:bg-blue-500"
                       : "bg-gray-300 dark:bg-slate-600/50 cursor-not-allowed"
-                      } rounded text-xs text-white shadow transition-colors w-fit px-2.5 flex items-center justify-center cursor-pointer`}
+                      } rounded text-xs text-white shadow transition-colors w-fit px-3.5 flex items-center justify-center cursor-pointer`}
                     onClick={(e) => {
                       (e.target as HTMLButtonElement).blur()
                       onSubmit()
@@ -131,7 +131,7 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
               return (
                 <button
                   key={key}
-                  className="bg-white hover:bg-white/80 dark:bg-gray-600 dark:hover:bg-gray-500 dark:hover:text-white rounded text-xs dark:text-white/80 text-slate-600 text-shadow hover:text-slate-800 shadow transition-colors w-fit px-2.5 py-5 flex items-center justify-center cursor-pointer"
+                  className="bg-white hover:bg-white/80 dark:bg-gray-600 dark:hover:bg-gray-500 dark:hover:text-white rounded text-xs dark:text-white/80 text-slate-600 text-shadow hover:text-slate-800 shadow transition-colors w-fit px-3 py-5 flex items-center justify-center cursor-pointer"
                   onClick={(e) => {
                     (e.target as HTMLButtonElement).blur()
                     handleKeyClick(key.toLowerCase())
