@@ -124,7 +124,7 @@ const QuickStartMode: React.FC = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <hr className="text-gray-400/60" />
-                  <ul className="flex lg:flex-col px-1 py-2 space-x-1 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
+                  <ul className="flex lg:flex-col px-1 py-2 space-x-1 gap-1 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
                     {locationName.map((path, index) => {
                       const isCurrentStep = index === currentStep
                       const isLocationCorrect = correctGuesses.some(
