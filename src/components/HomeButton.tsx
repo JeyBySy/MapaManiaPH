@@ -17,7 +17,7 @@ const HomeButton: React.FC<HomeButtonProps> = ({ titlePage }) => {
             >
                 <ArrowLeft width={25} height={25} />
             </button>
-            <p className="text-xl sm:text-4xl md:text-2xl py-4">{titlePage}</p>
+            <p className="text-sm sm:text-sm md:text-2xl">{titlePage}</p>
         </div>
     );
 };
