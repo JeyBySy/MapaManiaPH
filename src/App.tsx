@@ -20,17 +20,18 @@ function App() {
   return (
     <>
       <Router>
-        <div className="min-h-screen flex flex-col items-center justify-center m-auto dark:bg-retro-bg bg-[#4576b2] relative">
+        <div className="dark:bg-retro-bg bg-[#4576b2]">
           <Routes>
             <Route index path="/" element={<StartPage />} />
+
             <Route element={<FullScreenLayout />}>
               <Route path="/quickstart" element={<QuickStartMode />} />
               <Route path="/exploremap" element={<ExploreMapPage />}>
                 <Route path=":provinceName" element={<ProvincePage />} />
               </Route>
-
               <Route path="/challenge" element={<ChallengeModePage />} />
             </Route>
+
             {/* Catch-all route for 404 */}
             <Route path="*" element={<NotFound />} />
           </Routes>

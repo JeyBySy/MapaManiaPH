@@ -10,8 +10,8 @@ const StartPage: React.FC = () => {
   const [toggleSetting, setToggleSetting] = useState(false)
   const [toggleHelp, setToggleHelp] = useState(false)
   return (
-    <>
-      <div className="lg:container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center m-auto">
+      <div className=" lg:container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative">
 
         {/* Settings */}
         <PopUp visible={toggleSetting} onClose={() => { setToggleSetting(false) }} title="Settings">
@@ -102,7 +102,7 @@ const StartPage: React.FC = () => {
         </div>
       </div >
       <Footer />
-    </>
+    </div>
   )
 }
 

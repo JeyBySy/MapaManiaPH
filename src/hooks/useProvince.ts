@@ -68,7 +68,7 @@ export function useProvince(random: boolean = false) {
   // Get All location Name base on province params
   const getAllLocationName = (province: string) => {
     const data = LGU_PATHS[province];
-    return data?.paths?.map((path) => path.id).filter((id): id is string => !!id) || [];
+    return data?.paths?.map((path) => path.id).sort().filter((id): id is string => !!id) || [];
   };
 
   return {

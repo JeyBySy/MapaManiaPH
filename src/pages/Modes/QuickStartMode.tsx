@@ -161,10 +161,10 @@ const QuickStartMode: React.FC = () => {
           </div>
 
           {/* Main Content (Map and Typing Area) */}
-          <div className="flex flex-col w-full min-h-screen space-y-5 px-3">
+          <div className="flex flex-col w-full min-h-screen lg:min-h-0 space-y-5 px-2">
             {/* Province Outline */}
             <div
-              className={`w-full relative border-2 dark:border-gray-600 border-slate-300 rounded lg:py-4  lg:my-0 my-2 
+              className={`w-full relative border-2 px-2 dark:border-gray-600 border-slate-300 rounded lg:py-4 lg:my-0 my-2 
                 ${!submitted ? "h-[50vh] lg:h-[75vh] px-10 flex-5/12 lg:flex-none" : "h-full lg:h-[80vh] "
                 }`}
             >
@@ -173,7 +173,7 @@ const QuickStartMode: React.FC = () => {
                   (e.currentTarget as HTMLButtonElement).blur()
                   handleNextProvince()
                 }}
-                className="absolute w-auto dark:text-gray-400 dark:hover:text-gray-100 text-white/80 hover:text-white px-4 py-3 rounded cursor-pointer top-0 right-0"
+                className="absolute w-auto dark:text-gray-400 dark:hover:text-gray-100 text-white/80 hover:text-white px-4 py-3 rounded cursor-pointer top-0 right-0 z-50"
               >
                 <RotateCcw width={20} height={20} />
               </button>

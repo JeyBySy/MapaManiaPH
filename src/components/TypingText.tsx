@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import formatProvinceName from "../util/formatProvinceName"
 
 interface TypingTextProps {
-    text: string
+    text: string | null | undefined
     isSubmitted?: boolean
     isMasked?: boolean
     maskChar?: string

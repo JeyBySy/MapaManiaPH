@@ -22,9 +22,9 @@ const ExploreMapPage: React.FC = () => {
   );
 
   return (
-    <div className="flex min-h-screen w-full">
-      <main className="flex container mx-auto flex-col justify-between w-full h-full lg:p-4">
-        <Outlet />
+    <div>
+      <Outlet />
+      <main className="flex container mx-auto flex-col justify-between w-full h-fit lg:p-4">
         {!isProvincePage && (
           <>
             <div className="w-full mx-auto px-5 lg:mt-14 flex items-center lg:justify-end justify-center">
@@ -36,13 +36,13 @@ const ExploreMapPage: React.FC = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="w-full h-full overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 p-4">
+            <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 p-4">
               {filteredProvinces.length > 0 ? (
                 filteredProvinces.map((province) => (
                   <div
                     onClick={() => { handlePathClick(province) }}
                     key={province}
-                    className="w-full h-[300px] py-8 border shadwo rounded-md overflow-hidden cursor-pointer dark:hover:bg-gray-700/50 hover:bg-retro-mint/10 hover:shadow-2xl"
+                    className="w-full h-[300px] pt-5 px-2 border shadow rounded-md overflow-hidden cursor-pointer dark:hover:bg-gray-700/50 hover:bg-retro-mint/10 hover:shadow-2xl"
                   >
                     <MapSVG
                       provinceName={province}
@@ -50,7 +50,6 @@ const ExploreMapPage: React.FC = () => {
                       mode="explore"
                       onPathClick={(id) => console.log(`Clicked ${id} in ${province}`)}
                     />
-                    {/* <p className="text-center text-sm font-medium mt-1">{formatProvinceName(province)}</p> */}
                   </div>
                 ))
               ) : (
