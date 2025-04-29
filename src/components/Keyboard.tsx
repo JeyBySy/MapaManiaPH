@@ -131,7 +131,7 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
               return (
                 <button
                   key={key}
-                  className="bg-white hover:bg-white/80 dark:bg-gray-600 dark:hover:bg-gray-500 dark:hover:text-white rounded text-xs dark:text-white/80 text-slate-600 text-shadow hover:text-slate-800 shadow transition-colors w-fit px-3 py-5 flex items-center justify-center cursor-pointer"
+                  className="bg-white lg:text-[100%] text-[50%] hover:bg-white/80 dark:bg-gray-600 dark:hover:bg-gray-500 dark:hover:text-white rounded text-xs dark:text-white/80 text-slate-600 text-shadow hover:text-slate-800 shadow transition-colors w-fit px-3 py-5 flex items-center justify-center cursor-pointer"
                   onClick={(e) => {
                     (e.target as HTMLButtonElement).blur()
                     handleKeyClick(key.toLowerCase())

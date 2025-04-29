@@ -18,7 +18,7 @@ const ProvincePage: React.FC = () => {
     const [selectedLocationId, setSelectedLocationId] = useState<string | null>(locationList[0]);
 
     return (
-        <div className="flex flex-col lg:flex-row gap-6 p-4 lg:mt-14 h-fit justify-center border">
+        <div className="flex flex-col lg:flex-row gap-6 p-4 lg:mt-14 h-fit justify-center">
             {/* LEFT: Locations List */}
             <div className="hidden lg:flex w-full lg:w-1/4 flex-col h-[40vh] lg:h-[84vh]">
                 <div className="sticky top-0 z-20 bg-gradient-to-r dark:from-green-800 dark:to-green-600/50 from-green-800/80 to-green-600 text-white font-semibold p-4 rounded-t-md shadow-md">

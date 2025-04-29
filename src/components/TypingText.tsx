@@ -8,6 +8,7 @@ interface TypingTextProps {
     maskChar?: string
     delay?: number // typing delay per character in ms
     className?: string
+    upperCase?: boolean
 }
 
 const TypingText: React.FC<TypingTextProps> = ({
@@ -17,6 +18,7 @@ const TypingText: React.FC<TypingTextProps> = ({
     maskChar = "?",
     delay = 50,
     className = "",
+    upperCase = false
 }) => {
     const [displayText, setDisplayText] = useState("")
     const indexRef = useRef(0)
@@ -46,7 +48,7 @@ const TypingText: React.FC<TypingTextProps> = ({
         }
     }, [isSubmitted, text, isMasked, maskChar, delay])
 
-    return <p className={`${className} capitalize`}>{formatProvinceName(displayText.toLowerCase())}</p>
+    return <p className={`${className} capitalize`}>{upperCase ? formatProvinceName(displayText) : formatProvinceName(displayText.toLowerCase())}</p>
 }
 
 export default TypingText

@@ -52,6 +52,7 @@ a {
   --color-retro-text: #f4f4f4;
   --color-retro-card: #2d2d30;
   --color-retro-main: #4576b2;
+  --color-retro-mint-text: #087a80;
 }
 /* Custom Animation */
 @layer utilities {
