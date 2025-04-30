@@ -187,6 +187,7 @@ const QuickStartMode: React.FC = () => {
                   isSubmitted={submitted}
                   correctGuesses={correctGuesses}
                   onPathClick={handlePathClick}
+                  isZoomable={true}
                 />
               )
             )}
