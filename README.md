@@ -6,7 +6,7 @@
 
 - **🇵🇭 Quick Start**  
 Start by guessing the province, then move on to identifying its cities or municipalities.
-Type the name of the highlighted province (e.g., B _ _ A _ _ A S).
+Type the name of the highlighted province.
 You’ll answer a total of 11 questions — 1 for the province and 10 for its cities or municipalities.
 There’s no limit on mistakes, so take your time and have fun! 
 
