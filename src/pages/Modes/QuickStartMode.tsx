@@ -147,7 +147,7 @@ const QuickStartMode: React.FC = () => {
         <div className={`transition-all duration-300 ease-in-out flex flex-col gap-2 lg:max-h-none lg:h-full lg:p-2 border overflow-hidden  bg-neutral-200 dark:bg-gray-800 border-gray-300 dark:border-gray-700 shadow-inner 
             ${isCollapsed
             ? 'max-h-0 p-0'
-            : 'max-h-[30vh] p-2 overflow-y-auto lg:max-h-none'}`
+            : 'max-h-[30dvh] p-2 overflow-y-auto lg:max-h-none'}`
         }>
 
           {submitted && typedText.length !== 0 ? (
