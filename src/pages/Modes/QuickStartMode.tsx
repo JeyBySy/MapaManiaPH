@@ -102,7 +102,7 @@ const QuickStartMode: React.FC = () => {
 
 
   return (
-    <div className="lg:flex lg:flex-row gap-1 border lg:h-fit justify-center lg:container lg:mx-auto">
+    <div className="lg:flex lg:flex-row gap-1 lg:h-fit justify-center lg:container lg:mx-auto">
       {/* LEFT: Location List */}
       <div className={`w-full fixed bottom-0 lg:static lg:w-4/12 flex-col lg:h-[80vh] z-50 ${submitted ? 'lg:flex' : 'hidden'}`}>
         <div className="bg-gradient-to-r dark:from-green-800 dark:to-green-600 from-green-800 to-green-600 text-white font-semibold shadow-md rounded-t-md flex justify-between items-center z-40">
