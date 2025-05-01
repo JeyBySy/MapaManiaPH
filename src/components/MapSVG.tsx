@@ -20,7 +20,7 @@ interface SVGProps {
 const MapSVG: React.FC<SVGProps> = ({
     provinceName,
     pathsData,
-    mode,
+    mode = 'explore',
     isSubmitted = true,
     correctGuesses = [],
     onPathClick,
@@ -35,16 +35,15 @@ const MapSVG: React.FC<SVGProps> = ({
 
     const isPanning = useRef(false);
     const startPoint = useRef({ x: 0, y: 0 });
-
     const scaleRef = useRef(1);
     const translateRef = useRef({ x: 0, y: 0 });
     const [hasZoomed, setHasZoomed] = useState(false);
 
-
+    // Handle initial map loading
     useEffect(() => {
         const loadMap = async () => {
             if (provinceName) {
-                setHasZoomed(false)
+                setHasZoomed(false);
                 setIsLoading(true);
                 scaleRef.current = 1;
                 translateRef.current = { x: 0, y: 0 };
@@ -61,49 +60,35 @@ const MapSVG: React.FC<SVGProps> = ({
             const { x, y } = translateRef.current;
             const scale = scaleRef.current;
             gRef.current.setAttribute('transform', `translate(${x},${y}) scale(${scale})`);
-            setHasZoomed(scale !== 1 || x !== 0 || y !== 0); // Track if zoomed or panned
+            setHasZoomed(scale !== 1 || x !== 0 || y !== 0);
         }
     };
 
-    const svgPoint = (event: React.WheelEvent<SVGSVGElement>) => {
-        const svg = svgRef.current;
-        if (!svg) return { x: 0, y: 0 };
-
-        const pt = svg.createSVGPoint();
-        pt.x = event.clientX;
-        pt.y = event.clientY;
-
-        const cursorPt = pt.matrixTransform(svg.getScreenCTM()?.inverse());
-        return { x: cursorPt.x, y: cursorPt.y };
-    };
-
-
+    // Cursor location
     const getSvgPoint = (clientX: number, clientY: number) => {
         const svg = svgRef.current;
+
         if (!svg) return { x: 0, y: 0 };
 
         const pt = svg.createSVGPoint();
         pt.x = clientX;
         pt.y = clientY;
-        const cursor = pt.matrixTransform(svg.getScreenCTM()?.inverse());
-        return cursor;
+        return pt.matrixTransform(svg.getScreenCTM()?.inverse());
     };
 
     const handleWheel = (e: React.WheelEvent<SVGSVGElement>) => {
         if (!isZoomable) return;
-
         e.preventDefault();
 
         const zoomSpeed = 0.1;
         const direction = e.deltaY > 0 ? -1 : 1;
-
         const newScale = scaleRef.current * (1 + zoomSpeed * direction);
+
         const clampedScale = Math.max(0.5, Math.min(newScale, 10));
 
-        const { x: cursorX, y: cursorY } = svgPoint(e);
+        const { x: cursorX, y: cursorY } = getSvgPoint(e.clientX, e.clientY);
         const scaleChange = clampedScale / scaleRef.current;
 
-        // Adjust translation to keep the zoom centered at the cursor
         translateRef.current.x = cursorX - (cursorX - translateRef.current.x) * scaleChange;
         translateRef.current.y = cursorY - (cursorY - translateRef.current.y) * scaleChange;
 
@@ -116,18 +101,21 @@ const MapSVG: React.FC<SVGProps> = ({
         translateRef.current = { x: 0, y: 0 };
         applyTransform();
     };
+
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
         if (!isZoomable) return;
         isPanning.current = true;
-        const { x, y } = getSvgPoint(e.clientX, e.clientY);
-        startPoint.current = { x, y };
+        startPoint.current = getSvgPoint(e.clientX, e.clientY);
+    };
+
+    const handleMouseUp = () => {
+        if (!isZoomable) return;
+        isPanning.current = false;
     };
 
     const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
         if (!isZoomable || !isPanning.current) return;
-
         const { x, y } = getSvgPoint(e.clientX, e.clientY);
-
         const dx = x - startPoint.current.x;
         const dy = y - startPoint.current.y;
 
@@ -138,56 +126,70 @@ const MapSVG: React.FC<SVGProps> = ({
         applyTransform();
     };
 
-    const handleMouseUp = () => {
-        if (!isZoomable) return;
-        isPanning.current = false;
+    const handlePathClick = (pathId: string | undefined | null) => {
+        if (!pathId || !onPathClick) return;
+        if (mode === 'guess') {
+            onPathClick(pathId);
+        } else if (mode === 'explore') {
+            onPathClick(pathId);
+        }
     };
 
-
-
+    const handleSvgRef = (node: SVGSVGElement | null) => {
+        if (node) {
+            svgRef.current = node;
+            const stopScroll = (e: WheelEvent) => e.preventDefault();
+            node.addEventListener('wheel', stopScroll, { passive: false });
+            return () => {
+                node.removeEventListener('wheel', stopScroll);
+            };
+        }
+    };
 
     if (!province) return null;
-
-    const isGuessMode = mode === 'guess';
-    const isExploreMode = mode === 'explore';
 
     return (
         <>
             {isLoading ? (
                 <ProvinceSkeleton />
             ) : (
-                <div className="flex flex-col items-center justify-between h-full w-full">
-                    {/* For Explorer location name */}
-                    <div className="w-full text-start px-5 lg:pb-10 h-0 ">
-                        <TypingText
-                            text={selectedLocationId}
-                            isSubmitted={true}
-                            isMasked={false}
-                            className={`text-green-500 text-sm lg:text-2xl text-shadow`}
-                        />
-                    </div>
+                <div className="flex flex-col items-center justify-between h-full w-full ">
+                    {selectedLocationId && (
+                        <div className="w-full text-start absolute p-4 text-white">
+                            <div className='dark:bg-retro-bg/90  bg-retro-main/90 w-fit p-2 rounded '>
+                                <TypingText
+                                    text={selectedLocationId}
+                                    isSubmitted={true}
+                                    isMasked={false}
+                                    className="text-green-500 text-sm lg:text-2xl text-shadow"
+                                />
+                            </div>
+                        </div>
+                    )}
+
                     {isZoomable && hasZoomed && (
                         <button
-                            title='Reset Zoom'
+                            title="Reset Zoom"
                             onClick={(e) => {
-                                (e.currentTarget as HTMLButtonElement).blur()
-                                resetTransform()
+                                (e.currentTarget as HTMLButtonElement).blur();
+                                resetTransform();
                             }}
-                            className="z-50 mb-2 px-2 py-2 cursor-pointer dark:text-white text-neutral-700 dark:bg-retro-bg  bg-white rounded-md transition absolute bottom-4 right-4"
+                            className="z-50 mb-2 px-2 py-2 cursor-pointer dark:text-white text-neutral-700 dark:bg-retro-bg border bg-white rounded-md transition absolute bottom-4 right-4"
                         >
                             <ZoomOut />
                         </button>
                     )}
 
                     <svg
-                        ref={svgRef}
+                        ref={handleSvgRef}
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`w-full flex-1 ${isGuessMode && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                        className={`w-full flex-1 z-0 ${mode === 'guess' && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'
+                            }`}
                         viewBox={province.viewBox || '0 0 100 100'}
                         onWheel={handleWheel}
                         onMouseDown={handleMouseDown}
-                        onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUp}
+                        onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseUp}
                     >
                         <g ref={gRef}>
@@ -195,8 +197,11 @@ const MapSVG: React.FC<SVGProps> = ({
                                 const isPathCorrect = path.id && correctGuesses.some(([_, id]) => id === path.id);
                                 const isSelected = path.id === selectedLocationId;
 
-                                const hoverFill = isGuessMode ? 'fill-accent-hover' : 'hover:fill-green-400';
-                                const baseFill = isPathCorrect ? 'fill-accent' : `fill-gray-50 dark:fill-gray-200`;
+                                const baseFill = isPathCorrect
+                                    ? 'fill-accent'
+                                    : 'fill-gray-50 dark:fill-gray-200';
+
+                                const hoverFill = mode === 'guess' ? 'fill-accent-hover' : 'hover:fill-green-400';
 
                                 const dynamicFill = isSelected
                                     ? 'fill-green-400'
@@ -213,22 +218,23 @@ const MapSVG: React.FC<SVGProps> = ({
                                         stroke="black"
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            if (isGuessMode && path.id && onPathClick) {
-                                                onPathClick(path.id);
-                                            } else if (!isGuessMode && path.id && selectedLocationId && onPathClick) {
-                                                onPathClick(path.id);
-                                            }
+                                            handlePathClick(path.id);
                                         }}
                                     >
-                                        {isPathCorrect && (<title>{label}</title>)}
-                                        {!isGuessMode && <title>{path.id}</title>}
+                                        <title>
+                                            {mode === 'guess' && isPathCorrect
+                                                ? label
+                                                : mode === 'explore'
+                                                    ? path.id
+                                                    : ''}
+                                        </title>
                                     </path>
                                 );
                             })}
                         </g>
                     </svg>
 
-                    {isExploreMode && (
+                    {mode === 'explore' && (
                         <p className="text-center text-xs sm:text-sm p-2 break-words line-clamp-2 w-full">
                             {formatProvinceName(provinceName)}
                         </p>

@@ -3,12 +3,13 @@ import { LGU_PATHS } from "../../../util/constants";
 import MapSVG from "../../../components/MapSVG";
 import NotFound from "../../NotFound";
 import { useProvince } from "../../../hooks/useProvince";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { MapPin } from "lucide-react";
 
 const ProvincePage: React.FC = () => {
     const { provinceName } = useParams();
     const { getAllLocationName } = useProvince();
+    const provinceDivRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
     const locationList = useMemo(() => {
         if (!provinceName) return [];
@@ -17,8 +18,18 @@ const ProvincePage: React.FC = () => {
 
     const [selectedLocationId, setSelectedLocationId] = useState<string | null>(locationList[0]);
 
+    const handlePathClick = (pathId: string) => {
+        if (provinceDivRefs.current[pathId]) {
+            provinceDivRefs.current[pathId]?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+            });
+        }
+        setSelectedLocationId(pathId);
+    };
+
     return (
-        <div className="flex flex-col lg:flex-row gap-6 p-4 lg:mt-14 h-fit justify-center">
+        <div className="flex flex-col lg:flex-row gap-6 p-4 h-fit justify-center">
             {/* LEFT: Locations List */}
             <div className="hidden lg:flex w-full lg:w-1/4 flex-col h-[40vh] lg:h-[84vh]">
                 <div className="sticky top-0 z-20 bg-gradient-to-r dark:from-green-800 dark:to-green-600/50 from-green-800/80 to-green-600 text-white font-semibold p-4 rounded-t-md shadow-md">
@@ -36,8 +47,15 @@ const ProvincePage: React.FC = () => {
                             return (
                                 <div
                                     key={index}
+                                    ref={(el) => {
+                                        if (el) {
+                                            provinceDivRefs.current[location] = el;
+                                        }
+                                    }}
+                                    tabIndex={index}
                                     onClick={() => {
                                         setSelectedLocationId(location);
+                                        handlePathClick(location);
                                     }}
                                     className={`flex items-center gap-3 p-3 border rounded-md transition-all cursor-pointer group
                                         ${isSelected ? 'bg-green-200 dark:bg-green-700 border-green-400 dark:border-green-500' : 'bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600'}
@@ -61,13 +79,15 @@ const ProvincePage: React.FC = () => {
             </div>
 
             {/* RIGHT: Map Display */}
-            <div className="w-full lg:w-2/3 h-[84vh] py-5 overflow-hidden bg-transparent border relative border-gray-300 dark:border-gray-700 rounded-lg shadow-lg flex items-center justify-center">
+            <div className="w-full lg:w-2/3 h-[84vh] overflow-hidden bg-transparent border relative border-gray-300 dark:border-gray-700 rounded-lg shadow-lg flex items-center justify-center">
                 {provinceName && LGU_PATHS[provinceName] ? (
                     <MapSVG
                         provinceName={provinceName}
                         pathsData={LGU_PATHS}
+                        mode="explore"
                         selectedLocationId={selectedLocationId}
-                        onPathClick={(id) => { setSelectedLocationId(id) }}
+                        onPathClick={(id) => { handlePathClick(id) }}
+                        isZoomable={true}
                     />
                 ) : (
                     <NotFound />

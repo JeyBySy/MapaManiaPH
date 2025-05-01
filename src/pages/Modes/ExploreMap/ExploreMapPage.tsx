@@ -27,7 +27,7 @@ const ExploreMapPage: React.FC = () => {
       <main className="flex container mx-auto flex-col justify-between w-full h-fit lg:p-4">
         {!isProvincePage && (
           <>
-            <div className="w-full mx-auto px-5 lg:mt-14 flex items-center lg:justify-end justify-center">
+            <div className="w-full mx-auto px-5 flex items-center lg:justify-end justify-center">
               <input
                 className="p-2 rounded border w-full lg:w-fit"
                 type="text"

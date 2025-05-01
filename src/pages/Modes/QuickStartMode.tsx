@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react"
 import { useProvince } from "../../hooks/useProvince"
 import Keyboard from "../../components/Keyboard"
-import { MapPin, RotateCcw } from "lucide-react"
+import { ChevronDown, MapPin, RotateCw } from "lucide-react"
 import ProvinceSkeleton from "../../components/Skeleton/ProvinceSkeleton"
 import TypingText from "../../components/TypingText"
 import { useUniquePathId } from "../../hooks/useUniquePath"
 import MapSVG from "../../components/MapSVG"
 import { isMobile } from "react-device-detect"
+import { AnimatePresence, motion } from "framer-motion"
 
 const QuickStartMode: React.FC = () => {
   const { provinceOutline, nextProvince, locationName, refreshPaths } =
@@ -22,6 +23,8 @@ const QuickStartMode: React.FC = () => {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
   const isCompleted = correctGuesses.length === locationName.length
+  const [isSpinning, setIsSpinning] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const handleSubmit = () => {
     setSubmitted(true)
@@ -32,6 +35,7 @@ const QuickStartMode: React.FC = () => {
   }
 
   const handleNextProvince = async () => {
+    setIsSpinning(true)
     const prevProvince = provinceOutline
     setTypedText("")
     setCurrentStep(0)
@@ -47,6 +51,10 @@ const QuickStartMode: React.FC = () => {
     setTimeout(() => {
       inputRef.current?.focus()
     }, 0)
+
+    setTimeout(() => {
+      setIsSpinning(false)
+    }, 900)
   }
 
   const handlePathClick = (clickedId: string) => {
@@ -59,12 +67,11 @@ const QuickStartMode: React.FC = () => {
 
     const expectedAnswer = locationName[currentStep]
 
-    if (
-      cityName.trim().toLowerCase() === expectedAnswer?.trim().toLowerCase()
-    ) {
+    if (cityName.trim().toLowerCase() === expectedAnswer?.trim().toLowerCase()) {
       setCorrectGuesses((prev) => [...prev, [cityName, clickedId]])
-      setCurrentStep((prev) => prev + 1) // move to next city
+      setCurrentStep((prev) => prev + 1) // move to next city      
     }
+
   }
 
   useEffect(() => {
@@ -95,32 +102,70 @@ const QuickStartMode: React.FC = () => {
 
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 lg:mt-14 lg:h-fit justify-center">
+    <div className="lg:flex lg:flex-row gap-1 lg:h-fit justify-center lg:container lg:mx-auto">
       {/* LEFT: Location List */}
-      <div className={`w-full lg:w-1/5 flex-col h-[40vh] lg:h-fit  ${submitted ? 'lg:flex' : 'hidden'}`}>
-        <div className="sticky top-0 z-20 bg-gradient-to-r dark:from-green-800 dark:to-green-600/50 from-green-800/80 to-green-600 text-white font-semibold p-4 rounded-t-md shadow-md">
-          <p className="text-xs lg:text-sm uppercase tracking-wider">
+      <div className={`w-full absolute  bottom-0 lg:static lg:w-4/12 flex-col lg:h-[80vh] z-50 ${submitted ? 'lg:flex' : 'hidden'}`}>
+        <div className="sticky top-0 bg-gradient-to-r dark:from-green-800 dark:to-green-600 from-green-800 to-green-600 text-white font-semibold shadow-md rounded-t-md flex justify-between items-center z-40">
+          <p className="text-xs lg:text-sm hidden lg:block uppercase tracking-wider p-4">
             Guess the Location
           </p>
+          <div className="text-xs lg:text-sm uppercase tracking-wider pl-3 lg:hidden">
+            {locationName[currentStep] === undefined ? (
+              "Complete"
+            ) : (
+              <div className="flex flex-col">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={`location-${currentStep}`}
+                    className="text-base capitalize flex gap-1 "
+                    initial={{ x: -40, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: 40, opacity: 0 }}
+                    transition={{
+                      type: "tween",
+                      ease: "easeInOut",
+                      duration: 0.2
+                    }}
+                  >
+                    <MapPin className={`transition-all  w-6 h-6 dark:text-neutral-100 text-retro-mint-text`} />
+                    {locationName[currentStep]}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+
+            )}
+          </div>
+          <button
+            title="Show All"
+            onClick={() => setIsCollapsed((prev) => !prev)}
+            className="p-4 text-white hover:text-gray-300 transition-transform cursor-pointer rounded lg:hidden"
+          >
+            <ChevronDown className={`w-6 h-6 transition-transform ${isCollapsed ? "rotate-180" : ""}`}
+            />
+          </button>
         </div>
-        <div className="flex flex-col gap-2 h-full overflow-y-auto bg-neutral-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-b-md p-4 shadow-inner">
+        <div className={`transition-all duration-300 ease-in-out flex flex-col gap-2 lg:max-h-none lg:h-full lg:p-2 border overflow-hidden  bg-neutral-200 dark:bg-gray-800 border-gray-300 dark:border-gray-700 shadow-inner 
+            ${isCollapsed
+            ? 'max-h-0 p-0'
+            : 'max-h-[30vh] p-2 overflow-y-auto lg:max-h-none'}`
+        }>
+
           {submitted && typedText.length !== 0 ? (
             locationName.map((path, index) => {
               const isCurrentStep = index === currentStep
               const isLocationCorrect = correctGuesses.some(([id]) => id === path)
-
               return (
                 <div
                   key={index}
                   ref={(el) => {
                     itemRefs.current[index] = el
                   }}
-                  className={`flex items-center gap-3 p-3 border  border-gray-300 dark:border-gray-700 rounded-md transition-all shadow text-shadow-2xs 
+                  className={`z-40 flex  items-center gap-3 p-2 lg:p-3 border  border-gray-300 dark:border-gray-700 rounded-md transition-all shadow text-shadow-2xs 
                   ${isCurrentStep ? " bg-neutral-50 text-gray-400 cursor-pointer dark:bg-gray-200 dark:text-gray-600 " :
                       isLocationCorrect ? "text-retro-mint-text dark:text-white bg-retro-mint dark:bg-retro-purple" :
                         "text-gray-400/20 bg-gray-300 dark:bg-gray-700/40 dark:text-gray-500"}`}
                 >
-                  <MapPin className={`transition-all  w-6 h-6 ${isLocationCorrect ? "dark:text-neutral-100 text-retro-mint-text" : "dark:text-neutral-600 text-gray-400"}`} />
+                  <MapPin className={`transition-all  w-6 h-6 ${isLocationCorrect ? "dark:text-neutral-200 text-retro-mint-text" : "dark:text-neutral-600 text-gray-400"}`} />
                   <TypingText
                     text={path}
                     isSubmitted={true}
@@ -147,11 +192,11 @@ const QuickStartMode: React.FC = () => {
       </div>
 
       {/* RIGHT: Map Display*/}
-      <div className="w-full lg:w-2/3 px-2 overflow-hidden">
+      <div className="grid grid-rows-[1fr_auto] lg:block lg:grid-rows-none h-fit w-full px-2 lg:w-12/12 lg:h-auto mx-auto overflow-hidden relative ">
         {/* Map */}
-        <div className="w-full h-[60vh] lg:h-[70vh] py-5 bg-transparent border relative border-gray-300 dark:border-gray-700 rounded-lg shadow-lg ">
+        <div className={`w-full mx-auto ${submitted ? 'h-[85vh]' : 'h-[70vh]'} relative lg:h-[80vh] bg-transparent border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg z-30`}>
           {/* Province Name */}
-          <div className="absolute left-0 top-0 z-50 py-4 px-4">
+          <div className="absolute left-0 top-0 z-10 py-4 px-4">
             <TypingText
               text={provinceOutline}
               isSubmitted={submitted}
@@ -163,17 +208,19 @@ const QuickStartMode: React.FC = () => {
 
           {/* Next Province Button */}
           <button
+            title="Change Province"
             onClick={(e) => {
               (e.currentTarget as HTMLButtonElement).blur()
               handleNextProvince()
             }}
-            className="absolute top-1 right-1  hover:outline-1 outline-gray-500/50 w-auto dark:text-gray-400 dark:hover:text-gray-100 text-white/80 hover:text-white px-4 py-4 rounded-md cursor-pointer z-50"
+            className={`z-40 absolute top-1 right-1  hover:outline-1 outline-gray-500/50 w-auto dark:text-gray-400 dark:hover:text-gray-100 text-white/80 hover:text-white px-4 py-4 rounded-md cursor-pointer 
+              ${isSpinning ? 'pointer-events-none' : 'pointer-events-auto'}`}
           >
-            <RotateCcw width={20} height={20} />
+            <RotateCw width={20} height={20} className={isSpinning ? 'animate-[spin_0.5s_linear]' : ''} />
           </button>
 
           {/* Province Map */}
-          <div className="relative w-full h-full  flex-6/12 flex items-center justify-center p-2">
+          <div className="relative w-full h-full flex py-2 items-center justify-center z-20">
             {submitted && !showMap ? (
               <ProvinceSkeleton />
             ) : (
@@ -195,18 +242,17 @@ const QuickStartMode: React.FC = () => {
         </div>
 
         {/* Typing and next province button */}
-        <div className="flex flex-col w-full h-fit">
+        <div className="flex flex-col  justify-end mx-auto items-center w-full">
           {/* Keyboard */}
           {!submitted && (
-            <div className="flex flex-col w-full items-center gap-4 p-2 relative">
-
+            <>
               {/* Typing Squares */}
-              <div className="flex flex-wrap gap-1 justify-center">
+              <div className="flex items-center flex-wrap gap-1 justify-center py-4 px-2">
                 {provinceOutline.split("").map((char, i) => (
                   <div
                     key={i}
-                    className={`w-9 h-9 md:w-12 md:h-12 border-2 flex items-center justify-center text-center text-sm lg:text-lg font-bold uppercase
-            ${char === "_"
+                    className={`w-10 h-10 md:w-12 md:h-12 border-2 flex items-center justify-center text-center text-sm lg:text-lg font-bold uppercase
+                      ${char === "_"
                         ? "border-transparent bg-transparent"
                         : typedText[i]
                           ? "dark:border-white/20 dark:bg-slate-600 bg-white text-slate-600 dark:text-white border-white/40 shadow text-shadow-2xs"
@@ -214,17 +260,16 @@ const QuickStartMode: React.FC = () => {
                       }`}
                   >
                     {char === "_" ? (
-                      <span className="w-9 h-9 md:w-12 md:h-12 border-b-2 dark:border-gray-600 border-gray-100" />
+                      <span className="w-10 h-10 md:w-12 md:h-12 border-b-2 dark:border-gray-600 border-gray-100 " />
                     ) : (
                       typedText[i] || ""
                     )}
                   </div>
                 ))}
               </div>
-
               {/* Mobile Keyboard */}
               <div
-                className={`mx-auto w-full ${isMobile ? "mb-2" : "hidden"} lg:static lg:w-fit`}>
+                className={`mx-auto container ${isMobile ? "mb-2" : "hidden"} lg:static lg:w-fit`}>
                 <Keyboard
                   value={typedText}
                   onType={setTypedText}
@@ -233,15 +278,16 @@ const QuickStartMode: React.FC = () => {
                   provinceValue={provinceOutline}
                 />
               </div>
-            </div>
+            </>
           )}
+
           {/* Next Province Button */}
           {isCompleted && (
-            <div className="w-full flex items-center justify-center py-4">
+            <div className="w-full absolute h-full bg-retro-bg/80 rounded-lg  flex items-center justify-center py-4 z-40">
               <button
                 ref={nextButtonRef}
                 onClick={() => handleNextProvince()}
-                className="cursor-pointer p-4 text-sm dark:bg-green-800 bg-green-600 w-full lg:w-fit rounded"
+                className="cursor-pointer p-3 text-sm lg:dark:bg-green-800/90 dark:hover:bg-green-600 bg-green-600 w-fit rounded hover:shadow-2xl"
               >
                 Next Province
               </button>
@@ -249,7 +295,7 @@ const QuickStartMode: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </div >
 
   )
 }
