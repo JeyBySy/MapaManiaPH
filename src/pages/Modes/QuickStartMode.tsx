@@ -104,8 +104,8 @@ const QuickStartMode: React.FC = () => {
   return (
     <div className="lg:flex lg:flex-row gap-1 lg:h-fit justify-center lg:container lg:mx-auto">
       {/* LEFT: Location List */}
-      <div className={`w-full absolute  bottom-0 lg:static lg:w-4/12 flex-col lg:h-[80vh] z-50 ${submitted ? 'lg:flex' : 'hidden'}`}>
-        <div className="sticky top-0 bg-gradient-to-r dark:from-green-800 dark:to-green-600 from-green-800 to-green-600 text-white font-semibold shadow-md rounded-t-md flex justify-between items-center z-40">
+      <div className={`w-full absolute bottom-0 lg:static lg:w-4/12 flex-col lg:h-[80vh] z-50 ${submitted ? 'lg:flex' : 'hidden'}`}>
+        <div className="bg-gradient-to-r dark:from-green-800 dark:to-green-600 from-green-800 to-green-600 text-white font-semibold shadow-md rounded-t-md flex justify-between items-center z-40">
           <p className="text-xs lg:text-sm hidden lg:block uppercase tracking-wider p-4">
             Guess the Location
           </p>
@@ -127,7 +127,7 @@ const QuickStartMode: React.FC = () => {
                       duration: 0.2
                     }}
                   >
-                    <MapPin className={`transition-all  w-6 h-6 dark:text-neutral-100 text-retro-mint-text`} />
+                    <MapPin className={`transition-all  w-6 h-6 text-neutral-100`} />
                     {locationName[currentStep]}
                   </motion.p>
                 </AnimatePresence>
