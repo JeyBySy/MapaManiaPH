@@ -24,7 +24,7 @@ const QuickStartMode: React.FC = () => {
   const nextButtonRef = useRef<HTMLButtonElement>(null);
   const isCompleted = correctGuesses.length === locationName.length
   const [isSpinning, setIsSpinning] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(true)
 
   const handleSubmit = () => {
     setSubmitted(true)
