@@ -10,8 +10,7 @@ import { isMobile } from "react-device-detect"
 import { AnimatePresence, motion } from "framer-motion"
 
 const QuickStartMode: React.FC = () => {
-  const { provinceOutline, nextProvince, locationName, refreshPaths } =
-    useProvince(true)
+  const { provinceOutline, nextProvince, locationName, refreshPaths } = useProvince(true)
   const { pathsWithIds: UniquePath, answerKeys } = useUniquePathId()
   const [submitted, setSubmitted] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
