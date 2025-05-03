@@ -57,7 +57,9 @@ const StartPage: React.FC = () => {
         <div className="lg:w-1/3 w-full px-2 flex flex-col gap-4  mx-auto">
           <Link to={"/quickstart"}>
             <div className="button bg-gradient-to-b from-sky-400 to-sky-700 opacity-90 hover:opacity-100">
-              <Button icon="🇵🇭" btnName="Quick Start" event={() => { }} />
+              <Button
+                icon="🇵🇭"
+                btnName="Quick Start" />
             </div>
           </Link>
 
@@ -66,7 +68,6 @@ const StartPage: React.FC = () => {
               <Button
                 icon='🌍'
                 btnName="Explore Map"
-                event={() => { }}
               />
             </div>
           </Link>
@@ -76,7 +77,6 @@ const StartPage: React.FC = () => {
               <Button
                 icon='⏱️'
                 btnName=" Challenge Mode"
-                event={() => { }}
               />
             </div>
           </Link>
