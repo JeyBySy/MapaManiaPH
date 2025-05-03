@@ -6,13 +6,15 @@ const FullScreenLayout: React.FC = () => {
     const { pathname } = useLocation();
     const segments = pathname.split('/').filter(Boolean);
 
-    const pageTitles: Record<string, string> = {
-        "/exploremap": "Explore Map",
-    };
+    let title = "";
 
-    const title = pageTitles[pathname] ||
-        (segments[1] ? decodeURIComponent(segments[1].replace(/_/g, ' ')) : "");
-
+    if (segments[0] === 'exploremap') {
+        title = segments[1] ? decodeURIComponent(segments[1].replace(/_/g, ' ')) : "Explore Map";
+    } else if (segments[0] === 'challenge') {
+        title = "Challenge";
+    } else {
+        title = segments[1] ? decodeURIComponent(segments[1].replace(/_/g, ' ')) : "";
+    }
 
     return (
         <div className="flex flex-col w-full">

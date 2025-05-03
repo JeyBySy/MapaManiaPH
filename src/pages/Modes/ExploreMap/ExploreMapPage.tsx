@@ -47,7 +47,6 @@ const ExploreMapPage: React.FC = () => {
                       provinceName={province}
                       pathsData={LGU_PATHS}
                       mode="explore"
-                      onPathClick={(id) => console.log(`Clicked ${id} in ${province}`)}
                     />
                   </div>
                 ))
