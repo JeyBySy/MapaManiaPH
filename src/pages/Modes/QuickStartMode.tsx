@@ -109,13 +109,13 @@ const QuickStartMode: React.FC = () => {
           <p className="text-xs lg:text-sm hidden lg:block uppercase tracking-wider p-4">
             Guess the Location
           </p>
-          <div className="text-xs lg:text-sm tracking-wider pl-3 lg:hidden w-full">
+          <div className="text-xs lg:text-sm tracking-wider lg:hidden w-full">
             {locationName[currentStep] === undefined ? (
               <p className="text-center text-base">
                 Complete
               </p>
             ) : (
-              <div className="flex flex-col items-center justify-center gap-2 py-2">
+              <div className="flex flex-col items-center justify-center w-full gap-2 py-2">
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={`location-${currentStep}`}
@@ -142,7 +142,7 @@ const QuickStartMode: React.FC = () => {
           <button
             title="Show All"
             onClick={() => setIsCollapsed((prev) => !prev)}
-            className="p-4 text-white hover:text-gray-300 transition-transform cursor-pointer rounded lg:hidden"
+            className="absolute  right-0 p-4 text-white hover:text-gray-300 transition-transform cursor-pointer rounded lg:hidden"
           >
             <ChevronDown className={`w-6 h-6 transition-transform ${isCollapsed ? "rotate-180" : ""}`}
             />
