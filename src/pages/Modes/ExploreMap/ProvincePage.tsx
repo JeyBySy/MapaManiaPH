@@ -51,7 +51,7 @@ const ProvincePage: React.FC = () => {
             </button>
 
             {/* LEFT: Locations List */}
-            <div className={`lg:flex w-full lg:w-1/3 flex-col lg:h-[84vh] lg:static z-30
+            <div className={`lg:flex w-full lg:w-1/3 flex-col lg:h-[84vh] lg:static z-30 h-full overflow-y-auto 
                 ${isLocationShow ? "h-full mx-auto fixed top-0 z-40" : "hidden "}
                 `}>
                 <div className="sticky top-0 z-20 bg-gradient-to-r dark:bg-slate-600 bg-blue-400 text-white font-semibold p-4 lg:rounded-t-md shadow-md">
@@ -62,41 +62,43 @@ const ProvincePage: React.FC = () => {
                         {locationList.length}
                     </span>
                 </div>
-                <div className="flex flex-col gap-2 h-full overflow-y-auto bg-neutral-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-b-md p-4 shadow-inner">
-                    {locationList.length > 0 ? (
-                        locationList.map((location, index) => {
-                            const isSelected = selectedLocationId === location;
-                            return (
-                                <div
-                                    key={index}
-                                    ref={(el) => {
-                                        if (el) {
-                                            provinceDivRefs.current[location] = el;
-                                        }
-                                    }}
-                                    tabIndex={index}
-                                    onClick={() => {
-                                        setSelectedLocationId(location);
-                                        handlePathClick(location);
-                                    }}
-                                    className={`flex items-center gap-3 p-3 border rounded-md transition-all cursor-pointer group
+                <div className="min-h-full lg:h-full lg:min-h-auto overflow-y-auto bg-neutral-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 lg:rounded-b-md p-4 shadow-inner">
+                    <div className="flex flex-col gap-2 ">
+                        {locationList.length > 0 ? (
+                            locationList.map((location, index) => {
+                                const isSelected = selectedLocationId === location;
+                                return (
+                                    <div
+                                        key={index}
+                                        ref={(el) => {
+                                            if (el) {
+                                                provinceDivRefs.current[location] = el;
+                                            }
+                                        }}
+                                        tabIndex={index}
+                                        onClick={() => {
+                                            setSelectedLocationId(location);
+                                            handlePathClick(location);
+                                        }}
+                                        className={`flex items-center gap-3 p-3 border rounded-md transition-all cursor-pointer group
                                         ${isSelected ? 'bg-green-200 dark:bg-green-700 border-green-400 dark:border-green-500' : 'bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600'}
                                         hover:bg-green-100 dark:hover:bg-green-600`}
-                                >
-                                    <MapPin
-                                        className={`text-retro-orange transition-all ${isSelected ? 'text-green-800 dark:text-green-300' : 'group-hover:text-green-700 dark:group-hover:text-green-300'} w-6 h-6`}
-                                    />
-                                    <p className={`text-xs sm:text-xs transition-all capitalize ${isSelected ? 'text-green-900 dark:text-green-200 ' : 'text-gray-700 dark:text-gray-200 group-hover:text-green-800 dark:group-hover:text-green-200'}`}>
-                                        {location}
-                                    </p>
-                                </div>
-                            )
-                        })
-                    ) : (
-                        <div className="text-center text-sm italic text-gray-400 mt-8">
-                            -- No locations found --
-                        </div>
-                    )}
+                                    >
+                                        <MapPin
+                                            className={`text-retro-orange transition-all ${isSelected ? 'text-green-800 dark:text-green-300' : 'group-hover:text-green-700 dark:group-hover:text-green-300'} w-6 h-6`}
+                                        />
+                                        <p className={`text-xs sm:text-xs transition-all capitalize ${isSelected ? 'text-green-900 dark:text-green-200 ' : 'text-gray-700 dark:text-gray-200 group-hover:text-green-800 dark:group-hover:text-green-200'}`}>
+                                            {location}
+                                        </p>
+                                    </div>
+                                )
+                            })
+                        ) : (
+                            <div className="text-center text-sm italic text-gray-400 mt-8">
+                                -- No locations found --
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 

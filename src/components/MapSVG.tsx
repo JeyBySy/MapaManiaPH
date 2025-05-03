@@ -163,7 +163,7 @@ const MapSVG: React.FC<SVGProps> = ({
                                     text={selectedLocationId}
                                     isSubmitted={true}
                                     isMasked={false}
-                                    className="text-green-500 text-sm lg:text-2xl text-shadow"
+                                    className="text-green-500 text-base lg:text-2xl text-shadow"
                                 />
                             </div>
                         </div>
