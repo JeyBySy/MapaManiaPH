@@ -111,7 +111,7 @@ const QuickStartMode: React.FC = () => {
           </p>
           <div className="text-xs lg:text-sm tracking-wider lg:hidden w-full">
             {locationName[currentStep] === undefined ? (
-              <p className="text-center text-base">
+              <p className="text-center text-base py-4.5">
                 Complete
               </p>
             ) : (
