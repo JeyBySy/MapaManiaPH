@@ -138,11 +138,13 @@ const MapSVG: React.FC<SVGProps> = ({
     const handleSvgRef = (node: SVGSVGElement | null) => {
         if (node) {
             svgRef.current = node;
-            const stopScroll = (e: WheelEvent) => e.preventDefault();
-            node.addEventListener('wheel', stopScroll, { passive: false });
-            return () => {
-                node.removeEventListener('wheel', stopScroll);
-            };
+            if (isZoomable) {
+                const stopScroll = (e: WheelEvent) => e.preventDefault();
+                node.addEventListener('wheel', stopScroll, { passive: false });
+                return () => {
+                    node.removeEventListener('wheel', stopScroll);
+                };
+            }
         }
     };
 
@@ -155,7 +157,7 @@ const MapSVG: React.FC<SVGProps> = ({
             ) : (
                 <div className="flex flex-col items-center justify-between h-full w-full ">
                     {selectedLocationId && (
-                        <div className="w-full text-start absolute p-4 text-white">
+                        <div className="w-full text-start absolute p-4 text-white z-10">
                             <div className='dark:bg-retro-bg/90  bg-retro-main/90 w-fit p-2 rounded '>
                                 <TypingText
                                     text={selectedLocationId}
@@ -174,7 +176,7 @@ const MapSVG: React.FC<SVGProps> = ({
                                 (e.currentTarget as HTMLButtonElement).blur();
                                 resetTransform();
                             }}
-                            className="z-50 mb-2 px-2 py-2 cursor-pointer dark:text-white text-neutral-700 dark:bg-retro-bg border bg-white rounded-md transition absolute bottom-4 right-4"
+                            className="z-30 mb-2 px-2 py-2 cursor-pointer dark:text-white text-neutral-700 dark:bg-retro-bg border bg-white rounded-md transition absolute bottom-4 right-4"
                         >
                             <ZoomOut />
                         </button>

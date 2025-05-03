@@ -105,34 +105,38 @@ const QuickStartMode: React.FC = () => {
     <div className="lg:flex lg:flex-row gap-1 lg:h-fit justify-center lg:container lg:mx-auto">
       {/* LEFT: Location List */}
       <div className={`w-full fixed bottom-0 lg:static lg:w-4/12 flex-col lg:h-[80vh] z-50 ${submitted ? 'lg:flex' : 'hidden'}`}>
-        <div className="bg-gradient-to-r dark:from-green-800 dark:to-green-600 from-green-800 to-green-600 text-white font-semibold shadow-md rounded-t-md flex justify-between items-center z-40">
+        <div className="bg-gradient-to-r dark:bg-slate-600 bg-blue-400 text-white font-semibold shadow-md lg:rounded-t-md flex justify-between items-center z-40">
           <p className="text-xs lg:text-sm hidden lg:block uppercase tracking-wider p-4">
             Guess the Location
           </p>
-          <div className="text-xs lg:text-sm uppercase tracking-wider pl-3 lg:hidden">
+          <div className="text-xs lg:text-sm tracking-wider pl-3 lg:hidden w-full">
             {locationName[currentStep] === undefined ? (
-              "Complete"
+              <p className="text-center text-base">
+                Complete
+              </p>
             ) : (
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center justify-center gap-2 py-2">
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={`location-${currentStep}`}
                     className="text-base capitalize flex gap-1 "
-                    initial={{ x: -40, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: 40, opacity: 0 }}
+                    initial={{ y: -15, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 10, opacity: 0 }}
                     transition={{
                       type: "tween",
                       ease: "easeInOut",
                       duration: 0.2
                     }}
                   >
-                    <MapPin className={`transition-all  w-6 h-6 text-neutral-100`} />
+                    <MapPin className={`transition-all w-5 h-5 text-neutral-100`} />
                     {locationName[currentStep]}
                   </motion.p>
                 </AnimatePresence>
+                <p className="text-[10px] dark:text-neutral-300 tracking-wider">
+                  Guess the Location
+                </p>
               </div>
-
             )}
           </div>
           <button
@@ -147,7 +151,7 @@ const QuickStartMode: React.FC = () => {
         <div className={`transition-all duration-300 ease-in-out flex flex-col gap-2 lg:max-h-none lg:h-full lg:p-2 border overflow-hidden  bg-neutral-200 dark:bg-gray-800 border-gray-300 dark:border-gray-700 shadow-inner 
             ${isCollapsed
             ? 'max-h-0 p-0'
-            : 'max-h-[30dvh] p-2 overflow-y-auto lg:max-h-none'}`
+            : 'max-h-[35dvh] p-2 overflow-y-auto lg:max-h-none'}`
         }>
 
           {submitted && typedText.length !== 0 ? (

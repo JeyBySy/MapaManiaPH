@@ -4,12 +4,17 @@ import MapSVG from "../../../components/MapSVG";
 import NotFound from "../../NotFound";
 import { useProvince } from "../../../hooks/useProvince";
 import { useMemo, useRef, useState } from "react";
-import { MapPin } from "lucide-react";
+import { MapPin, Map } from "lucide-react";
 
 const ProvincePage: React.FC = () => {
     const { provinceName } = useParams();
     const { getAllLocationName } = useProvince();
     const provinceDivRefs = useRef<Record<string, HTMLDivElement | null>>({});
+    const [isLocationShow, setIsLocationShow] = useState(false)
+
+    const handleLocationShow = () => {
+        setIsLocationShow((prev) => !prev)
+    }
 
     const locationList = useMemo(() => {
         if (!provinceName) return [];
@@ -29,18 +34,35 @@ const ProvincePage: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row gap-6 p-4 h-fit justify-center">
+        <div className="flex flex-col md:flex-row lg:container lg:mx-auto gap-2 h-fit justify-center relative">
+            <button
+                title="Show All"
+                className=" lg:hidden p-4 fixed bottom-5 right-5 rounded-full dark:bg-green-800 dark:hover:bg-green-700 shadow-2xl bg-gray-400 z-50 cursor-pointer "
+                onClick={(e) => {
+                    e.preventDefault()
+                    handleLocationShow()
+                }}
+            >
+                {isLocationShow ? (
+                    <Map className={`transition-all  w-6 h-6 dark:text-neutral-100 text-gray-400`} />
+                ) : (
+                    <MapPin className={`transition-all  w-6 h-6 dark:text-neutral-100 text-gray-400`} />
+                )}
+            </button>
+
             {/* LEFT: Locations List */}
-            <div className="hidden lg:flex w-full lg:w-1/4 flex-col h-[40vh] lg:h-[84vh]">
-                <div className="sticky top-0 z-20 bg-gradient-to-r dark:from-green-800 dark:to-green-600/50 from-green-800/80 to-green-600 text-white font-semibold p-4 rounded-t-md shadow-md">
-                    <p className="text-xs lg:text-sm uppercase tracking-wider">
-                        Cities & Municipalities
+            <div className={`lg:flex w-full lg:w-1/3 flex-col lg:h-[84vh] lg:static z-30
+                ${isLocationShow ? "h-full mx-auto fixed top-0 z-40" : "hidden "}
+                `}>
+                <div className="sticky top-0 z-20 bg-gradient-to-r dark:bg-slate-600 bg-blue-400 text-white font-semibold p-4 lg:rounded-t-md shadow-md">
+                    <p className="text-xs lg:text-sm tracking-wider">
+                        Cities/Municipalities
                     </p>
-                    <span className="text-xs bg-white text-retro-orange rounded-full px-3 py-1 font-bold shadow">
+                    <span className="text-[10px] text-retro-orange rounded-full font-bold shadow">
                         {locationList.length}
                     </span>
                 </div>
-                <div className="flex flex-col gap-2 h-full overflow-y-auto bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-b-md p-4 shadow-inner">
+                <div className="flex flex-col gap-2 h-full overflow-y-auto bg-neutral-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-b-md p-4 shadow-inner">
                     {locationList.length > 0 ? (
                         locationList.map((location, index) => {
                             const isSelected = selectedLocationId === location;
@@ -79,7 +101,7 @@ const ProvincePage: React.FC = () => {
             </div>
 
             {/* RIGHT: Map Display */}
-            <div className="w-full lg:w-2/3 h-[84vh] overflow-hidden bg-transparent border relative border-gray-300 dark:border-gray-700 rounded-lg shadow-lg flex items-center justify-center">
+            <div className="w-[95%] lg:w-full h-[84vh] mx-auto overflow-hidden bg-transparent border relative border-gray-300 dark:border-gray-700 rounded-lg shadow-lg flex items-center justify-center ">
                 {provinceName && LGU_PATHS[provinceName] ? (
                     <MapSVG
                         provinceName={provinceName}
