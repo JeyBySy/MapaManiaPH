@@ -91,7 +91,6 @@ const StartPage: React.FC = () => {
                 <Button
                   icon='⏱🔥'
                   btnName="Multiplayer"
-                  event={() => { }}
                 />
               </div>
               {/* bg-amber-600 hover:bg-amber-700 */}
