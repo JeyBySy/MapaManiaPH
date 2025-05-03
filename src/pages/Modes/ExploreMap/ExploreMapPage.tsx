@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { LGU_PATHS } from "../../../util/constants"
 import MapSVG from "../../../components/MapSVG"
-import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "../../../components/Footer";
 
 const ExploreMapPage: React.FC = () => {
@@ -23,7 +23,6 @@ const ExploreMapPage: React.FC = () => {
 
   return (
     <div>
-      <Outlet />
       <main className="flex container mx-auto flex-col justify-between w-full h-fit lg:p-4">
         {!isProvincePage && (
           <>
