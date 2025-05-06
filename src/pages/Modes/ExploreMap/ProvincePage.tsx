@@ -64,7 +64,7 @@ const ProvincePage: React.FC = () => {
                             {locationList.length}
                         </span>
                     </div>
-                    <div className="min-h-[92dvh] lg:h-full lg:min-h-auto overflow-y-auto bg-neutral-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 lg:rounded-b-md p-4 shadow-inner">
+                    <div className="min-h-[92dvh] lg:h-full lg:min-h-auto overflow-y-auto bg-neutral-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-500 lg:rounded-b-md p-4 shadow-inner">
                         <div className="flex flex-col gap-2 ">
                             {locationList.length > 0 ? (
                                 locationList.map((location, index) => {
@@ -105,7 +105,7 @@ const ProvincePage: React.FC = () => {
                 </div>
 
                 {/* RIGHT: Map Display */}
-                <div className="w-[95%] lg:w-full h-[84dvh] mx-auto overflow-hidden bg-transparent border relative border-gray-300 dark:border-gray-700 rounded-lg shadow-lg flex items-center justify-center ">
+                <div className="w-[95%] lg:w-full h-[84dvh] mx-auto overflow-hidden bg-transparent border relative border-gray-300 dark:border-gray-500 rounded-lg shadow-lg flex items-center justify-center ">
                     {provinceName && LGU_PATHS[provinceName] ? (
                         <MapSVG
                             provinceName={provinceName}

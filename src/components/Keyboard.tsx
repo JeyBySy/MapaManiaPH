@@ -1,6 +1,7 @@
 import { CornerDownLeft, Delete } from "lucide-react"
 import React, { useEffect } from "react"
 
+
 const KEYBOARD_ROWS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
   ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -72,7 +73,9 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
       const key = e.key.toLowerCase()
 
       if (key === "enter") {
-        if (isInputValid) onSubmit()
+        if (isInputValid) {
+          onSubmit()
+        }
       } else if (key === "backspace") {
         handleBackspace()
       } else if (/^[a-z]$/.test(key)) {
@@ -89,8 +92,28 @@ const Keyboard: React.FC<KeyboardProps> = ({ value, onType, limit, onSubmit, pro
 
 
   return (
-    <div className="w-full container mx-auto relative bg-retro-main dark:bg-retro-bg">
-      <div className="flex flex-col gap-1">
+    <div className="w-full gap-2 mb-2 flex flex-col lg:w-fit container mx-auto relative bg-retro-main dark:bg-retro-bg">
+      <div className="flex items-center flex-wrap gap-1 justify-center ">
+        {provinceValue && provinceValue.split("").map((char, i) => (
+          <div
+            key={i}
+            className={`w-10 h-10 md:w-12 md:h-12 border-2 flex items-center justify-center text-center text-sm lg:text-lg font-bold uppercase
+                      ${char === "_"
+                ? "border-transparent bg-transparent"
+                : value[i]
+                  ? "dark:border-white/20 dark:bg-slate-600 bg-white text-slate-600 dark:text-white border-white/40 shadow text-shadow-2xs"
+                  : "dark:border-gray-600 dark:bg-slate-700 bg-slate-300 border-white/60 shadow"
+              }`}
+          >
+            {char === "_" ? (
+              <span className="w-10 h-10 md:w-12 md:h-12 border-b-2 dark:border-gray-600 border-gray-100 " />
+            ) : (
+              value[i] || ""
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-col gap-1 lg:hidden">
         {KEYBOARD_ROWS.map((row, rowIndex) => (
           <div key={rowIndex} className="flex justify-center gap-1">
             {row.map((key) => {

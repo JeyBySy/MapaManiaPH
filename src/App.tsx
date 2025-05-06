@@ -10,6 +10,7 @@ import { useEffect } from "react"
 import { ChallengeModePage } from "./pages/Modes/Challenge/ChallengeModePage"
 import ProvincePage from "./pages/Modes/ExploreMap/ProvincePage"
 import PlayChallengePage from "./pages/Modes/Challenge/PlayChallengePage"
+import { ChallengeProvider } from "./context/ChallengeContext"
 
 function App() {
   useEffect(() => {
@@ -31,10 +32,17 @@ function App() {
                 <Route index element={<ExploreMapPage />} />
                 <Route path=":provinceName" element={<ProvincePage />} />
               </Route>
-              <Route path="/challenge">
-                <Route index element={<ChallengeModePage />} />
-                <Route path="play" element={<PlayChallengePage />} />
-              </Route>
+              <Route
+                path="/challenge/*"
+                element={
+                  <ChallengeProvider>
+                    <Routes>
+                      <Route index element={<ChallengeModePage />} />
+                      <Route path="play" element={<PlayChallengePage />} />
+                    </Routes>
+                  </ChallengeProvider>
+                }
+              />
             </Route>
 
             {/* Catch-all route for 404 */}

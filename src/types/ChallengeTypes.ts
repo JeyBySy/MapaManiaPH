@@ -1,0 +1,18 @@
+export type ProvinceState = {
+    name: string;
+    lives: number;
+    isCompleted: boolean;
+};
+export type ProvinceLocation = {
+    province: string;
+    locations: string[];
+};
+export type ChallengeContextType = {
+    selectedProvinces: string[];
+    provinceGameStates: { name: string; lives: number; isCompleted: boolean }[];
+    setProvinceGameStates: React.Dispatch<React.SetStateAction<{ name: string; lives: number; isCompleted: boolean }[]>>;
+    pickRandomProvinces: () => Promise<void>;
+    updateProvinceLives: (provinceName: string, action?: "decrease" | "increase", value?: number) => void;
+    updateProvinceCompletion: (provinceName: string, isCompleted: boolean) => void;    
+    provinceLocations:ProvinceLocation[];
+};

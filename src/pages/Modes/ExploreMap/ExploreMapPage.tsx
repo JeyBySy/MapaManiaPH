@@ -22,7 +22,7 @@ const ExploreMapPage: React.FC = () => {
   );
 
   return (
-    <div>
+    <div className="min-h-[92dvh] grid grid-rows-[1fr_auto]">
       <main className="flex container mx-auto flex-col justify-between w-full h-fit lg:p-4">
         {!isProvincePage && (
           <>
@@ -58,8 +58,8 @@ const ExploreMapPage: React.FC = () => {
             </div>
           </>
         )}
-        <Footer />
       </main>
+      <Footer />
     </div>
   )
 }

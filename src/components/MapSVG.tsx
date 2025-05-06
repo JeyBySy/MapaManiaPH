@@ -185,8 +185,7 @@ const MapSVG: React.FC<SVGProps> = ({
                     <svg
                         ref={handleSvgRef}
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`w-full flex-1 z-0 ${mode === 'guess' && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'
-                            }`}
+                        className={`w-full flex-1 z-0 ${mode === 'guess' && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'}`}
                         viewBox={province.viewBox || '0 0 100 100'}
                         onWheel={handleWheel}
                         onMouseDown={handleMouseDown}
