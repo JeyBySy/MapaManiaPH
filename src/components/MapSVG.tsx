@@ -44,11 +44,11 @@ const MapSVG: React.FC<SVGProps> = ({
         const loadMap = async () => {
             if (provinceName) {
                 setHasZoomed(false);
-                setIsLoading(true);
+                await setIsLoading(true);
                 scaleRef.current = 1;
                 translateRef.current = { x: 0, y: 0 };
                 await new Promise((res) => setTimeout(res, 500));
-                setIsLoading(false);
+                await setIsLoading(false);
                 applyTransform();
             }
         };
@@ -78,7 +78,7 @@ const MapSVG: React.FC<SVGProps> = ({
 
     const handleWheel = (e: React.WheelEvent<SVGSVGElement>) => {
         if (!isZoomable) return;
-        e.preventDefault();
+        // e.preventDefault();
 
         const zoomSpeed = 0.1;
         const direction = e.deltaY > 0 ? -1 : 1;

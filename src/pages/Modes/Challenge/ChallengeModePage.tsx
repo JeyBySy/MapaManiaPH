@@ -8,10 +8,11 @@ import { useUniquePathId } from '../../../hooks/useUniquePath';
 
 export const ChallengeModePage: React.FC = () => {
     const navigate = useNavigate()
-    const { pickRandomProvinces, selectedProvinces } = useChallenge()
+    const { pickRandomProvinces, selectedProvinces, isLoading, startGame } = useChallenge()
     const { pathsWithIds: UniquePath } = useUniquePathId()
 
     const handlePlayButton = () => {
+        startGame();
         navigate(`play`)
     }
 
@@ -21,7 +22,7 @@ export const ChallengeModePage: React.FC = () => {
                 <div className='container mx-auto px-2 lg:auto h-full flex justify-between '>
                     <div className='grid grid-row-2 gap-10 w-full'>
                         <div className='lg:grid lg:grid-cols-[1fr_1fr_1fr] gap-2 flex overflow-hidden items-center w-full justify-between'>
-                            {selectedProvinces.length > 0 ? (
+                            {!isLoading && selectedProvinces.length > 0 ? (
                                 selectedProvinces.map((province, idx) => (
                                     <div
                                         key={idx}
@@ -33,18 +34,16 @@ export const ChallengeModePage: React.FC = () => {
                                                     provinceName={province}
                                                     pathsData={UniquePath}
                                                     mode="guess"
-                                                    isSubmitted={false} //False to make pointer-events-none
+                                                    isSubmitted={false}
                                                 />
                                             </div>
                                         )}
                                     </div>
                                 ))
                             ) : (
-                                <div className="col-span-3 text-center text-gray-500">No provinces yet.</div>
+                                <div className="lg:h-[54.4dvh] col-span-12 border w-full rounded-xl text-center text-gray-500 flex justify-center items-center">No provinces yet.</div>
                             )}
-
                         </div>
-
                         <div className='w-full items-center justify-center flex gap-2 flex-col lg:flex-row'>
                             <button
                                 onClick={(e) => {

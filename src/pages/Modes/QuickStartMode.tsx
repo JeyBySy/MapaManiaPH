@@ -101,14 +101,15 @@ const QuickStartMode: React.FC = () => {
   return (
     <div className="lg:flex lg:flex-row gap-1 lg:h-fit justify-center lg:container lg:mx-auto">
       {/* LEFT: Location List */}
-      <LocationList
-        submitted={submitted}
-        typedText={typedText}
-        locationName={locationName}
-        currentLocationStep={currentLocationStep}
-        correctGuesses={correctGuesses}
-        provinceOutline={provinceOutline}
-      />
+      {submitted && (
+        <LocationList
+          submitted={submitted}
+          typedText={typedText}
+          locationName={locationName}
+          currentLocationStep={currentLocationStep}
+          correctGuesses={correctGuesses}
+        />
+      )}
 
       {/* RIGHT: Map Display*/}
       <div className="grid grid-rows-[1fr_auto] lg:block lg:grid-rows-none h-fit w-full px-2 space-y-2 lg:w-12/12 lg:h-auto mx-auto overflow-hidden relative ">

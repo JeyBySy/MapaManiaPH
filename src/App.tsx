@@ -32,14 +32,21 @@ function App() {
                 <Route index element={<ExploreMapPage />} />
                 <Route path=":provinceName" element={<ProvincePage />} />
               </Route>
+
+              {/* Challenge mode routes */}
               <Route
-                path="/challenge/*"
+                path="/challenge"
                 element={
                   <ChallengeProvider>
-                    <Routes>
-                      <Route index element={<ChallengeModePage />} />
-                      <Route path="play" element={<PlayChallengePage />} />
-                    </Routes>
+                    <ChallengeModePage />
+                  </ChallengeProvider>
+                }
+              />
+              <Route
+                path="/challenge/play"
+                element={
+                  <ChallengeProvider>
+                    <PlayChallengePage />
                   </ChallengeProvider>
                 }
               />

@@ -1,25 +1,37 @@
 import { createContext, useEffect, useState } from "react";
 import { ChallengeContextType } from "../types/ChallengeTypes";
 import { useProvince } from "../hooks/useProvince";
+import { useLocation } from "react-router-dom";
 
 const ChallengeContext = createContext<ChallengeContextType | undefined>(undefined);
 
 export const ChallengeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { generateRandomProvinces, provinceLocations } = useProvince();
-    const maximumLives = 5
+    const maximumLives = 5;
+    const location = useLocation();
+
     const [selectedProvinces, setSelectedProvinces] = useState<string[]>([]);
     const [provinceGameStates, setProvinceGameStates] = useState<{ name: string; lives: number; isCompleted: boolean }[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isGameOver, setIsGameOver] = useState(false);
 
     const pickRandomProvinces = async () => {
-        const newProvinces = generateRandomProvinces();
+        setIsLoading(true);
+        setSelectedProvinces([])
+        setIsGameOver(false);
+        let newProvinces = generateRandomProvinces();
 
-        // while (newProvinces.some(province => selectedProvinces.includes(province))) {
-        //     newProvinces = generateRandomProvinces();
-        // }
+        while (newProvinces.length > 3 && newProvinces.some(province => selectedProvinces.includes(province))) {
+            newProvinces = generateRandomProvinces();
+        }
 
         await setSelectedProvinces(newProvinces);
+        setIsLoading(false);
+    };
+
+    const startGame = async () => {
         await setProvinceGameStates(
-            newProvinces.map((name) => ({
+            selectedProvinces.map((name) => ({
                 name,
                 lives: maximumLives,
                 isCompleted: false,
@@ -29,8 +41,8 @@ export const ChallengeProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     const updateProvinceLives = (
         provinceName: string,
-        action: "decrease" | "increase" = "decrease",  // Define action (decrease or increase)
-        value: number = 1  // Specify the number of lives to increase or decrease
+        action: "decrease" | "increase" = "decrease",
+        value: number = 1
     ) => {
         setProvinceGameStates((prevStates) =>
             prevStates.map((province) =>
@@ -55,9 +67,24 @@ export const ChallengeProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     };
 
     useEffect(() => {
-        pickRandomProvinces();
+        if (provinceGameStates.length === 0) return;
+
+        const allCompleted = provinceGameStates.every(p => p.isCompleted);
+        const allFailed = provinceGameStates.every(p => p.lives === 0);
+
+        if (allCompleted || allFailed) {
+            setIsGameOver(true);
+        } else {
+            setIsGameOver(false);
+        }
+    }, [provinceGameStates]);
+
+    useEffect(() => {
+        if (location.pathname === '/challenge') {
+            pickRandomProvinces();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [location.pathname]);
 
     return (
         <ChallengeContext.Provider value={{
@@ -65,13 +92,17 @@ export const ChallengeProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             provinceGameStates,
             setProvinceGameStates,
             pickRandomProvinces,
+            startGame,
             updateProvinceLives,
             updateProvinceCompletion,
-            provinceLocations
+            provinceLocations,
+            isLoading,
+            isGameOver,
         }}>
             {children}
         </ChallengeContext.Provider>
     );
 };
+
 
 export { ChallengeContext };
