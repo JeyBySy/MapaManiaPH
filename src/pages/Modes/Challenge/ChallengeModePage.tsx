@@ -1,5 +1,5 @@
 import { Dices, MapPinned } from 'lucide-react';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import Footer from '../../../components/Footer';
 import { useChallenge } from '../../../hooks/useChallenge';
@@ -15,6 +15,14 @@ export const ChallengeModePage: React.FC = () => {
         startGame();
         navigate(`play`)
     }
+
+    useEffect(() => {
+        if (location.pathname === '/challenge') {
+            pickRandomProvinces();
+            return
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.pathname])
 
     return (
         <div className='min-h-[92dvh] grid grid-rows-[1fr_auto]'>
