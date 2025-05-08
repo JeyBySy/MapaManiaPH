@@ -81,6 +81,7 @@ const ProvincePage: React.FC = () => {
                                             onClick={() => {
                                                 setSelectedLocationId(location);
                                                 handlePathClick(location);
+                                                setIsLocationShow(false)
                                             }}
                                             className={`flex items-center gap-3 p-3 border rounded-md transition-all cursor-pointer group
                                         ${isSelected ? 'bg-green-200 dark:bg-green-700 border-green-400 dark:border-green-500' : 'bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600'}
