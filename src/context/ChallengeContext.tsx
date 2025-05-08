@@ -1,14 +1,15 @@
 import { createContext, useEffect, useState } from "react";
 import { ChallengeContextType } from "../types/ChallengeTypes";
 import { useProvince } from "../hooks/useProvince";
-import { useLocation } from "react-router-dom";
+// import { useLocation, useNavigate } from "react-router-dom";
 
 const ChallengeContext = createContext<ChallengeContextType | undefined>(undefined);
 
 export const ChallengeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { generateRandomProvinces, provinceLocations } = useProvince();
     const maximumLives = 5;
-    const location = useLocation();
+    // const location = useLocation();
+    // const navigate = useNavigate()
 
     const [selectedProvinces, setSelectedProvinces] = useState<string[]>([]);
     const [provinceGameStates, setProvinceGameStates] = useState<{ name: string; lives: number; isCompleted: boolean }[]>([]);
@@ -79,12 +80,21 @@ export const ChallengeProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         }
     }, [provinceGameStates]);
 
-    useEffect(() => {
-        if (location.pathname === '/challenge') {
-            pickRandomProvinces();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname]);
+    // useEffect(() => {
+    //     if (location.pathname === '/challenge') {
+    //         pickRandomProvinces();
+    //         return
+    //     }
+
+    //     if (provinceGameStates && provinceGameStates[0].lives === 0 && location.pathname === '/challenge/play') {
+    //         pickRandomProvinces();
+    //         navigate('/challenge')
+    //         return
+    //     }
+    //     console.log(provinceGameStates[0].lives);
+
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [location.pathname]);
 
     return (
         <ChallengeContext.Provider value={{
