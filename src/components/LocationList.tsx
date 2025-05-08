@@ -44,7 +44,7 @@ const LocationList: React.FC<LocationListProps> = ({
 
     return (
         <>
-            <div className={`w-full fixed bottom-0 lg:static lg:w-4/12 flex-col lg:h-[80vh] z-50 ${submitted ? 'lg:flex' : 'hidden'}`}>
+            <div className={`w-full fixed bottom-0 lg:static lg:w-4/12 flex-col lg:h-[80vh] z-40 ${submitted ? 'lg:flex' : 'hidden'}`}>
                 <div className="dark:bg-slate-600 bg-blue-400 text-white font-semibold shadow-md lg:rounded-t-md flex flex-col justify-between items-center z-40">
                     <p className="text-xs lg:text-sm hidden lg:block uppercase tracking-wider p-4">
                         Guess the Location
