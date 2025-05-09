@@ -6,15 +6,22 @@ import formatProvinceName from '../util/formatProvinceName';
 import TypingText from './TypingText';
 import { ZoomOut } from 'lucide-react';
 
+interface SummaryRecord {
+    correctGuessesRecord: string[];
+    wrongGuessesRecord: string[];
+}
+
 interface SVGProps {
     provinceName: string;
     pathsData: LGU_PATH_TYPE;
-    mode?: 'guess' | 'explore';
+    mode?: 'guess' | 'explore' | 'summary' | 'challenge';
     isSubmitted?: boolean;
     correctGuesses?: [string, string][];
     onPathClick?: (id: string) => void;
     selectedLocationId?: string | null;
     isZoomable?: boolean;
+    offLoading?: boolean;
+    summaryRecord?: SummaryRecord
 }
 
 const MapSVG: React.FC<SVGProps> = ({
@@ -26,6 +33,8 @@ const MapSVG: React.FC<SVGProps> = ({
     onPathClick,
     selectedLocationId,
     isZoomable = false,
+    offLoading,
+    summaryRecord
 }) => {
     const [isLoading, setIsLoading] = useState(true);
     const province = pathsData[provinceName];
@@ -128,11 +137,7 @@ const MapSVG: React.FC<SVGProps> = ({
 
     const handlePathClick = (pathId: string | undefined | null) => {
         if (!pathId || !onPathClick) return;
-        if (mode === 'guess') {
-            onPathClick(pathId);
-        } else if (mode === 'explore') {
-            onPathClick(pathId);
-        }
+        onPathClick(pathId);
     };
 
     const handleSvgRef = (node: SVGSVGElement | null) => {
@@ -152,13 +157,13 @@ const MapSVG: React.FC<SVGProps> = ({
 
     return (
         <>
-            {isLoading ? (
+            {!offLoading && isLoading ? (
                 <ProvinceSkeleton />
             ) : (
-                <div className="flex flex-col items-center justify-between h-full w-full ">
+                <div className="flex flex-col justify-between h-full w-full">
                     {selectedLocationId && (
-                        <div className="w-full text-start absolute p-4 text-white z-10">
-                            <div className='dark:bg-retro-bg/90  bg-retro-main/90 w-fit p-2 rounded '>
+                        <div className="w-fit text-start absolute text-white z-10">
+                            <div className='w-fit p-4 rounded '>
                                 <TypingText
                                     text={selectedLocationId}
                                     isSubmitted={true}
@@ -185,7 +190,7 @@ const MapSVG: React.FC<SVGProps> = ({
                     <svg
                         ref={handleSvgRef}
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`w-full flex-1 z-0 ${mode === 'guess' && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                        className={`w-full flex-1 z-0 px-2 ${mode === 'guess' && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'}`}
                         viewBox={province.viewBox || '0 0 100 100'}
                         onWheel={handleWheel}
                         onMouseDown={handleMouseDown}
@@ -198,15 +203,29 @@ const MapSVG: React.FC<SVGProps> = ({
                                 const isPathCorrect = path.id && correctGuesses.some(([_, id]) => id === path.id);
                                 const isSelected = path.id === selectedLocationId;
 
-                                const baseFill = isPathCorrect
-                                    ? 'fill-accent'
-                                    : 'fill-gray-50 dark:fill-gray-200';
+                                let dynamicFill = '';
 
-                                const hoverFill = mode === 'guess' ? 'fill-accent-hover' : 'hover:fill-green-400';
 
-                                const dynamicFill = isSelected
-                                    ? 'fill-green-400'
-                                    : `${hoverFill} ${baseFill}`;
+                                if (mode === 'summary' && summaryRecord) { // For Summary Record style
+                                    const { correctGuessesRecord, wrongGuessesRecord } = summaryRecord;
+                                    if (path.id && correctGuessesRecord.includes(path.id)) {
+                                        dynamicFill = 'fill-accent';
+                                    } else if (path.id && wrongGuessesRecord.includes(path.id)) {
+                                        dynamicFill = 'fill-red-400';
+                                    } else {
+                                        dynamicFill = 'fill-white/40 dark:fill-gray-200/40 pointer-events-none';
+                                    }
+                                } else {
+                                    const baseFill = isPathCorrect
+                                        ? `fill-accent ${mode === 'challenge' && "pointer-events-none"}`
+                                        : 'fill-gray-50 dark:fill-gray-200';
+
+                                    const hoverFill = mode === 'guess' || mode === 'challenge' ? 'fill-accent-hover' : 'hover:fill-green-400';
+
+                                    dynamicFill = isSelected
+                                        ? 'fill-green-400'
+                                        : `${hoverFill} ${baseFill}`;
+                                }
 
                                 const label = correctGuesses.find(([_, id]) => id === path.id)?.[0] || path.id;
 
@@ -215,7 +234,7 @@ const MapSVG: React.FC<SVGProps> = ({
                                         key={path.id || index}
                                         id={path.id || undefined}
                                         d={path.d}
-                                        className={`map_svg ${dynamicFill} drop-shadow-accent-hover transition-all`}
+                                        className={`map_svg drop-shadow-accent-hover transition-all ${dynamicFill}`}
                                         stroke="black"
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -235,10 +254,12 @@ const MapSVG: React.FC<SVGProps> = ({
                         </g>
                     </svg>
 
-                    {mode === 'explore' && (
-                        <p className="text-center text-xs sm:text-sm p-2 break-words line-clamp-2 w-full">
-                            {formatProvinceName(provinceName)}
-                        </p>
+                    {(mode === 'summary' || mode === 'explore') && (
+                        <div className='w-full bg-transparent flex items-center justify-center'>
+                            <p className="text-center text-[55%] sm:text-sm p-2 break-words line-clamp-2">
+                                {formatProvinceName(provinceName)}
+                            </p>
+                        </div>
                     )}
                 </div>
             )}
