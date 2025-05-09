@@ -175,7 +175,7 @@ const QuickStartMode: React.FC = () => {
           )}
           {/* Next Province Button */}
           {isCompleted && (
-            <div className="w-full absolute h-full bg-retro-bg/80 rounded-lg flex items-center justify-center py-4 z-40">
+            <div className="w-full absolute h-full dark:bg-retro-bg/80 bg-neutral-300/20 backdrop-blur-xs rounded-lg flex items-center justify-center z-40">
               <button
                 ref={nextButtonRef}
                 onClick={() => handleNextProvince()}
