@@ -1,8 +1,8 @@
 import { useMemo, useRef, useState } from "react"
-import { LGU_PATHS } from "../util/constants"
+import { LGU_PATHS,MAX_GUESS_PATH_LIMIT,MAX_CHALLENGE_PROVINCE_LIMIT } from "../util/constants"
 
 export function useProvince(random: boolean = false) {
-  const pathLimit = 10
+ 
   const provinceKeys = Object.keys(LGU_PATHS)
   const [pathVersion, setPathVersion] = useState(0)
   const [provinceOutline, setProvinceOutline] = useState(
@@ -38,9 +38,9 @@ export function useProvince(random: boolean = false) {
   //     ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
   //   }
 
-  //   return shuffled.slice(0, pathLimit)
+  //   return shuffled.slice(0, MAX_GUESS_PATH_LIMIT)
   // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [pathVersion,pathLimit, provinceData?.paths])
+  // }, [pathVersion,MAX_GUESS_PATH_LIMIT, provinceData?.paths])
 
   // Get the 10 shuffled location with name ONLY
   const locationName = useMemo(() => {
@@ -53,12 +53,12 @@ export function useProvince(random: boolean = false) {
     }
 
     return shuffled
-      .slice(0, pathLimit)
+      .slice(0, MAX_GUESS_PATH_LIMIT)
       .map((path) => path.id)
       .filter((id): id is string => !!id);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathVersion, pathLimit, provinceData?.paths]);
+  }, [pathVersion, MAX_GUESS_PATH_LIMIT, provinceData?.paths]);
 
   
   // Get All location Name base on province params
@@ -74,7 +74,7 @@ export function useProvince(random: boolean = false) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    const selected = shuffled.slice(0, 3);
+    const selected = shuffled.slice(0, MAX_CHALLENGE_PROVINCE_LIMIT);
     setRandomProvinces(selected);
     return selected;
   };
@@ -93,12 +93,12 @@ export function useProvince(random: boolean = false) {
       return {
         province,
         locations: shuffled
-          .slice(0, pathLimit)
+          .slice(0, MAX_GUESS_PATH_LIMIT)
           .map((path) => path.id)
           .filter((id): id is string => !!id),
       };
     });
-  }, [randomProvinces, pathLimit]);
+  }, [randomProvinces]);
   
 
   return {
