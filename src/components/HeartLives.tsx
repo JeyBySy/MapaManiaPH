@@ -20,7 +20,7 @@ const HeartLives: React.FC<HeartLivesProps> = ({ lives, maxLives = 5 }) => {
     }, [lives]);
 
     return (
-        <div className="flex gap-1">
+        <div className="flex gap-1 flex-wrap justify-evenly">
             {Array.from({ length: maxLives }).map((_, index) => (
                 <svg
                     key={index}

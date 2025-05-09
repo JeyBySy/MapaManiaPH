@@ -26,24 +26,27 @@ export const ChallengeModePage: React.FC = () => {
 
     return (
         <div className='min-h-[92dvh] grid grid-rows-[1fr_auto]'>
-            <main className="flex flex-col w-full items-center lg:justify-center container mx-auto relative">
-                <div className='container mx-auto px-2 lg:auto h-full flex justify-between '>
-                    <div className='grid grid-row-2 gap-10 w-full'>
-                        <div className='lg:grid lg:grid-cols-[1fr_1fr_1fr] gap-2 flex overflow-hidden items-center w-full justify-between'>
+            <main className="flex w-full relative">
+                <div className='mx-auto h-full flex justify-between '>
+                    <div className='grid grid-row-2 w-full'>
+                        <div className='flex flex-row items-center justify-evenly lg:justify-center lg:gap-3 gap-1 flex-wrap text-sm relative w-full'>
                             {!isLoading && selectedProvinces.length > 0 ? (
                                 selectedProvinces.map((province, idx) => (
                                     <div
                                         key={idx}
-                                        className='border h-[30dvh] lg:h-fit border-gray-300 dark:border-gray-500 p-5 text-center overflow-hidden flex items-center justify-center rounded-xl'
+                                        className='shadow-2xl flex-1/4 w-[30dvw] relative border  border-gray-300 dark:border-gray-500 p-3 text-center overflow-hidden flex items-center justify-center rounded-xl'
                                     >
                                         {UniquePath && (
-                                            <div className='lg:h-[50dvh] lg:w-full'>
-                                                <MapSVG
-                                                    provinceName={province}
-                                                    pathsData={UniquePath}
-                                                    mode="guess"
-                                                    isSubmitted={false}
-                                                />
+                                            // <div className='h-[30dvh] lg:h-[55dvh] w-full '>
+                                            <div className='w-[100dvw] relative'>
+                                                <div className='h-[20dvh] lg:h-[50dvh] relative rounded-t-sm'>
+                                                    <MapSVG
+                                                        provinceName={province}
+                                                        pathsData={UniquePath}
+                                                        mode="guess"
+                                                        isSubmitted={false}
+                                                    />
+                                                </div>
                                             </div>
                                         )}
                                     </div>
@@ -52,7 +55,7 @@ export const ChallengeModePage: React.FC = () => {
                                 <div className="lg:h-[54.4dvh] col-span-12 border w-full rounded-xl text-center text-gray-500 flex justify-center items-center">No provinces yet.</div>
                             )}
                         </div>
-                        <div className='w-full items-center justify-center flex gap-2 flex-col lg:flex-row'>
+                        <div className='w-full items-center justify-start lg:justify-center flex gap-2 flex-col lg:flex-row'>
                             <button
                                 onClick={(e) => {
                                     (e.target as HTMLButtonElement).blur()
