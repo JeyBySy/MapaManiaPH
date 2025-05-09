@@ -120,7 +120,7 @@ const QuickStartMode: React.FC = () => {
             <TypingText
               text={provinceOutline}
               isSubmitted={submitted}
-              isMasked={true}
+              isMasked={!submitted}
               upperCase={true}
               className={`text-sm lg:text-xl text-shadow ${submitted ? "dark:text-retro-purple text-retro-mint" : "text-white"}`}
             />
