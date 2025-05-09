@@ -19,3 +19,9 @@ export type ChallengeContextType = {
     isLoading:boolean,
     isGameOver:boolean    
 };
+
+export interface SummaryRecord {
+    correctGuessesRecord: string[];
+    wrongGuessesRecord: string[];
+    currentGuessRecord: string;
+}
