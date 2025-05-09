@@ -49,15 +49,25 @@ const GameOverScreen: React.FC<GameOverScreenType> = ({
                         className='shadow border w-full border-white/10 text-center py-2 px-2 dark:bg-neutral-600 bg-blue-300  text-xs lg:text-base text-retro-text dark:text-retro-mint text-shadow-2xs' />
                     // <p className='shadow border w-full border-white/10 text-center py-4 px-2 dark:bg-retro-card text-neutral-200 text-xs lg:text-base dark:text-neutral-300 text-shadow-2xs'><span className='dark:text-retro-mint text-retro-yellow'>Congratulations!</span> You’ve completed the challenge!</p>
                 )}
-                <div className='flex flex-row justify-center gap-3 flex-wrap text-sm relative w-full'>
-                    {Object.entries(provinceGuessRecords).map(([province, record]) => (
-                        <>
-                            <div key={province} className='shadow-2xl w-[30dvw] lg:w-auto relative border rounded-sm border-neutral-500/50'>
-                                <div className={`h-[20dvh] lg:h-[30dvh] relative p-2 rounded-t-sm dark:bg-neutral-800/90 bg-blue-300/90`}>
-                                    {pathsData && currentProvince && (
+                <div className="flex flex-row justify-center gap-3 flex-wrap text-sm relative w-full">
+                    {Object.entries(provinceGuessRecords).map(([province, record]) => {
+                        const provinceState = provinceGameStates.find((p) => p.name === province);
+
+                        if (!provinceState) return null;
+
+                        const { lives, isCompleted } = provinceState;
+
+                        return (
+                            <div key={province} className="shadow-2xl w-[30dvw] lg:w-auto relative border rounded-sm border-neutral-500/50">
+                                <div className="h-[20dvh] lg:h-[30dvh] relative p-2 rounded-t-sm dark:bg-neutral-800/90 bg-blue-300/90">
+                                    {pathsData && (
                                         <>
-                                            <div className='absolute top-0 right-0 p-2'>
-                                                {currentProvince?.isCompleted ? (<Check className='w-5 h-5 text-white p-1 bg-green-500 rounded-full' />) : (<X className='w-5 h-5 p-1 bg-red-500 rounded-full' />)}
+                                            <div className="absolute top-0 right-0 p-2">
+                                                {isCompleted ? (
+                                                    <Check className="w-5 h-5 text-white p-1 bg-green-500 rounded-full" />
+                                                ) : (
+                                                    <X className="w-5 h-5 p-1 bg-red-500 rounded-full" />
+                                                )}
                                             </div>
                                             <MapSVG
                                                 provinceName={province}
@@ -71,30 +81,22 @@ const GameOverScreen: React.FC<GameOverScreenType> = ({
                                             />
                                         </>
                                     )}
-
                                 </div>
-                                {provinceGameStates.map(({ name, lives }) =>
-                                (province === name ? (
-                                    <div
-                                        key={name}
-                                        className={`text-[55%] lg:text-xs flex flex-col gap-2 items-center h-fit dark:bg-neutral-700 bg-blue-400 p-2 rounded-b-sm`}
-                                    >
-                                        <div className='flex flex-col w-full justify-between items-center'>
-                                            <p>Lives Left</p>
-                                            <HeartLives lives={lives} />
-                                        </div>
-                                        <div className='flex w-full justify-between items-center text-center'>
-                                            <button className='w-full cursor-pointer border p-4 rounded'> Summary</button>
-                                        </div>
+
+                                <div className="text-[55%] lg:text-xs flex flex-col gap-2 items-center h-fit dark:bg-neutral-700 bg-blue-400 p-2 rounded-b-sm">
+                                    <div className="flex flex-col w-full justify-between items-center">
+                                        <p>Lives Left</p>
+                                        <HeartLives lives={lives} />
                                     </div>
-                                ) : null
-                                ))}
+                                    <div className="flex w-full justify-between items-center text-center">
+                                        <button className="w-full cursor-pointer border p-4 rounded">Summary</button>
+                                    </div>
+                                </div>
                             </div>
-
-                        </>
-
-                    ))}
+                        );
+                    })}
                 </div>
+
                 <div className='flex gap-2'>
                     <button
                         onClick={() => {
