@@ -5,11 +5,7 @@ import ProvinceSkeleton from './Skeleton/ProvinceSkeleton';
 import formatProvinceName from '../util/formatProvinceName';
 import TypingText from './TypingText';
 import { ZoomOut } from 'lucide-react';
-
-interface SummaryRecord {
-    correctGuessesRecord: string[];
-    wrongGuessesRecord: string[];
-}
+import { SummaryRecord } from '../types/ChallengeTypes';
 
 interface SVGProps {
     provinceName: string;
@@ -190,7 +186,7 @@ const MapSVG: React.FC<SVGProps> = ({
                     <svg
                         ref={handleSvgRef}
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`w-full flex-1 z-0 px-2 ${mode === 'guess' && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                        className={`w-full flex-1 z-0 px-2 ${(mode === 'guess' || mode === 'challenge') && !isSubmitted ? 'pointer-events-none' : 'pointer-events-auto'}`}
                         viewBox={province.viewBox || '0 0 100 100'}
                         onWheel={handleWheel}
                         onMouseDown={handleMouseDown}
@@ -205,14 +201,16 @@ const MapSVG: React.FC<SVGProps> = ({
 
                                 let dynamicFill = '';
 
-
                                 if (mode === 'summary' && summaryRecord) { // For Summary Record style
-                                    const { correctGuessesRecord, wrongGuessesRecord } = summaryRecord;
+                                    const { correctGuessesRecord, wrongGuessesRecord, currentGuessRecord } = summaryRecord;
                                     if (path.id && correctGuessesRecord.includes(path.id)) {
                                         dynamicFill = 'fill-accent';
                                     } else if (path.id && wrongGuessesRecord.includes(path.id)) {
                                         dynamicFill = 'fill-red-400';
-                                    } else {
+                                    } else if (path.id && currentGuessRecord.includes(path.id)) {
+                                        dynamicFill = 'fill-retro-mint';
+                                    }
+                                    else {
                                         dynamicFill = 'fill-white/40 dark:fill-gray-200/40 pointer-events-none';
                                     }
                                 } else {
