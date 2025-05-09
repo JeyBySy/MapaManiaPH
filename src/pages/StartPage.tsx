@@ -14,28 +14,60 @@ const StartPage: React.FC = () => {
       <div className=" lg:container m-2 flex flex-col items-center justify-center border-4 border-dashed py-20 relative">
 
         {/* Settings */}
-        <PopUp visible={toggleSetting} onClose={() => { setToggleSetting(false) }} title="Settings">
-          <div className="flex flex-col gap-2 p-8 w-full">
-            <div className="flex flex-row dark:text-gray-600 text-gray-700 items-center space-x-10 justify-between text-shadow-xs">
-              <p>Dark Mode: </p>
-              <DarkModeToggle />
+        <PopUp showExitBtn={true} visible={toggleSetting} onClose={() => { setToggleSetting(false) }}>
+          <div className="bg-gray-100 dark:bg-gray-900 text-white  mx-auto lg:w-xl lg:min-w-[400px] w-[87%] h-fit rounded-md border-2 border-gray-300 shadow relative">
+            {/* Header */}
+            <div className="bg-gray-400 dark:bg-gray-700 p-4 rounded-t-sm">
+              <h2 className="text-xs lg:text-lg font-bold font-mono tracking-wider uppercase text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
+                Settings
+              </h2>
+            </div>
+
+            {/* Content */}
+            <div className="flex text-xs gap-2 max-h-[80vh] text-wrap overflow-y-auto ">
+
+              <div className="flex flex-col gap-2 p-8 w-full">
+                <div className="flex flex-row dark:text-gray-600 text-gray-700 items-center space-x-10 justify-between text-shadow-xs">
+                  <p>Dark Mode: </p>
+                  <DarkModeToggle />
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="bg-gray-400  dark:bg-gray-600 rounded-b-sm text-center">
+              <button onClick={() => { setToggleSetting(false) }} className="cursor-pointer px-4 py-4 text-sm">Close</button>
             </div>
           </div>
         </PopUp>
 
         {/* Info */}
-        <PopUp visible={toggleHelp} onClose={() => { setToggleHelp(false) }} title="Info">
-          <div className="flex flex-col gap-4 p-8 w-full text-gray-700 dark:text-gray-300 overflow-y-auto h-[800px]">
-            <p>
-              Welcome to the <span className="font-semibold">Interactive Map Challenge</span>!
-              In this game, you can <strong>explore</strong> and <strong>guess</strong> the different regions of the Philippines.
-            </p>
-            <div className="flex flex-col gap-2">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex mollitia aperiam aspernatur ad. Harum et suscipit sunt pariatur vero. Natus, nulla. Repellat minus sed fuga blanditiis facere sint sapiente.
+        <PopUp showExitBtn={true} visible={toggleHelp} onClose={() => { setToggleHelp(false) }}>
+          <div className="bg-gray-100 dark:bg-gray-900 text-white  mx-auto lg:w-xl lg:min-w-[400px] w-[87%] h-fit rounded-md border-2 border-gray-300 shadow relative">
+            {/* Header */}
+            <div className="bg-gray-400 dark:bg-gray-700 p-4 rounded-t-sm">
+              <h2 className="text-xs lg:text-lg font-bold font-mono tracking-wider uppercase text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.5)]">
+                Settings
+              </h2>
+            </div>
+            {/* Content */}
+            <div className="flex text-xs gap-2 max-h-[80vh] text-wrap overflow-y-auto ">
+              <div className="flex flex-col gap-4 p-8 w-full text-gray-700 dark:text-gray-300 overflow-y-auto h-[800px]">
+                <p>
+                  Welcome to the <span className="font-semibold">Interactive Map Challenge</span>!
+                  In this game, you can <strong>explore</strong> and <strong>guess</strong> the different regions of the Philippines.
+                </p>
+                <div className="flex flex-col gap-2">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex mollitia aperiam aspernatur ad. Harum et suscipit sunt pariatur vero. Natus, nulla. Repellat minus sed fuga blanditiis facere sint sapiente.
+                </div>
+              </div>
+            </div>
+            {/* Footer */}
+            <div className="bg-gray-400  dark:bg-gray-600 rounded-b-sm text-center">
+              <button onClick={() => { setToggleHelp(false) }} className="cursor-pointer px-4 py-4 text-sm">Close</button>
             </div>
           </div>
         </PopUp>
-
 
         <div className="w-full flex absolute top-0 right-0 justify-end">
           <div className=" p-3">
