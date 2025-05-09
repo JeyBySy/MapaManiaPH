@@ -40,7 +40,7 @@ const GameOverScreen: React.FC<GameOverScreenType> = ({
                     <TypingText
                         isSubmitted={true}
                         text={`You've run out of lives on ${currentProvince.name}. Better luck next time!`}
-                        className='shadow border w-full border-white/10 text-center py-2 px-2 dark:bg-neutral-600 bg-blue-300  text-xs lg:text-base text-retro-text dark:text-retro-mint text-shadow-2xs' />
+                        className='shadow border w-full border-white/10 text-center py-2 px-2 dark:bg-neutral-600 bg-blue-300  text-xs lg:text-base text-retro-text text-shadow-2xs' />
                     // <p className='shadow border w-full border-white/10 text-center py-4 px-2 text-neutral-200 text-xs lg:text-base dark:text-neutral-300 text-shadow-2xs'>You've <span className='text-retro-orange'>run out of lives</span> on <span className='dark:text-retro-purple text-retro-mint'>"{currentProvince.name}"</span>. Better luck next time!</p>
                 ) : (
                     <TypingText
