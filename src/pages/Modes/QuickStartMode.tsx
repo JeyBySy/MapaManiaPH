@@ -114,7 +114,7 @@ const QuickStartMode: React.FC = () => {
       {/* RIGHT: Map Display*/}
       <div className="grid grid-rows-[1fr_auto] lg:block lg:grid-rows-none h-fit w-full px-2 space-y-2 lg:w-12/12 lg:h-auto mx-auto overflow-hidden relative ">
         {/* Map */}
-        <div className={`w-full mx-auto ${submitted ? 'h-[85vh]' : 'h-[70vh]'} relative lg:h-[80vh] bg-transparent border border-gray-300 dark:border-gray-500 rounded-lg shadow-lg z-30`}>
+        <div className={`w-full mx-auto ${submitted ? 'h-[85vh]' : 'h-[70vh]'} relative lg:h-[80vh] bg-transparent border border-gray-300 dark:border-gray-500 rounded-lg py-2 shadow-lg z-30`}>
           {/* Province Name */}
           <div className="absolute left-0 top-0 z-10 py-4 px-4">
             <TypingText

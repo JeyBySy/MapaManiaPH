@@ -254,7 +254,7 @@ const MapSVG: React.FC<SVGProps> = ({
 
                     {(mode === 'summary' || mode === 'explore') && (
                         <div className='w-full bg-transparent flex items-center justify-center'>
-                            <p className="text-center text-[55%] sm:text-sm p-2 break-words line-clamp-2">
+                            <p className="text-center text-[45%] sm:text-sm p-2 break-words line-clamp-2">
                                 {formatProvinceName(provinceName)}
                             </p>
                         </div>

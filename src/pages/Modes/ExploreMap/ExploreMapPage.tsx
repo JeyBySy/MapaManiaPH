@@ -35,13 +35,13 @@ const ExploreMapPage: React.FC = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 p-4">
+            <div className="w-full h-full grid grid-cols-3 lg:grid-cols-5 gap-4 p-4">
               {filteredProvinces.length > 0 ? (
                 filteredProvinces.map((province) => (
                   <div
                     onClick={() => { handlePathClick(province) }}
                     key={province}
-                    className="w-full h-[300px] pt-5 px-2 border shadow rounded-md overflow-hidden cursor-pointer dark:hover:bg-gray-700/50 hover:bg-retro-mint/10 hover:shadow-2xl"
+                    className="w-full h-[170px] lg:h-[300px] pt-5 px-2 border shadow rounded-md overflow-hidden cursor-pointer dark:hover:bg-gray-700/50 hover:bg-retro-mint/10 hover:shadow-2xl"
                   >
                     <MapSVG
                       provinceName={province}
