@@ -42,7 +42,7 @@ const TypingText: React.FC<TypingTextProps> = ({
 
             return () => clearInterval(interval)
         } else if (isMasked) {
-            setDisplayText(text.replace(/[A-Za-z_]/gi, maskChar).slice(0, 10))
+            setDisplayText(text.replace(/[A-Za-z_]/gi, maskChar).slice(0, text.replace(/_/g, "").length))
         } else {
             setDisplayText(text.replace(/_/g, " "))
         }
