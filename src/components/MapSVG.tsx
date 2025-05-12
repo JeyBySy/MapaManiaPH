@@ -233,7 +233,6 @@ const MapSVG: React.FC<SVGProps> = ({
                                         id={path.id || undefined}
                                         d={path.d}
                                         className={`map_svg drop-shadow-accent-hover transition-all ${dynamicFill}`}
-                                        stroke="black"
                                         onClick={(e) => {
                                             e.preventDefault();
                                             handlePathClick(path.id);
@@ -259,7 +258,7 @@ const MapSVG: React.FC<SVGProps> = ({
                             </p>
                         </div>
                     )}
-                </div>
+                </div >
             )}
         </>
     );

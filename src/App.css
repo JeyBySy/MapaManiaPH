@@ -34,7 +34,7 @@ a {
   @apply dark:bg-retro-purple bg-retro-mint;
 }
 .drop-shadow-accent-hover {
-  @apply hover:drop-shadow-2xl hover:drop-shadow-retro-bg/80;
+  @apply hover:drop-shadow hover:drop-shadow-retro-bg/80;
 }
 .fill-accent {
   @apply dark:fill-retro-purple fill-retro-mint;
