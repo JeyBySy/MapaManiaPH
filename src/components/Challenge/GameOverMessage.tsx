@@ -23,7 +23,7 @@ const GameOverMessage: React.FC<GameOverMessageType> = ({ finish, timeOut, isEmp
             ) : timeOut ? (
                 <>You've run out of time. Better luck next time!</>
             ) : (
-                <>TEST: Congratulations! You've completed the challenge!</>
+                <>Better luck next time!</>
             )}
         </p>
     )
