@@ -9,6 +9,7 @@ import GameOverScreen from '../../../components/Challenge/GameOverScreen'
 import { useNavigate } from 'react-router-dom'
 import useTimer from '../../../hooks/useTimer'
 import GameTimer from './../../../components/GameTimer'
+import { Flag } from 'lucide-react'
 
 
 const PlayChallengePage: React.FC = () => {
@@ -23,6 +24,7 @@ const PlayChallengePage: React.FC = () => {
     const [currentLocationStep, setCurrentLocationStep] = useState(0)
     const [correctGuesses, setCorrectGuesses] = useState<[string, string][]>([])
     const currentProvince = provinceGameStates && provinceGameStates[currentProvinceIndex]
+    const [isSurrender, setIsSurrender] = useState(false)
     const [provinceGuessRecords, setProvinceGuessRecords] = useState<{
         [provinceName: string]: {
             correctGuessesRecord: string[],
@@ -163,6 +165,11 @@ const PlayChallengePage: React.FC = () => {
         navigate('/challenge')
     }
 
+    const handleSurrender = () => {
+        pause();
+        setIsSurrender(true)
+    }
+
     useEffect(() => {
         setCurrentProvinceIndex(0);
 
@@ -193,7 +200,7 @@ const PlayChallengePage: React.FC = () => {
     return (
         <>
             <div className="container mx-auto relative px-2 gap-3 flex flex-row items-start justify-center">
-                {(isGameOver || isEmptyLives || !isRunning) && UniquePath && (
+                {(isGameOver || isEmptyLives || !isRunning || isSurrender) && UniquePath && (
                     <GameOverScreen
                         provinceGuessRecords={provinceGuessRecords}
                         pathsData={UniquePath}
@@ -204,6 +211,7 @@ const PlayChallengePage: React.FC = () => {
                         isEmptyLives={isEmptyLives}
                         time={timeUsed}
                         timeOut={!isRunning}
+                        surrender={isSurrender}
                     />
                 )}
 
@@ -221,11 +229,10 @@ const PlayChallengePage: React.FC = () => {
                 )
                 }
                 {/* Right Side: Map */}
-                <div className={`
-                            w-full mx-auto h-[85vh] relative space-y-2 lg:h-[80vh] bg-transparent border border-gray-300 dark:border-gray-500 rounded-lg shadow-lg z-30
+                <div className={`grid grid-rows-[1fr_auto] lg:block lg:grid-rows-none h-fit w-full space-y-2 lg:w-12/12 lg:h-auto mx-auto overflow-hidden relative 
                             ${isEmptyLives ? "pointer-events-none" : "pointer-events-auto"}
                         `}>
-                    <div className="relative w-full h-full flex py-2 items-center justify-center z-20">
+                    <div className={`w-full mx-auto ${submitted ? 'h-[85dvh]' : 'h-[70dvh]'} relative lg:h-[80vh] bg-transparent border border-gray-300 dark:border-gray-500 rounded-lg py-2 shadow-lg z-30`}>
                         <div className='absolute top-0 right-0 p-4'>
                             <GameTimer />
                         </div>
@@ -246,8 +253,15 @@ const PlayChallengePage: React.FC = () => {
                             />
                         )
                         }
+                        <button onClick={(e) => {
+                            (e.target as HTMLButtonElement).blur()
+                            handleSurrender()
+                        }}
+                            title='Surrender' className='cursor-pointer absolute bottom-0 right-0 p-4'>
+                            <Flag />
+                        </button>
                     </div>
-                    <div className={`flex flex-col border justify-end mx-auto items-center w-full ${(isGameOver || isEmptyLives || !isRunning) && 'hidden'}`}>
+                    <div className={`flex flex-col justify-end mx-auto items-center w-full ${(isGameOver || isEmptyLives || !isRunning) && 'hidden'}`}>
                         {!submitted && (
                             <Keyboard
                                 value={typedText}

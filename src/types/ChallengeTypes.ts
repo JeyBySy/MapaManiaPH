@@ -38,4 +38,5 @@ export interface GameOverScreenType {
     isEmptyLives?: boolean
     time: number;
     timeOut?:boolean
+    surrender?:boolean
 }

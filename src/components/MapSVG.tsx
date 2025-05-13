@@ -210,7 +210,7 @@ const MapSVG: React.FC<SVGProps> = ({
                                     } else if (path.id && wrongGuessesRecord.includes(path.id)) {
                                         dynamicFill = 'fill-red-400';
                                     } else if (path.id && currentGuessRecord.includes(path.id)) {
-                                        dynamicFill = 'fill-retro-mint';
+                                        dynamicFill = 'dark:fill-retro-mint fill-blue-400';
                                     }
                                     else {
                                         dynamicFill = 'fill-white/40 dark:fill-gray-200/40 pointer-events-none';
