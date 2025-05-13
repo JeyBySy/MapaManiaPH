@@ -12,11 +12,12 @@ export type ProvinceLocation = {
 export type ChallengeContextType = {
     selectedProvinces: string[];
     provinceGameStates: { name: string; lives: number; isCompleted: boolean }[];
-    setProvinceGameStates: React.Dispatch<React.SetStateAction<{ name: string; lives: number; isCompleted: boolean }[]>>;
+    setProvinceGameStates: React.Dispatch<React.SetStateAction<{ name: string; lives: number; isCompleted: boolean,isGuessed: boolean }[]>>;
     pickRandomProvinces: () => void;
     startGame:()=>void;
     updateProvinceLives: (provinceName: string, action?: "decrease" | "increase", value?: number) => void;
-    updateProvinceCompletion: (provinceName: string, isCompleted: boolean) => void;    
+    updateProvinceCompletion: (provinceName: string, isCompleted: boolean) => void; 
+    updateProvinceGuessed:(provinceName: string, isGuessed: boolean) =>void;
     provinceLocations:ProvinceLocation[];
     isLoading:boolean,
     isGameOver:boolean    
