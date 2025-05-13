@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { LGU_PATH_TYPE } from '../types/ProvinceTypes';
 import ProvinceSkeleton from './Skeleton/ProvinceSkeleton';
-import formatProvinceName from '../util/formatProvinceName';
+import { ignoreCharProvinceName, maskProvinceName } from '../util/formatProvinceName';
 import TypingText from './TypingText';
 import { ZoomOut } from 'lucide-react';
 import { SummaryRecord } from '../types/ChallengeTypes';
@@ -18,6 +18,7 @@ interface SVGProps {
     isZoomable?: boolean;
     offLoading?: boolean;
     summaryRecord?: SummaryRecord
+    hideProvinceName?: boolean
 }
 
 const MapSVG: React.FC<SVGProps> = ({
@@ -30,7 +31,8 @@ const MapSVG: React.FC<SVGProps> = ({
     selectedLocationId,
     isZoomable = false,
     offLoading,
-    summaryRecord
+    summaryRecord,
+    hideProvinceName = false
 }) => {
     const [isLoading, setIsLoading] = useState(true);
     const province = pathsData[provinceName];
@@ -250,14 +252,31 @@ const MapSVG: React.FC<SVGProps> = ({
                             })}
                         </g>
                     </svg>
+                    {hideProvinceName
+                        ? (
+                            <>
+                                {mode === 'summary' && (
+                                    <div className='w-full bg-transparent flex items-center justify-center'>
+                                        <p className="text-center text-[45%] sm:text-sm p-2 break-words line-clamp-2">
+                                            {maskProvinceName(provinceName)}
+                                        </p>
+                                    </div>
+                                )}
+                            </>
+                        ) : (
 
-                    {(mode === 'summary' || mode === 'explore') && (
-                        <div className='w-full bg-transparent flex items-center justify-center'>
-                            <p className="text-center text-[45%] sm:text-sm p-2 break-words line-clamp-2">
-                                {formatProvinceName(provinceName)}
-                            </p>
-                        </div>
-                    )}
+                            <>
+                                {(mode === 'summary' || mode === 'explore') && (
+                                    <div className='w-full bg-transparent flex items-center justify-center'>
+                                        <p className="text-center text-[45%] sm:text-sm p-2 break-words line-clamp-2">
+                                            {ignoreCharProvinceName(provinceName)}
+                                        </p>
+                                    </div>
+                                )}
+                            </>
+                        )}
+
+
                 </div >
             )}
         </>
