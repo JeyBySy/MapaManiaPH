@@ -51,7 +51,7 @@ const QuickStartMode: React.FC = () => {
 
     setTimeout(() => {
       setIsSpinning(false)
-    }, 900)
+    }, 550)
   }
 
   const handlePathClick = (clickedId: string) => {
@@ -116,15 +116,19 @@ const QuickStartMode: React.FC = () => {
         {/* Map */}
         <div className={`w-full mx-auto ${submitted ? 'h-[85vh]' : 'h-[70vh]'} relative lg:h-[80vh] bg-transparent border border-gray-300 dark:border-gray-500 rounded-lg py-2 shadow-lg z-30`}>
           {/* Province Name */}
-          <div className="absolute left-0 top-0 z-10 py-4 px-4">
-            <TypingText
-              text={provinceOutline}
-              isSubmitted={submitted}
-              isMasked={!submitted}
-              upperCase={true}
-              className={`text-sm lg:text-xl text-shadow ${submitted ? "dark:text-retro-purple text-retro-mint" : "text-white"}`}
-            />
-          </div>
+          {!isSpinning && (
+            <>
+              <div className="absolute left-0 top-0 z-10 py-4 px-4">
+                <TypingText
+                  text={provinceOutline}
+                  isSubmitted={submitted}
+                  isMasked={!submitted}
+                  upperCase={true}
+                  className={`text-sm lg:text-xl text-shadow ${submitted ? "dark:text-retro-purple text-retro-mint" : "text-white"}`}
+                />
+              </div>
+            </>
+          )}
 
           {/* Next Province Button */}
           <button
@@ -171,6 +175,7 @@ const QuickStartMode: React.FC = () => {
               limit={provinceOutline.length}
               onSubmit={handleSubmit}
               provinceValue={provinceOutline}
+              isLoading={!isSpinning}
             />
           )}
           {/* Next Province Button */}
