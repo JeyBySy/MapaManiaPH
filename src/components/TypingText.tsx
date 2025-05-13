@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react"
-import formatProvinceName from "../util/formatProvinceName"
+import { ignoreCharProvinceName, maskProvinceName } from "../util/formatProvinceName"
 
 interface TypingTextProps {
     text: string | null | undefined
     isSubmitted?: boolean
     isMasked?: boolean
-    maskChar?: string
     delay?: number // typing delay per character in ms
     className?: string
     upperCase?: boolean
@@ -15,7 +14,6 @@ const TypingText: React.FC<TypingTextProps> = ({
     text,
     isSubmitted = false,
     isMasked = false,
-    maskChar = "?",
     delay = 50,
     className = "",
     upperCase = false
@@ -42,13 +40,13 @@ const TypingText: React.FC<TypingTextProps> = ({
 
             return () => clearInterval(interval)
         } else if (isMasked) {
-            setDisplayText(text.replace(/[A-Za-z_]/gi, maskChar).slice(0, text.replace(/_/g, "").length))
+            setDisplayText(maskProvinceName(text).slice(0, ignoreCharProvinceName(text).length))
         } else {
-            setDisplayText(text.replace(/_/g, " "))
+            setDisplayText(ignoreCharProvinceName(text))
         }
-    }, [isSubmitted, text, isMasked, maskChar, delay])
+    }, [isSubmitted, text, isMasked, delay])
 
-    return <p className={`${className} capitalize`}>{upperCase ? formatProvinceName(displayText) : formatProvinceName(displayText.toLowerCase())}</p>
+    return <p className={`${className} capitalize`}>{upperCase ? ignoreCharProvinceName(displayText) : ignoreCharProvinceName(displayText.toLowerCase())}</p>
 }
 
 export default TypingText
