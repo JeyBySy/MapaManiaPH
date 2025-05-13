@@ -34,9 +34,9 @@ const PopUp: React.FC<PopUpProps> = ({ children, visible, onClose, showExitBtn =
         <div className="fixed inset-0 backdrop-blur flex flex-col items-center justify-center z-50">
           <motion.div
             ref={popupRef}
-            initial={{ scale: 0, opacity: 0 }}
+            initial={{ scale: 1.1, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            transition={{ stiffness: 300, damping: 20 }}
           >
             {/* Close Button */}
             {/* {showExitBtn && (
