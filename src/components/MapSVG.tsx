@@ -206,11 +206,11 @@ const MapSVG: React.FC<SVGProps> = ({
                                 if (mode === 'summary' && summaryRecord) { // For Summary Record style
                                     const { correctGuessesRecord, wrongGuessesRecord, currentGuessRecord } = summaryRecord;
                                     if (path.id && correctGuessesRecord.includes(path.id)) {
-                                        dynamicFill = 'fill-accent';
+                                        dynamicFill = 'fill-accent pointer-events-none';
                                     } else if (path.id && wrongGuessesRecord.includes(path.id)) {
-                                        dynamicFill = 'fill-red-400';
+                                        dynamicFill = 'fill-red-400 pointer-events-none';
                                     } else if (path.id && currentGuessRecord.includes(path.id)) {
-                                        dynamicFill = 'dark:fill-retro-mint fill-blue-400';
+                                        dynamicFill = 'dark:fill-retro-mint fill-blue-400 pointer-events-none';
                                     }
                                     else {
                                         dynamicFill = 'fill-white/40 dark:fill-gray-200/40 pointer-events-none';
@@ -252,31 +252,15 @@ const MapSVG: React.FC<SVGProps> = ({
                             })}
                         </g>
                     </svg>
-                    {hideProvinceName
-                        ? (
-                            <>
-                                {mode === 'summary' && (
-                                    <div className='w-full bg-transparent flex items-center justify-center'>
-                                        <p className="text-center text-[45%] sm:text-sm p-2 break-words line-clamp-2">
-                                            {maskProvinceName(provinceName)}
-                                        </p>
-                                    </div>
-                                )}
-                            </>
-                        ) : (
-
-                            <>
-                                {(mode === 'summary' || mode === 'explore') && (
-                                    <div className='w-full bg-transparent flex items-center justify-center'>
-                                        <p className="text-center text-[45%] sm:text-sm p-2 break-words line-clamp-2">
-                                            {ignoreCharProvinceName(provinceName)}
-                                        </p>
-                                    </div>
-                                )}
-                            </>
-                        )}
-
-
+                    {(mode === 'summary' || (!hideProvinceName && mode === 'explore')) && (
+                        <div className='w-full bg-transparent flex items-center justify-center'>
+                            <p className="text-center text-[45%] sm:text-sm p-2 break-words line-clamp-2">
+                                {hideProvinceName
+                                    ? maskProvinceName(provinceName)
+                                    : ignoreCharProvinceName(provinceName)}
+                            </p>
+                        </div>
+                    )}
                 </div >
             )}
         </>
