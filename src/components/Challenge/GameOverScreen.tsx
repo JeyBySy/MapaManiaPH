@@ -56,7 +56,7 @@ const GameOverScreen: React.FC<GameOverScreenType> = ({
 
                             if (!provinceState) return null;
 
-                            const { lives, isCompleted } = provinceState;
+                            const { lives, isCompleted, isGuessed } = provinceState;
 
                             return (
                                 <div
@@ -82,7 +82,7 @@ const GameOverScreen: React.FC<GameOverScreenType> = ({
                                                     isZoomable={false}
                                                     offLoading={true}
                                                     summaryRecord={record}
-                                                    hideProvinceName={!(lives === 0 || isCompleted)}
+                                                    hideProvinceName={(surrender && !isGuessed) || (lives !== 0 && !isCompleted && !isGuessed)}
                                                 />
                                             </>
                                         )}

@@ -15,8 +15,7 @@ import { Flag } from 'lucide-react'
 const PlayChallengePage: React.FC = () => {
     const navigate = useNavigate()
     const { timeUsed, pause, isRunning } = useTimer();
-
-    const { provinceGameStates, provinceLocations, updateProvinceLives, updateProvinceCompletion, isGameOver, selectedProvinces } = useChallenge()
+    const { provinceGameStates, provinceLocations, updateProvinceLives, updateProvinceCompletion, updateProvinceGuessed, isGameOver, selectedProvinces } = useChallenge()
     const { pathsWithIds: UniquePath, answerKeys } = useUniquePathId()
     const [submitted, setSubmitted] = useState(false)
     const [typedText, setTypedText] = useState("")
@@ -96,6 +95,7 @@ const PlayChallengePage: React.FC = () => {
     const handleSubmit = () => {
         if (currentProvince && typedText.toUpperCase() === currentProvince.name.toUpperCase()) {
             setSubmitted(true)
+            updateProvinceGuessed(currentProvince.name, true)
             setTypedText('')
         } else {
             if (currentProvince) {
