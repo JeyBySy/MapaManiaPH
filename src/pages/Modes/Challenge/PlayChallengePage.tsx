@@ -3,13 +3,18 @@ import { useChallenge } from '../../../hooks/useChallenge'
 import Keyboard from '../../../components/Keyboard'
 import MapSVG from '../../../components/MapSVG'
 import { useUniquePathId } from '../../../hooks/useUniquePath'
-import HeartLives from '../../../components/HeartLives'
+import HeartLives from '../../../components/Challenge/HeartLives'
 import LocationList from '../../../components/LocationList'
-import GameOverScreen from '../../../components/GameOverScreen'
+import GameOverScreen from '../../../components/Challenge/GameOverScreen'
 import { useNavigate } from 'react-router-dom'
+import useTimer from '../../../hooks/useTimer'
+import GameTimer from './../../../components/GameTimer'
+
 
 const PlayChallengePage: React.FC = () => {
     const navigate = useNavigate()
+    const { timeUsed, pause, isRunning } = useTimer();
+
     const { provinceGameStates, provinceLocations, updateProvinceLives, updateProvinceCompletion, isGameOver, selectedProvinces } = useChallenge()
     const { pathsWithIds: UniquePath, answerKeys } = useUniquePathId()
     const [submitted, setSubmitted] = useState(false)
@@ -25,6 +30,8 @@ const PlayChallengePage: React.FC = () => {
             currentGuessRecord: string
         }
     }>({});
+
+
     const [isEmptyLives, setIsEmptyLives] = useState(false)
 
     useEffect(() => {
@@ -68,7 +75,11 @@ const PlayChallengePage: React.FC = () => {
         }));
     }, [currentLocationStep, currentProvinceIndex, currentProvince, provinceLocations, answerKeys]);
 
-
+    useEffect(() => {
+        if (isGameOver || isEmptyLives) {
+            pause();
+        }
+    }, [isGameOver, isEmptyLives, pause]);
 
     const handleLifeLoss = () => {
         if (!currentProvince) return;
@@ -182,7 +193,7 @@ const PlayChallengePage: React.FC = () => {
     return (
         <>
             <div className="container mx-auto relative px-2 gap-3 flex flex-row items-start justify-center">
-                {(isGameOver || isEmptyLives) && UniquePath && (
+                {(isGameOver || isEmptyLives || !isRunning) && UniquePath && (
                     <GameOverScreen
                         provinceGuessRecords={provinceGuessRecords}
                         pathsData={UniquePath}
@@ -190,7 +201,10 @@ const PlayChallengePage: React.FC = () => {
                         correctGuesses={correctGuesses}
                         provinceGameStates={provinceGameStates}
                         handleTryAgain={handleTryAgain}
-                        isEmptyLives={isEmptyLives} />
+                        isEmptyLives={isEmptyLives}
+                        time={timeUsed}
+                        timeOut={!isRunning}
+                    />
                 )}
 
                 {/* Left Side: Locations */}
@@ -206,15 +220,17 @@ const PlayChallengePage: React.FC = () => {
                     </>
                 )
                 }
-
                 {/* Right Side: Map */}
                 <div className={`
                             w-full mx-auto h-[85vh] relative space-y-2 lg:h-[80vh] bg-transparent border border-gray-300 dark:border-gray-500 rounded-lg shadow-lg z-30
                             ${isEmptyLives ? "pointer-events-none" : "pointer-events-auto"}
                         `}>
                     <div className="relative w-full h-full flex py-2 items-center justify-center z-20">
+                        <div className='absolute top-0 right-0 p-4'>
+                            <GameTimer />
+                        </div>
                         {submitted && (
-                            <div className='flex absolute top-0 right-0 p-2 text-xs flex-col gap-2 z-30'>
+                            <div className='flex absolute top-0 left-0 p-2 text-xs flex-col gap-2 z-30'>
                                 <HeartLives lives={currentProvince.lives} />
                             </div>
                         )}
@@ -231,7 +247,7 @@ const PlayChallengePage: React.FC = () => {
                         )
                         }
                     </div>
-                    <div className="flex flex-col justify-end mx-auto items-center w-full">
+                    <div className={`flex flex-col border justify-end mx-auto items-center w-full ${(isGameOver || isEmptyLives || !isRunning) && 'hidden'}`}>
                         {!submitted && (
                             <Keyboard
                                 value={typedText}

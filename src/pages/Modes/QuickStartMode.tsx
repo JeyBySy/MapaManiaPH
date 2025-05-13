@@ -73,7 +73,7 @@ const QuickStartMode: React.FC = () => {
 
   useEffect(() => {
     if (submitted) {
-      setShowMap(false) // reset
+      setShowMap(false)
       const timeout = setTimeout(() => setShowMap(true), 0) // simulate reload delay
       return () => clearTimeout(timeout)
     }

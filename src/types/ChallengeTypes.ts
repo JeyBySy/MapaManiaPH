@@ -1,3 +1,5 @@
+import { LGU_PATH_TYPE } from '../types/ProvinceTypes';
+
 export type ProvinceState = {
     name: string;
     lives: number;
@@ -24,4 +26,16 @@ export interface SummaryRecord {
     correctGuessesRecord: string[];
     wrongGuessesRecord: string[];
     currentGuessRecord: string;
+}
+
+export interface GameOverScreenType {
+    provinceGuessRecords: { [provinceName: string]: SummaryRecord };
+    pathsData: LGU_PATH_TYPE;
+    currentProvince: { name: string; lives: number; isCompleted: boolean }
+    correctGuesses: [string, string][]
+    provinceGameStates: { name: string; lives: number; isCompleted: boolean }[];
+    handleTryAgain: () => void
+    isEmptyLives?: boolean
+    time: number;
+    timeOut?:boolean
 }
