@@ -114,7 +114,7 @@ const QuickStartMode: React.FC = () => {
       {/* RIGHT: Map Display*/}
       <div className="grid grid-rows-[1fr_auto] lg:block lg:grid-rows-none h-fit w-full px-2 space-y-2 lg:w-12/12 lg:h-auto mx-auto overflow-hidden relative ">
         {/* Map */}
-        <div className={`w-full mx-auto ${submitted ? 'h-[85dvh]' : 'h-[70dvh]'} relative lg:h-[80dvh] bg-transparent border border-gray-300 dark:border-gray-500 rounded-lg py-2 shadow-lg z-30`}>
+        <div className={`w-full mx-auto ${submitted ? 'h-[85vh]' : 'h-[70vh]'} relative lg:h-[80vh] bg-transparent border border-gray-300 dark:border-gray-500 rounded-lg py-2 shadow-lg z-30`}>
           {/* Province Name */}
           {!isSpinning && (
             <>
