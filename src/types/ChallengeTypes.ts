@@ -21,6 +21,7 @@ export type ChallengeContextType = {
     provinceLocations:ProvinceLocation[];
     isLoading:boolean,
     isGameOver:boolean    
+    isGuessed:boolean
 };
 
 export interface SummaryRecord {
@@ -34,7 +35,7 @@ export interface GameOverScreenType {
     pathsData: LGU_PATH_TYPE;
     currentProvince: { name: string; lives: number; isCompleted: boolean }
     correctGuesses: [string, string][]
-    provinceGameStates: { name: string; lives: number; isCompleted: boolean }[];
+    provinceGameStates: { name: string; lives: number; isCompleted: boolean,isGuessed:boolean }[];
     handleTryAgain: () => void
     isEmptyLives?: boolean
     time: number;

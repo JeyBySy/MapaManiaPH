@@ -45,8 +45,8 @@ const GameOverScreen: React.FC<GameOverScreenType> = ({
                         <GameStats title="Province Completed" value={completedCount} totalValue={totalCount} />
                         <GameStats title="number of guessed locations" value={totalCorrectGuesses} totalValue={totalLocations} />
                         <GameStats title="time consumed" value={formatTime(time)} />
-                        <GameStats title="hints used during the game" value={1} />
-                        <GameStats title="longest streak" value={1} />
+                        {/* <GameStats title="hints used during the game" value={1} /> */}
+                        {/* <GameStats title="longest streak" value={1} /> */}
                     </div>
                 </div>
                 <div className='flex flex-col gap-2'>
