@@ -41,7 +41,7 @@ const GameOverScreen: React.FC<GameOverScreenType> = ({
                 </div>
                 <GameOverMessage surrender={surrender} finish={isFinish} timeOut={timeOut} isEmptyLives={isEmptyLives} provinceName={currentProvince.name} />
                 <div className="w-full relative dark:bg-neutral-700 bg-blue-300">
-                    <div className="flex overflow-x-auto whitespace-nowrap justify-start px-2 md:justify-evenly xl:w-[75%] w-full mx-auto">
+                    <div className="flex overflow-x-auto whitespace-nowrap justify-start px-2 md:justify-center xl:w-[75%] w-full mx-auto">
                         <GameStats title="Province Completed" value={completedCount} totalValue={totalCount} />
                         <GameStats title="time consumed" value={formatTime(time)} />
                         <GameStats title="number of guessed locations" value={totalCorrectGuesses} totalValue={totalLocations} />
