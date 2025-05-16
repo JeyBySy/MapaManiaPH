@@ -12,7 +12,7 @@ export type ProvinceLocation = {
 export type ChallengeContextType = {
     selectedProvinces: string[];
     provinceGameStates: { name: string; lives: number; isCompleted: boolean,isGuessed: boolean }[];
-    setProvinceGameStates: React.Dispatch<React.SetStateAction<{ name: string; lives: number; isCompleted: boolean,isGuessed: boolean }[]>>;
+    setProvinceGameStates: React.Dispatch<React.SetStateAction<{ name: string; lives: number; isCompleted: boolean, isGuessed: boolean }[]>>;
     pickRandomProvinces: () => void;
     startGame:()=>void;
     updateProvinceLives: (provinceName: string, action?: "decrease" | "increase", value?: number) => void;
@@ -20,8 +20,7 @@ export type ChallengeContextType = {
     updateProvinceGuessed:(provinceName: string, isGuessed: boolean) =>void;
     provinceLocations:ProvinceLocation[];
     isLoading:boolean,
-    isGameOver:boolean    
-    isGuessed:boolean
+    isGameOver:boolean        
 };
 
 export interface SummaryRecord {
