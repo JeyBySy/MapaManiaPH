@@ -43,8 +43,8 @@ const GameOverScreen: React.FC<GameOverScreenType> = ({
                 <div className="w-full relative dark:bg-neutral-700 bg-blue-300">
                     <div className="flex overflow-x-auto whitespace-nowrap justify-start px-2 md:justify-evenly xl:w-[75%] w-full mx-auto">
                         <GameStats title="Province Completed" value={completedCount} totalValue={totalCount} />
-                        <GameStats title="number of guessed locations" value={totalCorrectGuesses} totalValue={totalLocations} />
                         <GameStats title="time consumed" value={formatTime(time)} />
+                        <GameStats title="number of guessed locations" value={totalCorrectGuesses} totalValue={totalLocations} />
                         {/* <GameStats title="hints used during the game" value={1} /> */}
                         {/* <GameStats title="longest streak" value={1} /> */}
                     </div>
