@@ -11,7 +11,7 @@ export type ProvinceLocation = {
 };
 export type ChallengeContextType = {
     selectedProvinces: string[];
-    provinceGameStates: { name: string; lives: number; isCompleted: boolean }[];
+    provinceGameStates: { name: string; lives: number; isCompleted: boolean,isGuessed: boolean }[];
     setProvinceGameStates: React.Dispatch<React.SetStateAction<{ name: string; lives: number; isCompleted: boolean,isGuessed: boolean }[]>>;
     pickRandomProvinces: () => void;
     startGame:()=>void;
@@ -33,7 +33,7 @@ export interface SummaryRecord {
 export interface GameOverScreenType {
     provinceGuessRecords: { [provinceName: string]: SummaryRecord };
     pathsData: LGU_PATH_TYPE;
-    currentProvince: { name: string; lives: number; isCompleted: boolean }
+    currentProvince: { name: string; lives: number; isCompleted: boolean ,isGuessed:boolean}
     correctGuesses: [string, string][]
     provinceGameStates: { name: string; lives: number; isCompleted: boolean,isGuessed:boolean }[];
     handleTryAgain: () => void
